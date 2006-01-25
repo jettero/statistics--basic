@@ -1,5 +1,5 @@
 # vi:fdm=marker fdl=0
-# $Id: Basic.pm,v 1.1 2006-01-25 22:20:40 jettero Exp $ 
+# $Id: Basic.pm,v 1.3 2006-01-25 22:23:29 jettero Exp $ 
 
 package Statistics::Basic;
 
@@ -7,7 +7,7 @@ use strict;
 no warnings;
 use Carp;
 
-our $VERSION = "0.41.3";
+our $VERSION = "0.42";
 
 1;
 
@@ -104,6 +104,10 @@ set the $ENV{UNBIAS}=1;
 Please contact me with ANY suggestions, no matter how pedantic.
 
 Jettero Heller <japh@voltar-confed.org>
+
+=head1 CONTRIBS
+
+http://search.cpan.org/~orien/  (some modules and tests)
 
 =head1 COPYRIGHT
 
