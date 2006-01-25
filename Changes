@@ -1,0 +1,61 @@
+0.41.3:  Thu Mar 25 12:48:56 EST 2004
+   - jettero took out the stoopid mod::sig, everyone hated
+     it anyway
+
+0.41.1 and 0.41.2: Tue Mar 23 07:59:46 EST 2004
+   - Copyright clarifications.  ... GPL with a twist.
+
+0.41:  Fri Jan 30 08:54:37 EST 2004
+   - jettero found an amazingly STUPID typo in the Basic.pm
+     Statisics anyone?
+
+0.4:  Thu Jan 29 11:20:51 EST 2004
+   - jettero added the UNBIAS flag for those that wish to
+     use (N-1) in their variance. Perhaps I should switch
+     the default. We will see.
+
+0.39:  Fri Dec 12 07:18:18 EST 2003
+   - jettero changed the NAME field to match CPAN
+
+0.38:  Tue Dec  9 08:35:59 EST 2003
+   - jettero discovered many bugs in the insert/ginsert of
+     the new new()s
+
+0.37:  Mon Dec  8 20:58:08 EST 2003
+   - jettero cleaned up the new() functions so they don't
+     require arguments for no reason
+
+0.36:  Sat Dec  6 11:32:17 EST 2003
+   - jettero added (linear) LeastSquareFit
+
+0.35:  Tue Dec  2 17:04:58 EST 2003
+   - jettero was working on the documentation in Basic.pm
+     when he realized the need for ginsert and set_vector
+     around the world... finished implementing those.
+
+0.34:  Tue Dec  2 14:45:11 EST 2003
+   - jettero tought the ::CoVariance module to take ::Mean
+     objects as optional arguments to keep the ::Correlation
+     object from uselessly recalculating the mean as
+     mentioned in the entry below in 0.33.
+
+0.33:  Tue Dec  2 14:00:48 EST 2003
+   - jettero did an amazing amount of work on the objected
+     oriented structrues, the tests in t/ and added the
+     queuing functions to the packages. He also added the
+     Vector object to handle some things. Note that the
+     author is aware that the Mean get's uselessly
+     recalculated for some the high level objects...
+     Solution forthcomming...
+
+0.25:  Mon Dec  1 12:13:44 EST 2003
+   - jettero installed a correlation module and upped the
+     version a great deal.
+
+0.02:  Mon Dec  1 00:28:50 EST 2003
+   - jettero made some base packages, namely: StdDev,
+     Variance, CoVariance, and Mean.
+
+0.01:  Sun Nov 30 11:55:03 EST 2003
+   - jettero made a skeleton package
+
