@@ -1,5 +1,5 @@
 # vi:fdm=marker fdl=0
-# $Id: Basic.pm,v 1.3 2006-01-25 22:23:29 jettero Exp $ 
+# $Id: Basic.pm,v 1.2 2006-01-25 22:22:12 jettero Exp $ 
 
 package Statistics::Basic;
 
@@ -104,10 +104,6 @@ set the $ENV{UNBIAS}=1;
 Please contact me with ANY suggestions, no matter how pedantic.
 
 Jettero Heller <japh@voltar-confed.org>
-
-=head1 CONTRIBS
-
-http://search.cpan.org/~orien/  (some modules and tests)
 
 =head1 COPYRIGHT
 

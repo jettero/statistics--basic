@@ -21,3 +21,5 @@ Basic/Correlation.pm
 Basic/LeastSquareFit.pm
 gpl.txt
 META.yml                                 Module meta-data (added by MakeMaker)
+t/10_median.t
+t/10_mode.t

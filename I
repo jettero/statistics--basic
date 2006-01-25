@@ -1,0 +1,28 @@
+#!/bin/sh
+
+p=Changes
+pack=Basic.pm
+
+cat $pack | perl -ne 's/(VERSION[^0-9]+)([0-9.]+)([^0-9]*)/$1.($2+0.01).$3/e; print "$_";' > fil
+echo 1 > .REL
+
+#cat fil | grep VER; rm fil ; exit
+
+mv fil $pack
+
+v=`cat $pack | grep VERSION\ \*\= | sed s/.VERSION\ \=\ // | sed s/[^0-9.]//g`
+
+if [ -f $p ]; then
+    mv $p $p.bak
+    echo -n $v:'  '       > $p
+    date                 >> $p
+    echo "   - $USER $*" >> $p
+    echo                 >> $p
+    cat $p.bak           >> $p
+    rm $p.bak
+    vi $p -c "set tw=800" -s format.scr
+    clear
+    head -20 $p
+fi
+
+cvs ci -m ok
