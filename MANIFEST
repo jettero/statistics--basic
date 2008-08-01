@@ -25,4 +25,3 @@ t/10_mode.t
 lgpl-2.1.txt.gz
 Basic/LeastSquareFit.pod
 Basic.pod
-Basic/_overloader.pm
