@@ -23,3 +23,5 @@ META.yml                                 Module meta-data (added by MakeMaker)
 t/10_median.t
 t/10_mode.t
 lgpl-2.1.txt.gz
+Basic/LeastSquareFit.pod
+Basic.pod
