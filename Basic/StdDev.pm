@@ -2,9 +2,11 @@
 package Statistics::Basic::StdDev;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
 use Statistics::Basic::Variance;
+
+$ENV{DEBUG} ||= 0;
 
 1;
 

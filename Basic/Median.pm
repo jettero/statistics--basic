@@ -2,10 +2,12 @@
 package Statistics::Basic::Median;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
 
 use Statistics::Basic::Vector;
+
+$ENV{DEBUG} ||= 0;
 
 1;
 

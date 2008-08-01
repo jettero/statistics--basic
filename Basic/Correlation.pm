@@ -2,11 +2,13 @@
 package Statistics::Basic::Correlation;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
 use Statistics::Basic::Vector;
 use Statistics::Basic::StdDev;
 use Statistics::Basic::CoVariance;
+
+$ENV{DEBUG} ||= 0;
 
 1;
 

@@ -2,10 +2,12 @@
 package Statistics::Basic::CoVariance;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
 use Statistics::Basic::Mean;
 use Statistics::Basic::Vector;
+
+$ENV{DEBUG} ||= 0;
 
 1;
 
