@@ -4,6 +4,8 @@ package Statistics::Basic::LeastSquareFit;
 use strict;
 use warnings;
 use Carp;
+
+
 use Statistics::Basic::Vector;
 use Statistics::Basic::Variance;
 use Statistics::Basic::CoVariance;

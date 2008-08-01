@@ -3,6 +3,7 @@ package Statistics::Basic::_overloader;
 
 use strict;
 use warnings;
+
 use Number::Format;
 use overload
     '""' => \&interpolate,

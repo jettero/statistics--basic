@@ -4,6 +4,7 @@ package Statistics::Basic::StdDev;
 use strict;
 use warnings;
 use Carp;
+
 use Statistics::Basic::Variance;
 
 $ENV{DEBUG} ||= 0;

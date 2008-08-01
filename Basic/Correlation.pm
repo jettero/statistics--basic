@@ -4,6 +4,7 @@ package Statistics::Basic::Correlation;
 use strict;
 use warnings;
 use Carp;
+
 use Statistics::Basic::Vector;
 use Statistics::Basic::StdDev;
 use Statistics::Basic::CoVariance;

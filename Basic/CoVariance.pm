@@ -4,6 +4,7 @@ package Statistics::Basic::CoVariance;
 use strict;
 use warnings;
 use Carp;
+
 use Statistics::Basic::Mean;
 use Statistics::Basic::Vector;
 

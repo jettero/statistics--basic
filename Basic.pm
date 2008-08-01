@@ -2,16 +2,19 @@
 package Statistics::Basic;
 
 use strict;
+use warnings;
+
 use Carp;
-use Basic::CoVariance;
-use Basic::Correlation;
-use Basic::LeastSquareFit;
-use Basic::Mean;
-use Basic::Median;
-use Basic::Mode;
-use Basic::StdDev;
-use Basic::Variance;
-use Basic::Vector;
+
+use Statistics::Basic::CoVariance;
+use Statistics::Basic::Correlation;
+use Statistics::Basic::LeastSquareFit;
+use Statistics::Basic::Mean;
+use Statistics::Basic::Median;
+use Statistics::Basic::Mode;
+use Statistics::Basic::StdDev;
+use Statistics::Basic::Variance;
+use Statistics::Basic::Vector;
 
 our $VERSION = "0.5";
 
