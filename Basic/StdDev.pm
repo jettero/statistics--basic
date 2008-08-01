@@ -17,7 +17,6 @@ sub new {
     my $size   = shift;
 
     $this = bless { v => Statistics::Basic::Variance->new( $vector, $size ) }, $this;
-
     $this->recalc;
 
     return $this;
@@ -29,6 +28,7 @@ sub recalc {
     my $first = shift;
 
     my $var = $this->{v}->query;
+    return unless defined $var;
 
     warn "[recalc stddev] sqrt( $var )\n" if $ENV{DEBUG};
 
@@ -92,35 +92,3 @@ sub set_vector {
     $this->recalc;
 }
 # }}}
-
-__END__
-# Below is stub documentation for your module. You better edit it!
-
-=head1 NAME
-
-    Statistics::Basic::StdDev
-
-=head1 SYNOPSIS
-
-A machine to calculate the standard deviation of a given vector.
-
-=head1 ENV VARIABLES
-
-=head2 DEBUG
-
-Try setting $ENV{DEBUG}=1; or $ENV{DEBUG}=2; to see the internals.
-
-Also, from your bash prompt you can 'DEBUG=1 perl ./myprog.pl' to
-enable debugging dynamically.
-
-=head1 AUTHOR
-
-Please contact me with ANY suggestions, no matter how pedantic.
-
-Jettero Heller <japh@voltar-confed.org>
-
-=head1 SEE ALSO
-
-perl(1)
-
-=cut

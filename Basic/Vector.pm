@@ -139,35 +139,3 @@ sub set_vector {
     warn "[set_vector vector] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
 }
 # }}}
-
-__END__
-# Below is stub documentation for your module. You better edit it!
-
-=head1 NAME
-
-    Statistics::Basic::Mean
-
-=head1 SYNOPSIS
-
-A machine to calculate the mean of a given vector.
-
-=head1 ENV VARIABLES
-
-=head2 DEBUG
-
-Try setting $ENV{DEBUG}=1; or $ENV{DEBUG}=2; to see the internals.
-
-Also, from your bash prompt you can 'DEBUG=1 perl ./myprog.pl' to
-enable debugging dynamically.
-
-=head1 AUTHOR
-
-Please contact me with ANY suggestions, no matter how pedantic.
-
-Jettero Heller <japh@voltar-confed.org>
-
-=head1 SEE ALSO
-
-perl(1)
-
-=cut
