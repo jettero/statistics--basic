@@ -1,5 +1,3 @@
-# vi:fdm=marker fdl=0
-# $Id: Mean.pm,v 1.1 2006-01-25 22:20:42 jettero Exp $ 
 
 package Statistics::Basic::Mean;
 

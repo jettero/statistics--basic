@@ -1,5 +1,3 @@
-# vi:fdm=marker fdl=0
-# $Id: Median.pm,v 1.1 2006-01-25 22:20:42 jettero Exp $ 
 
 package Statistics::Basic::Median;
 
@@ -51,9 +49,10 @@ sub recalc {
     my @v = (sort {$a <=> $b} ($this->{'v'}->query()));
     my $center = int($cardinality/2);
     if ($cardinality%2) {
-      $this->{'median'} = $v[$center];
+        $this->{'median'} = $v[$center];
+
     } else {
-      $this->{'median'} = ($v[$center] + $v[$center-1]) / 2.0;
+        $this->{'median'} = ($v[$center] + $v[$center-1]) / 2.0;
     }
 
     warn "[recalc median] vector[int($cardinality/2)] = $this->{median}\n" if $ENV{DEBUG};

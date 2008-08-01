@@ -1,5 +1,3 @@
-# vi:fdm=marker fdl=0
-# $Id: CoVariance.pm,v 1.1 2006-01-25 22:20:42 jettero Exp $ 
 
 package Statistics::Basic::CoVariance;
 
@@ -171,44 +169,3 @@ sub set_vector {
     $this->recalc;
 }
 # }}}
-
-__END__
-# Below is stub documentation for your module. You better edit it!
-
-=head1 NAME
-
-    Statistics::Basic::CoVariance
-
-=head1 SYNOPSIS
-
-A machine to calculate the covariance of given vectors.
-
-=head1 ENV VARIABLES
-
-=head2 DEBUG
-
-Try setting $ENV{DEBUG}=1; or $ENV{DEBUG}=2; to see the internals.
-
-Also, from your bash prompt you can 'DEBUG=1 perl ./myprog.pl' to
-enable debugging dynamically.
-
-=head2 UNBIAS
-
-This module uses the sum(X - mean(X))/N definition of variance.
-If you wish to use the unbiased, sum(X-mean(X)/(N-1) definition, then 
-set the $ENV{UNBIAS}=1;
-
-# And if you thought that was useful, then give a shout out to:
-# Robert McGehee <xxxxxxxx@wso.williams.edu>, for he requested it.
-
-=head1 AUTHOR
-
-Please contact me with ANY suggestions, no matter how pedantic.
-
-Jettero Heller <japh@voltar-confed.org>
-
-=head1 SEE ALSO
-
-perl(1)
-
-=cut
