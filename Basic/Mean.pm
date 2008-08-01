@@ -2,10 +2,13 @@
 package Statistics::Basic::Mean;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
 
 use Statistics::Basic::Vector;
+use base 'Statistics::Basic::_overloader';
+
+$ENV{DEBUG} ||= 0;
 
 1;
 
@@ -21,11 +24,14 @@ sub new {
 
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
+
     } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
         $this->{v} = $vector;
         $this->{v}->set_size( $set_size ) if defined $set_size;
+
     } elsif( defined($vector) ) {
         croak "argument to new() too strange";
+
     } else {
         $this->{v} = new Statistics::Basic::Vector;
     }

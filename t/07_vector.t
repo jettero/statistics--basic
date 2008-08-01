@@ -27,6 +27,6 @@ ok( $v->size == 5 ); # and of course, by normalizer, we mean 0-padder
 ok( $v->size == 5 );
 
 my  $j = new Statistics::Basic::Vector;
-ok( not defined $j->size );
+ok( 0, $j->size );
     $j->set_vector([7,9,21]);
 ok( $j->size == 3 );

@@ -2,8 +2,10 @@
 package Statistics::Basic::Vector;
 
 use strict;
-no warnings;
+use warnings;
 use Carp;
+
+$ENV{DEBUG} ||= 0;
 
 1;
 
@@ -64,8 +66,7 @@ sub set_size {
 sub size {
     my $this = shift;
 
-    return undef unless ref($this->{v});
-
+    return 0 unless ref($this->{v});
     return int(@{ $this->{v} });
 }
 # }}}
