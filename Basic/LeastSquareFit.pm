@@ -38,11 +38,12 @@ sub recalc {
     unless( $this->{vrx}->query ) {
         unless( defined $this->{vrx}->query ) {
             warn "[recalc LSF] undef variance...\n" if $ENV{DEBUG};
+
         } else {
             warn "[recalc LSF] narrowly avoided division by zero.  Something is probably wrong.\n" if $ENV{DEBUG};
         }
 
-        return undef;
+        return;
     }
 
     $this->{beta}  = ($this->{cov}->query / $this->{vrx}->query);

@@ -33,14 +33,14 @@ sub new {
 sub recalc {
     my $this  = shift;
 
-    my $c  = $this->{cov}->query;
-    my $s1 = $this->{sd1}->query; 
-    my $s2 = $this->{sd2}->query;
+    my $c  = $this->{cov}->query; return unless defined $c;
+    my $s1 = $this->{sd1}->query; return unless defined $s1;
+    my $s2 = $this->{sd2}->query; return unless defined $s2;
 
     if( $s1 == 0 or $s2 == 0 ) {
         warn "[recalc correlation] Standard deviation of 0.  Crazy infinite correlation detected.\n" if $ENV{DEBUG};
 
-        return undef;
+        return;
     }
 
     $this->{correlation} = ( $c / ($s1*$s2) );
