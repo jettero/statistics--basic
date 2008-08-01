@@ -22,22 +22,24 @@ sub new {
 
     $this = bless {}, $this;
 
-    for my $i(0..1) {
+    for my $i(0 .. 1) {
         my $x = $i +1;
 
         if( ref($v[$i]) eq "ARRAY" ) {
             $this->{"v$x"} = new Statistics::Basic::Vector( $v[$i], $set_size );
+
         } elsif( ref($v[$i]) eq "Statistics::Basic::Vector" ) {
             $this->{"v$x"} = $v[$i];
             $this->{"v$x"}->set_size( $set_size ) if defined $set_size;
+
         } elsif(defined($v[$i])) {
             croak "argument to new() must be an arrayref or Statistics::Basic::Vector";
+
         } else {
             $this->{"v$x"} = new Statistics::Basic::Vector;
         }
 
-        $this->{"m$x"} = (ref($m[$i]) eq "Statistics::Basic::Mean" ? 
-            $m[$i] : new Statistics::Basic::Mean($this->{"v$x"}));
+        $this->{"m$x"} = (ref($m[$i]) eq "Statistics::Basic::Mean" ?  $m[$i] : new Statistics::Basic::Mean($this->{"v$x"}));
     }
 
     $this->recalc;
