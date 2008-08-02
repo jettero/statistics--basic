@@ -26,8 +26,10 @@ use base 'Exporter';
 
 our @EXPORT      = ();
 our @EXPORT_OK   = (qw(
+    vector
     mean average avg
-    median mode
+    median
+    mode
     variance var
     stddev
 ));
@@ -35,6 +37,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 1;
 
+sub vector   { return Statistics::Basic::Vector->new( $_[0] )   if ref $_[0]; return Statistics::Basic::Vector->new( [@_] );     }
 sub mean     { return Statistics::Basic::Mean->new( $_[0] )     if ref $_[0]; return Statistics::Basic::Mean->new( [@_] );     }
 sub median   { return Statistics::Basic::Median->new( $_[0] )   if ref $_[0]; return Statistics::Basic::Median->new( [@_] );   }
 sub mode     { return Statistics::Basic::Mode->new( $_[0] )     if ref $_[0]; return Statistics::Basic::Mode->new( [@_] );     }

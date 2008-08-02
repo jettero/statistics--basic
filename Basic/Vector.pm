@@ -22,8 +22,7 @@ use overload
 sub new {
     my $this = shift;
 
-    $this = bless {}, $this;
-
+    $this = bless {v=>[]}, $this;
     $this->set_vector( @_ );
 
     return $this;
