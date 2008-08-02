@@ -54,17 +54,13 @@ sub new {
 sub recalc {
     my $this        = shift;
     my $cardinality = $this->{v}->size;
-    my %mode;
-    my $mode_count  = 0;
-
-    unless( $cardinality > 0 ) {
-        $this->{mode} = undef;
-
-        return;
-    }
 
     delete $this->{mode};
+    return unless $cardinality > 0;
+
+    my %mode;
     my $max = 0;
+
     for my $val ($this->{v}->query) {
         my $t = ++ $mode{$val};
         $max = $t if $t > $max;
@@ -96,10 +92,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size mode] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{v}->set_size($size);
+    eval { $this->{v}->set_size($size) }; croak $@ if $@;
     $this->recalc;
 }
 # }}}
