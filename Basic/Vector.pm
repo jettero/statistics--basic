@@ -5,7 +5,16 @@ use strict;
 use warnings;
 use Carp;
 
-$ENV{DEBUG} ||= 0;
+use Statistics::Basic;
+
+use overload
+    '0+' => sub { croak "attempt to use vector as scalar numerical value" },
+    '""' => sub {
+        local $" = ", ";
+        my @r = map { $Statistics::Basic::fmt->format_number($_, $ENV{IPRES}) } $_[0]->query;
+        "[@r]";
+    },
+    fallback => 1; # tries to do what it would have done if this wasn't present.
 
 1;
 

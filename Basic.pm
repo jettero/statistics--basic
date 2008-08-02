@@ -3,9 +3,9 @@ package Statistics::Basic;
 
 use strict;
 use warnings;
-
 use Carp;
 
+use Number::Format;
 use Statistics::Basic::CoVariance;
 use Statistics::Basic::Correlation;
 use Statistics::Basic::LeastSquareFit;
@@ -17,6 +17,10 @@ use Statistics::Basic::Variance;
 use Statistics::Basic::Vector;
 
 our $VERSION = "0.5";
+our $fmt = new Number::Format;
+
+$ENV{DEBUG} ||= 0;
+$ENV{IPRES} ||= 2;
 
 use base 'Exporter';
 

@@ -5,17 +5,19 @@ use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic::Vector;
+use Statistics::Basic;
 
-our $fmt;
-use Number::Format;
 use overload
-    '""' => sub { $fmt ||= new Number::Format; $fmt->format_number($_[0], $ENV{IPRES}) },
-    '0+' => sub { $_[0]->query },
+    '""' => sub {
+        my $q = $_[0]->query; return $q if ref $q; # vectors interpolate themselves
+        $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES});
+    },
+    '0+' => sub {
+        my $q = $_[0]->query;
+        croak "result is multimodal and cannot be used as a number" if ref $q;
+        $q;
+    },
     fallback => 1; # tries to do what it would have done if this wasn't present.
-
-$ENV{DEBUG} ||= 0;
-$ENV{IPRES} ||= 2;
 
 1;
 
@@ -64,14 +66,14 @@ sub recalc {
     delete $this->{mode};
     my $max = 0;
     for my $val ($this->{v}->query) {
-        my $t = $mode{$val} ++;
+        my $t = ++ $mode{$val};
         $max = $t if $t > $max;
     }
-    my @a = grep { $mode{$_}==$max } keys %mode;
+    my @a = sort {$a<=>$b} grep { $mode{$_}==$max } keys %mode;
 
-    $this->{mode} = ( @a == 1 ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
+    $this->{mode} = ( (@a == 1) ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
 
-    warn "[recalc mode] count of $this->{mode} = $mode{$this->{mode}}\n" if $ENV{DEBUG};
+    warn "[recalc mode] count of $this->{mode} = $max\n" if $ENV{DEBUG};
 }
 # }}}
 # query {{{

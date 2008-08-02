@@ -1,11 +1,10 @@
-
-                   shortcut {key}=undef return undef overload""0+ style
-CoVariance.pm      [ ]      [ ]         [ ]          [ ]          [ ]
-Correlation.pm     [ ]      [ ]         [ ]          [ ]          [ ]
-LeastSquareFit.pm  [ ]      [ ]         [ ]          [ ]          [ ]
-Mean.pm            [ ]      [ ]         [ ]          [ ]          [ ]
-Median.pm          [ ]      [ ]         [ ]          [ ]          [ ]
-Mode.pm            [ ]      [ ]         [ ]          [ ]          [ ]
-StdDev.pm          [ ]      [ ]         [ ]          [ ]          [ ]
-Variance.pm        [ ]      [ ]         [ ]          [ ]          [ ]
-Vector.pm          [ ]      [ ]         [ ]          [ ]          [ ]
+                   shortcut {key}=undef return undef overload""0+ style all-use-basic
+CoVariance.pm      [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Correlation.pm     [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+LeastSquareFit.pm  [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Mean.pm            [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Median.pm          [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Mode.pm            [ ]      [x]         [x]          [x]          [ ]   [x]
+StdDev.pm          [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Variance.pm        [ ]      [ ]         [ ]          [ ]          [ ]   [ ]
+Vector.pm          [ ]      [ ]         [ ]          [ ]          [ ]   [ ]

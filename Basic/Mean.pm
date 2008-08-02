@@ -5,17 +5,12 @@ use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic::Vector;
+use Statistics::Basic;
 
-our $fmt;
-use Number::Format;
 use overload
-    '""' => sub { $fmt ||= new Number::Format; $fmt->format_number($_[0], $ENV{IPRES}) },
+    '""' => sub { $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES}) },
     '0+' => sub { $_[0]->query },
     fallback => 1; # tries to do what it would have done if this wasn't present.
-
-$ENV{DEBUG} ||= 0;
-$ENV{IPRES} ||= 2;
 
 1;
 
