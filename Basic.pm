@@ -21,7 +21,10 @@ our $VERSION = "0.5";
 use base 'Exporter';
 
 our @EXPORT      = ();
-our @EXPORT_OK   = (qw(mean average avg));
+our @EXPORT_OK   = (qw(
+    mean average avg
+    median mode
+));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 1;
@@ -32,3 +35,13 @@ sub mean {
 }
 *average = *mean;
 *avg     = *mean;
+
+sub median {
+    return Statistics::Basic::Median->new( $_[0] ) if ref $_[0];
+    return Statistics::Basic::Median->new( [@_] );
+}
+
+sub mode {
+    return Statistics::Basic::Mode->new( $_[0] ) if ref $_[0];
+    return Statistics::Basic::Mode->new( [@_] );
+}

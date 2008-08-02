@@ -7,7 +7,15 @@ use Carp;
 
 use Statistics::Basic::Vector;
 
+our $fmt;
+use Number::Format;
+use overload
+    '""' => sub { $fmt ||= new Number::Format; $fmt->format_number($_[0], $ENV{IPRES}) },
+    '0+' => sub { $_[0]->query },
+    fallback => 1; # tries to do what it would have done if this wasn't present.
+
 $ENV{DEBUG} ||= 0;
+$ENV{IPRES} ||= 2;
 
 1;
 
@@ -23,11 +31,14 @@ sub new {
 
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
+
     } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
         $this->{v} = $vector;
         $this->{v}->set_size( $set_size ) if defined $set_size;
+
     } elsif( defined($vector) ) {
         croak "argument to new() too strange";
+
     } else {
         $this->{v} = new Statistics::Basic::Vector;
     }
@@ -50,17 +61,15 @@ sub recalc {
         return;
     }
 
-    $this->{'mode'} = undef;
-    foreach my $val ($this->{'v'}->query()) {
-      $mode{$val}++;
-      if (not defined $this->{'mode'}) {
-        $this->{'mode'} = $val;
-        $mode_count = $mode{$val};
-      } elsif ($mode{$val} > $mode_count) {
-        $this->{'mode'} = $val;
-        $mode_count = $mode{$val};
-      }
+    delete $this->{mode};
+    my $max = 0;
+    for my $val ($this->{v}->query) {
+        my $t = $mode{$val} ++;
+        $max = $t if $t > $max;
     }
+    my @a = grep { $mode{$_}==$max } keys %mode;
+
+    $this->{mode} = ( @a == 1 ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
 
     warn "[recalc mode] count of $this->{mode} = $mode{$this->{mode}}\n" if $ENV{DEBUG};
 }
