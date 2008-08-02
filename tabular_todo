@@ -1,10 +1,10 @@
                          shortcut {key}=undef return undef overload""0+ style use-basic eval-croak-set_size
-Basic/CoVariance.pm      [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
-Basic/Correlation.pm     [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
-Basic/LeastSquareFit.pm  [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
 Basic/Mean.pm            [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Median.pm          [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Mode.pm            [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/StdDev.pm          [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Variance.pm        [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Vector.pm          [x]      [x]         [x]          [x]          [x]   [x]       [-]
+Basic/CoVariance.pm      [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
+Basic/Correlation.pm     [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
+Basic/LeastSquareFit.pm  [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
