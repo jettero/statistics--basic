@@ -26,11 +26,14 @@ sub new {
 
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
+
     } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
         $this->{v} = $vector;
         $this->{v}->set_size( $set_size ) if defined $set_size;
+
     } elsif( defined($vector) ) {
         croak "argument to new() too strange";
+
     } else {
         $this->{v} = new Statistics::Basic::Vector;
     }
@@ -45,19 +48,16 @@ sub recalc {
     my $this        = shift;
     my $cardinality = $this->{v}->size;
 
-    unless( $cardinality > 0 ) {
-        $this->{median} = undef;
+    delete $this->{median};
+    return unless $cardinality > 0;
 
-        return;
-    }
-
-    my @v = (sort {$a <=> $b} ($this->{'v'}->query()));
+    my @v = (sort {$a <=> $b} ($this->{v}->query()));
     my $center = int($cardinality/2);
     if ($cardinality%2) {
-        $this->{'median'} = $v[$center];
+        $this->{median} = $v[$center];
 
     } else {
-        $this->{'median'} = ($v[$center] + $v[$center-1]) / 2.0;
+        $this->{median} = ($v[$center] + $v[$center-1]) / 2.0;
     }
 
     warn "[recalc median] vector[int($cardinality/2)] = $this->{median}\n" if $ENV{DEBUG};
@@ -67,7 +67,7 @@ sub recalc {
 sub query {
     my $this = shift;
 
-    return $this->{'median'};
+    return $this->{median};
 }
 # }}}
 
@@ -83,10 +83,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size median] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{v}->set_size($size);
+    eval { $this->{v}->set_size($size) }; croak $@ if $@;
     $this->recalc;
 }
 # }}}

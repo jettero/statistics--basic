@@ -49,11 +49,8 @@ sub recalc {
     my $sum         = 0; 
     my $cardinality = $this->{v}->size;
 
-    unless( $cardinality > 0 ) {
-        $this->{mean} = undef;
-
-        return;
-    }
+    delete $this->{mean};
+    return unless $cardinality > 0;
 
     $sum += $_ for $this->{v}->query;
 
@@ -82,10 +79,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size mean] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{v}->set_size($size);
+    eval { $this->{v}->set_size($size) }; croak $@ if $@;
     $this->recalc;
 }
 # }}}
