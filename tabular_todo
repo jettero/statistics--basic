@@ -6,5 +6,5 @@ Basic/Mean.pm            [x]      [x]         [x]          [x]          [x]   [x
 Basic/Median.pm          [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Mode.pm            [x]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/StdDev.pm          [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
-Basic/Variance.pm        [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]
+Basic/Variance.pm        [ ]      [x]         [x]          [x]          [x]   [x]       [x]
 Basic/Vector.pm          [ ]      [ ]         [ ]          [ ]          [ ]   [ ]       [ ]

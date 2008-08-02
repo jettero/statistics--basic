@@ -5,9 +5,7 @@ use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic::Variance;
-
-$ENV{DEBUG} ||= 0;
+use Statistics::Basic;
 
 1;
 
@@ -17,7 +15,7 @@ sub new {
     my $vector = shift;
     my $size   = shift;
 
-    $this = bless { v => Statistics::Basic::Variance->new( $vector, $size ) }, $this;
+    $this = eval { bless { v => Statistics::Basic::Variance->new( $vector, $size ) }, $this }; croak $@ if $@;
     $this->recalc;
 
     return $this;
@@ -56,10 +54,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size stddev] $size\n" if $ENV{DEBUG};
-    croak "strange stddev" if $size < 1;
-
-    $this->{v}->set_size( $size );
+    eval { $this->{v}->set_size( $size ) }; croak $@ if $@;
     $this->recalc;
 }
 # }}}

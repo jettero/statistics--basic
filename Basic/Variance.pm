@@ -5,10 +5,12 @@ use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic::Mean;
-use Statistics::Basic::Vector;
+use Statistics::Basic;
 
-$ENV{DEBUG} ||= 0;
+use overload
+    '""' => sub { $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES}) },
+    '0+' => sub { $_[0]->query },
+    fallback => 1; # tries to do what it would have done if this wasn't present.
 
 1;
 
@@ -16,24 +18,12 @@ $ENV{DEBUG} ||= 0;
 sub new {
     my $this   = shift;
     my $vector = shift;
-    my $set_size = shift;
+    my $size   = shift;
 
     warn "[new variance]\n" if $ENV{DEBUG} >= 2;
 
-    $this = bless {}, $this;
-
-    if( ref($vector) eq "ARRAY" ) {
-        $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
-    } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
-        $this->{v} = $vector;
-        $this->{v}->set_size( $set_size ) if defined $set_size;
-    } elsif( defined($vector) ) {
-        croak "argument to new() too strange";
-    } else {
-        $this->{v} = new Statistics::Basic::Vector;
-    }
-
-    $this->{m} = new Statistics::Basic::Mean($this->{v});
+    $this = eval { bless { m => Statistics::Basic::Mean->new( $vector, $size ) }, $this }; croak $@ if $@;
+    $this->{v} = $this->{m}{v};
     $this->recalc;
 
     return $this;
@@ -49,11 +39,8 @@ sub recalc {
 
     $cardinality -- if $ENV{UNBIAS};
 
-    unless( $cardinality > 0 ) {
-        $this->{variance} = undef;
-
-        return;
-    }
+    delete $this->{variance};
+    return unless $cardinality > 0;
 
     if( $ENV{DEBUG} >= 2 ) {
         warn "[recalc variance] ( $_ - $mean ) ** 2\n" for $this->{v}->query;
@@ -86,10 +73,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size variance] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{v}->set_size( $size );
+    eval { $this->{v}->set_size( $size ) }; croak $@ if $@;
     $this->{m}->recalc;
     $this->recalc;
 }
