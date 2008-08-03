@@ -4,6 +4,7 @@ package Statistics::Basic::Vector;
 use strict;
 use warnings;
 use Carp;
+use Scalar::Util qw(blessed weaken);
 
 use Statistics::Basic;
 
@@ -40,6 +41,25 @@ sub copy {
     my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
 
     $that;
+}
+# }}}
+# set_computer {{{
+sub set_computer {
+    my $this = shift;
+
+    while( my ($k,$v) = splice @_, 0, 2 ) {
+        warn "SvREFCNT for $k,$v: " . SvREFCNT($v);
+        weaken($this->{c}{$k} = $v);
+        warn "SvREFCNT for $k,$v: " . SvREFCNT($v);
+    }
+}
+# }}}
+# get_computer {{{
+sub get_computer {
+    my $this = shift;
+    my $k = shift;
+
+    $this->{c}{$k};
 }
 # }}}
 

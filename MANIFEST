@@ -25,3 +25,4 @@ t/10_mode.t
 lgpl-2.1.txt.gz
 Basic/LeastSquareFit.pod
 Basic.pod
+t/53_mean_persistance.t

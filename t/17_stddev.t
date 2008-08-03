@@ -1,7 +1,7 @@
 
 use strict;
 use Test;
-use Statistics::Basic::StdDev;
+use Statistics::Basic;
 
 plan tests => 5;
 

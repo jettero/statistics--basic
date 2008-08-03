@@ -1,7 +1,7 @@
 
 use strict;
 use Test;
-use Statistics::Basic::Median;
+use Statistics::Basic;
 
 plan tests => 6;
 

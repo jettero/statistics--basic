@@ -1,7 +1,7 @@
 
 use strict;
 use Test;
-use Statistics::Basic::Vector;
+use Statistics::Basic;
 
 plan tests => 18;
 

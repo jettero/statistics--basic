@@ -16,18 +16,21 @@ use overload
 
 # new {{{
 sub new {
-    my $this     = shift;
+    my $class    = shift;
     my $vector   = shift;
     my $set_size = shift;
 
     warn "[new mean]\n" if $ENV{DEBUG} >= 2;
 
-    $this = bless {}, $this;
+    my $this = bless {}, $class;
 
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
 
     } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
+        my $c = $vector->get_computer("mean");
+        return $c if $c;
+
         $this->{v} = $vector;
         $this->{v}->set_size( $set_size ) if defined $set_size;
 
@@ -38,7 +41,8 @@ sub new {
         $this->{v} = new Statistics::Basic::Vector;
     }
 
-    $this->recalc;
+    $this->{rnc} = 1;
+    $this->{v}->set_computer( mean => $this );
 
     return $this;
 }
@@ -49,6 +53,7 @@ sub recalc {
     my $sum         = 0; 
     my $cardinality = $this->{v}->size;
 
+    delete $this->{rnc};
     delete $this->{mean};
     return unless $cardinality > 0;
 
@@ -63,9 +68,15 @@ sub recalc {
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{rcn};
+
     return $this->{mean};
 }
 # }}}
+sub recalc_needed {
+    my $this = shift;
+       $this->{rnc} = 1;
+}
 
 # size {{{
 sub size {
@@ -80,7 +91,6 @@ sub set_size {
     my $size = shift;
 
     eval { $this->{v}->set_size($size) }; croak $@ if $@;
-    $this->recalc;
 }
 # }}}
 # set_vector {{{
@@ -90,7 +100,6 @@ sub set_vector {
     warn "[set_vector mean]\n" if $ENV{DEBUG};
 
     $this->{v}->set_vector(@_);
-    $this->recalc;
 }
 # }}}
 # insert {{{
@@ -100,7 +109,6 @@ sub insert {
     warn "[insert mean]\n" if $ENV{DEBUG};
 
     $this->{v}->insert(@_);
-    $this->recalc;
 }
 # }}}
 # ginsert {{{
@@ -110,6 +118,5 @@ sub ginsert {
     warn "[ginsert mean]\n" if $ENV{DEBUG};
 
     $this->{v}->ginsert(@_);
-    $this->recalc;
 }
 # }}}
