@@ -21,10 +21,7 @@ sub new {
 
     $this = bless {}, $this;
 
-    $this->{sd1} = new Statistics::Basic::StdDev($v1);
-    $this->{sd2} = new Statistics::Basic::StdDev($v2);
-    $this->{cov} = new Statistics::Basic::CoVariance( $v1, $v2, undef, $this->{sd1}{v}{m}, $this->{sd2}{v}{m});
-
+    $this->{cov} = new Statistics::Basic::CoVariance( $v1, $v2 );
     $this->recalc;
 
     return $this;

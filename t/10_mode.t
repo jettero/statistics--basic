@@ -1,5 +1,3 @@
-# vi:fdm=marker fdl=0 syntax=perl:
-# $Id: 10_mode.t,v 1.1 2006-01-25 22:20:42 jettero Exp $
 
 use strict;
 use Test;
@@ -20,7 +18,7 @@ ok($sbm->query, "[0, 3]");
 $sbm->ginsert( 2 );
 ok($sbm->query, "[0, 2, 3]");
 
-$sbm->set_vector( [2, 3..5, 7, 0, 0] );
+$sbm->set_vector( [2, 3 .. 5, 7, 0, 0] );
 ok($sbm->query, 0);
 
 my  $j = new Statistics::Basic::Mode;
