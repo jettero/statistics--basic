@@ -37,7 +37,7 @@ sub query {
 # copy {{{
 sub copy {
     my $this = shift;
-    my $that = _PACKAGE_->new( @{$this->{v}}, $this->{s} );
+    my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
 
     $that;
 }
@@ -46,20 +46,17 @@ sub copy {
 # fix_size {{{
 sub fix_size {
     my $this = shift;
-    my $norm = shift;;
+    my $norm = not shift; # 0 is normalize, 1 is no normalize
 
     my $fixed = 0;
 
-    return $fixed unless $this->{s} > 0;
-
-    my $d = $this->{s} - @{$this->{v}};
+    my $d = @{$this->{v}} - $this->{s};
     if( $d > 0 ) {
         splice @{$this->{v}}, 0, $d;
         $fixed = 1;
     }
 
     if( $norm and $d < 0 ) {
-
         unshift @{$this->{v}}, # unshift so the 0s leave first
             map {0} $d .. -1;  # add $d of them
 
@@ -77,12 +74,12 @@ sub set_size {
     my $size = shift;
     my $norm = shift;
 
-    croak "strange size" if $size < 1;
+    croak "strange size" if $size < 0;
 
     if( $this->{s} != $size ) {
-        $_->recalc_needed for values %{$this->{c}};
         $this->{s} = $size;
         $this->fix_size($norm);
+        $_->recalc_needed for values %{$this->{c}};
     }
 }
 # }}}
@@ -90,7 +87,7 @@ sub set_size {
 sub size {
     my $this = shift;
 
-    return int(@{ $this->{v} });
+    return scalar @{$this->{v}};
 }
 # }}}
 # insert {{{
