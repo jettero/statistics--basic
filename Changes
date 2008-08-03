@@ -1,3 +1,7 @@
+0.50: Sun Aug  3 16:15:52 EDT 2008
+   - I started the new smarter linking
+   - fixed an unimportant memory leak with Scalar::Util::weaken()
+
 0.50: Sun Aug  3 07:44:31 EDT 2008
    - I modernized and updated the crap out of the vector class
    - I tested most of that new stuff also

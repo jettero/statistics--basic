@@ -53,7 +53,7 @@ sub set_computer {
 
     while( my ($k,$v) = splice @_, 0, 2 ) {
         warn "set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
-        $this->{c}{$k} = $v;
+        weaken($this->{c}{$k} = $v);
         $v->recalc_needed;
     }
 }
