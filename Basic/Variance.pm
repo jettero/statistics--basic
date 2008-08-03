@@ -83,6 +83,13 @@ sub query_vector {
     return $this->{v};
 }
 # }}}
+# query_mean {{{
+sub query_mean {
+    my $this = shift;
+
+    return $this->{m};
+}
+# }}}
 
 # size {{{
 sub size {

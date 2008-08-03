@@ -16,12 +16,16 @@ use overload
 
 # new {{{
 sub new {
-    my $this   = shift;
-    my $vector = shift;
-    my $size   = shift;
+    my $class = shift;
 
-    $this = eval { bless { v => Statistics::Basic::Variance->new( $vector, $size ) }, $this }; croak $@ if $@;
-    $this->recalc;
+    warn "[new stddev]\n" if $ENV{DEBUG} >= 2;
+
+    my $this     = bless {}, $class;
+    my $variance = $this->{V} = eval { Statistics::Basic::Variance->new(@_) }; croak $@ if $@;
+    my $vector   = $variance->query_vector;
+    my $c        = $vector->get_computer( 'stddev' ); return $c if defined $c;
+
+    $vector->set_computer( stddev => $this );
 
     return $this;
 }
@@ -31,6 +35,8 @@ sub recalc {
     my $this  = shift;
     my $first = shift;
 
+    delete $this->{recalc_needed};
+
     my $var = $this->{V}->query;
     return unless defined $var;
 
@@ -39,11 +45,44 @@ sub recalc {
     $this->{stddev} = sqrt( $var );
 }
 # }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
+
+    warn "[recalc_needed variance]\n" if $ENV{DEBUG};
+}
+# }}}
 # query {{{
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query stddev $this->{stddev}]\n" if $ENV{DEBUG};
+
     return $this->{stddev};
+}
+# }}}
+# query_vector {{{
+sub query_vector {
+    my $this = shift;
+
+    return $this->{V}->query_vector;
+}
+# }}}
+# query_mean {{{
+sub query_mean {
+    my $this = shift;
+
+    return $this->{V}->query_mean;
+}
+# }}}
+# query_variance {{{
+sub query_variance {
+    my $this = shift;
+
+    return $this->{V};
 }
 # }}}
 
@@ -60,7 +99,6 @@ sub set_size {
     my $size = shift;
 
     eval { $this->{V}->set_size( $size ) }; croak $@ if $@;
-    $this->recalc;
 }
 # }}}
 # insert {{{
@@ -70,7 +108,6 @@ sub insert {
     warn "[insert stddev]\n" if $ENV{DEBUG};
 
     $this->{V}->insert( @_ );
-    $this->recalc;
 }
 # }}}
 # ginsert {{{
@@ -80,7 +117,6 @@ sub ginsert {
     warn "[ginsert stddev]\n" if $ENV{DEBUG};
 
     $this->{V}->ginsert( @_ );
-    $this->recalc;
 }
 # }}}
 # set_vector {{{
@@ -90,6 +126,5 @@ sub set_vector {
     warn "[set_vector stddev]\n" if $ENV{DEBUG};
 
     $this->{V}->set_vector( @_ );
-    $this->recalc;
 }
 # }}}
