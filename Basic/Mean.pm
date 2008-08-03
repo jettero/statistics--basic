@@ -29,10 +29,9 @@ sub new {
 
     } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
         my $c = $vector->get_computer("mean");
-        return $c if $c;
+        return $c if defined $c;
 
         $this->{v} = $vector;
-        $this->{v}->set_size( $set_size ) if defined $set_size;
 
     } elsif( defined($vector) ) {
         croak "argument to new() too strange";
@@ -41,7 +40,6 @@ sub new {
         $this->{v} = new Statistics::Basic::Vector;
     }
 
-    $this->{rnc} = 1;
     $this->{v}->set_computer( mean => $this );
 
     return $this;
@@ -53,7 +51,7 @@ sub recalc {
     my $sum         = 0; 
     my $cardinality = $this->{v}->size;
 
-    delete $this->{rnc};
+    delete $this->{recalc_needed};
     delete $this->{mean};
     return unless $cardinality > 0;
 
@@ -64,19 +62,32 @@ sub recalc {
     warn "[recalc mean] ($sum/$cardinality) = $this->{mean}\n" if $ENV{DEBUG};
 }
 # }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
+
+    warn "[recalc_needed mean]\n" if $ENV{DEBUG};
+}
+# }}}
 # query {{{
 sub query {
     my $this = shift;
 
-    $this->recalc if $this->{rcn};
+    warn "[query mean]\n" if $ENV{DEBUG};
+
+    $this->recalc if $this->{recalc_needed};
 
     return $this->{mean};
 }
 # }}}
-sub recalc_needed {
+# query_vector {{{
+sub query_vector {
     my $this = shift;
-       $this->{rnc} = 1;
+
+    return $this->{v};
 }
+# }}}
 
 # size {{{
 sub size {
