@@ -20,10 +20,9 @@ use overload
 
 # new {{{
 sub new {
-    my $this = shift;
-
-    $this = bless {v=>[]}, $this;
-    $this->set_vector( @_ );
+    my $class = shift;
+    my $this  = bless {s=>0, c=>{}, v=>[]}, $class;
+       $this->set_vector( @_ );
 
     return $this;
 }
@@ -35,46 +34,62 @@ sub query {
     return (wantarray ? @{$this->{v}} : $this->{v});
 }
 # }}}
+# copy {{{
+sub copy {
+    my $this = shift;
+    my $that = _PACKAGE_->new( @{$this->{v}}, $this->{s} );
+
+    $that;
+}
+# }}}
 
 # fix_size {{{
 sub fix_size {
     my $this = shift;
-    my $x = 0;
+    my $norm = shift;;
 
-    return $x unless defined $this->{s} and $this->{s} > 0;
+    my $fixed = 0;
 
-    while( int(@{ $this->{v}}) > $this->{s} ) {
-        shift @{ $this->{v} };
-        $x = 1;
+    return $fixed unless $this->{s} > 0;
+
+    my $d = $this->{s} - @{$this->{v}};
+    if( $d > 0 ) {
+        splice @{$this->{v}}, 0, $d;
+        $fixed = 1;
     }
 
-    while( int(@{ $this->{v}}) < $this->{s} ) {
-        push @{ $this->{v} }, 0;
-        $x = 1;
+    if( $norm and $d < 0 ) {
+
+        unshift @{$this->{v}}, # unshift so the 0s leave first
+            map {0} $d .. -1;  # add $d of them
+
+        $fixed = 1;
     }
 
     warn "[fix_size vector] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
 
-    return $x;
+    return $fixed;
 }
 # }}}
 # set_size {{{
 sub set_size {
     my $this = shift;
     my $size = shift;
-    my $norm = not shift;
+    my $norm = shift;
 
     croak "strange size" if $size < 1;
 
-    $this->{s} = $size;
-    $this->fix_size if $norm;
+    if( $this->{s} != $size ) {
+        $_->recalc_needed for values %{$this->{c}};
+        $this->{s} = $size;
+        $this->fix_size($norm);
+    }
 }
 # }}}
 # size {{{
 sub size {
     my $this = shift;
 
-    return 0 unless ref($this->{v});
     return int(@{ $this->{v} });
 }
 # }}}
@@ -89,9 +104,11 @@ sub insert {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
                 warn "[insert vector] @$e\n" if $ENV{DEBUG} >= 2;
+
             } else {
                 croak "insert() elements do not make sense";
             }
+
         } else {
             push @{ $this->{v} }, $e;
             warn "[insert vector] $e\n" if $ENV{DEBUG} >= 2;
@@ -99,6 +116,7 @@ sub insert {
     }
 
     $this->fix_size;
+    $_->recalc_needed for values %{$this->{c}};
 }
 # }}}
 # ginsert {{{
@@ -110,16 +128,19 @@ sub ginsert {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
                 warn "[ginsert vector] @$e\n" if $ENV{DEBUG} >= 2;
+
             } else {
                 croak "ginsert() elements do not make sense";
             }
+
         } else {
             push @{ $this->{v} }, $e;
             warn "[ginsert vector] $e\n" if $ENV{DEBUG} >= 2;
         }
     }
 
-    $this->{s}++;
+    $this->{s} = @{$this->{v}};
+    $_->recalc_needed for values %{$this->{c}};
 }
 # }}}
 # set_vector {{{
@@ -131,10 +152,12 @@ sub set_vector {
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = $vector;
         $this->{s} = int @$vector;
+        $_->recalc_needed for values %{$this->{c}};
 
     } elsif( ref($vector) eq "Statistics::Basic::Vector") {
         $this->{s} = $vector->{s};
-        $this->{v} = $vector->{v}; # this is really a clone I'd say ...
+        $this->{v} = $vector->{v}; # this links the vectors together
+        $this->{c} = $vector->{c}; # so we should link their computers too
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
