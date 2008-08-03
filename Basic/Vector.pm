@@ -21,8 +21,12 @@ use overload
 
 # new {{{
 sub new {
-    my $class = shift;
-    my $this  = bless {s=>0, c=>{}, v=>[]}, $class;
+    my $class  = shift;
+    my $vector = $_[0];
+
+    return $vector if blessed($vector) and $vector->isa(__PACKAGE__);
+
+    my $this = bless {s=>0, c=>{}, v=>[]}, $class;
        $this->set_vector( @_ );
 
     return $this;

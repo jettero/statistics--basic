@@ -31,7 +31,7 @@ sub recalc {
     my $this  = shift;
     my $first = shift;
 
-    my $var = $this->{v}->query;
+    my $var = $this->{V}->query;
     return unless defined $var;
 
     warn "[recalc stddev] sqrt( $var )\n" if $ENV{DEBUG};
@@ -51,7 +51,7 @@ sub query {
 sub size {
     my $this = shift;
 
-    return $this->{v}->size;
+    return $this->{V}->size;
 }
 # }}}
 # set_size {{{
@@ -59,7 +59,7 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    eval { $this->{v}->set_size( $size ) }; croak $@ if $@;
+    eval { $this->{V}->set_size( $size ) }; croak $@ if $@;
     $this->recalc;
 }
 # }}}
@@ -69,7 +69,7 @@ sub insert {
 
     warn "[insert stddev]\n" if $ENV{DEBUG};
 
-    $this->{v}->insert( @_ );
+    $this->{V}->insert( @_ );
     $this->recalc;
 }
 # }}}
@@ -79,7 +79,7 @@ sub ginsert {
 
     warn "[ginsert stddev]\n" if $ENV{DEBUG};
 
-    $this->{v}->ginsert( @_ );
+    $this->{V}->ginsert( @_ );
     $this->recalc;
 }
 # }}}
@@ -89,7 +89,7 @@ sub set_vector {
 
     warn "[set_vector stddev]\n" if $ENV{DEBUG};
 
-    $this->{v}->set_vector( @_ );
+    $this->{V}->set_vector( @_ );
     $this->recalc;
 }
 # }}}

@@ -16,31 +16,17 @@ use overload
 
 # new {{{
 sub new {
-    my $class    = shift;
-    my $vector   = shift;
-    my $set_size = shift;
+    my $class = shift;
 
     warn "[new mean]\n" if $ENV{DEBUG} >= 2;
 
-    my $this = bless {}, $class;
+    my $this   = bless {}, $class;
+    my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;
+    my $c      = $vector->get_computer("mean"); return $c if defined $c;
 
-    if( ref($vector) eq "ARRAY" ) {
-        $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
+    $this->{v} = $vector;
 
-    } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
-        my $c = $vector->get_computer("mean");
-        return $c if defined $c;
-
-        $this->{v} = $vector;
-
-    } elsif( defined($vector) ) {
-        croak "argument to new() too strange";
-
-    } else {
-        $this->{v} = new Statistics::Basic::Vector;
-    }
-
-    $this->{v}->set_computer( mean => $this );
+    $vector->set_computer( mean => $this );
 
     return $this;
 }
@@ -74,9 +60,9 @@ sub recalc_needed {
 sub query {
     my $this = shift;
 
-    warn "[query mean]\n" if $ENV{DEBUG};
-
     $this->recalc if $this->{recalc_needed};
+
+    warn "[query mean $this->{mean}]\n" if $ENV{DEBUG};
 
     return $this->{mean};
 }

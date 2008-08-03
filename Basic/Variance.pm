@@ -16,15 +16,18 @@ use overload
 
 # new {{{
 sub new {
-    my $this   = shift;
-    my $vector = shift;
-    my $size   = shift;
+    my $class = shift;
 
     warn "[new variance]\n" if $ENV{DEBUG} >= 2;
 
-    $this = eval { bless { m => Statistics::Basic::Mean->new( $vector, $size ) }, $this }; croak $@ if $@;
-    $this->{v} = $this->{m}{v};
-    $this->recalc;
+    my $this   = bless {}, $class;
+    my $vector = eval { Statistics::Basic::Vector->new(shift, @_) }; croak $@ if $@;
+    my $c      = $vector->get_computer("variance"); return $c if defined $c;
+
+    $this->{v} = $vector;
+    $this->{m} = eval { Statistics::Basic::Mean->new($vector, @_) }; croak $@ if $@;
+
+    $vector->set_computer( variance => $this );
 
     return $this;
 }
@@ -39,6 +42,7 @@ sub recalc {
 
     $cardinality -- if $ENV{UNBIAS};
 
+    delete $this->{recalc_needed};
     delete $this->{variance};
     return unless $cardinality > 0;
 
@@ -53,11 +57,30 @@ sub recalc {
     warn "[recalc variance] ($sum/$cardinality) = $this->{variance}\n" if $ENV{DEBUG};
 }
 # }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
+
+    warn "[recalc_needed variance]\n" if $ENV{DEBUG};
+}
+# }}}
 # query {{{
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query variance $this->{mean}]\n" if $ENV{DEBUG};
+
     return $this->{variance};
+}
+# }}}
+# query_vector {{{
+sub query_vector {
+    my $this = shift;
+
+    return $this->{v};
 }
 # }}}
 
@@ -74,8 +97,6 @@ sub set_size {
     my $size = shift;
 
     eval { $this->{v}->set_size( $size ) }; croak $@ if $@;
-    $this->{m}->recalc;
-    $this->recalc;
 }
 # }}}
 # insert {{{
@@ -84,8 +105,7 @@ sub insert {
 
     warn "[insert variance]\n" if $ENV{DEBUG};
 
-    $this->{m}->insert( @_ );
-    $this->recalc;
+    $this->{v}->insert( @_ );
 }
 # }}}
 # ginsert {{{
@@ -94,8 +114,7 @@ sub ginsert {
 
     warn "[ginsert variance]\n" if $ENV{DEBUG};
 
-    $this->{m}->ginsert( @_ );
-    $this->recalc;
+    $this->{v}->ginsert( @_ );
 }
 # }}}
 # set_vector {{{
@@ -104,7 +123,6 @@ sub set_vector {
 
     warn "[set_vector variance]\n" if $ENV{DEBUG};
 
-    $this->{m}->set_vector( @_ );
-    $this->recalc;
+    $this->{v}->set_vector( @_ );
 }
 # }}}
