@@ -128,7 +128,7 @@ sub query_mean2 {
 sub size {
     my $this = shift;
 
-    return $this->{v1}->size;
+    return ($this->{v2}->size, $this->{v1}->size); # only v1->size is returned in scalar context
 }
 # }}}
 # set_size {{{
