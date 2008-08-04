@@ -32,6 +32,9 @@ our @EXPORT_OK   = (qw(
     mode
     variance var
     stddev
+    covariance cov
+    correlation cor corr
+    leastsquarefit LSF lsf
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -52,7 +55,8 @@ sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0
 *avg     = *mean;
 *var     = *variance;
 
-*cov = *covariance;
-*cor = *correlation;
-*lsf = *leastsquarefit;
-*LSF = *leastsquarefit;
+*cov  = *covariance;
+*cor  = *correlation;
+*corr = *correlation;
+*lsf  = *leastsquarefit;
+*LSF  = *leastsquarefit;
