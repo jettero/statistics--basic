@@ -7,8 +7,6 @@ use Carp;
 
 use Statistics::Basic;
 
-$ENV{DEBUG} ||= 0;
-
 1;
 
 # new {{{
@@ -101,6 +99,13 @@ sub query_mean2 {
     my $this = shift;
 
     return $this->{cov}->query_mean2;
+}
+# }}}
+# query_covariance {{{
+sub query_covariance {
+    my $this = shift;
+
+    return $this->{cov};
 }
 # }}}
 

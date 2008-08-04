@@ -5,30 +5,29 @@ use strict;
 use warnings;
 use Carp;
 
-
-use Statistics::Basic::Vector;
-use Statistics::Basic::Variance;
-use Statistics::Basic::Covariance;
-
-$ENV{DEBUG} ||= 0;
+use Statistics::Basic;
 
 1;
 
 # new {{{
 sub new {
     my $this = shift;
-    my $v1   = new Statistics::Basic::Vector( shift );
-    my $v2   = new Statistics::Basic::Vector( shift );
+    my $v1   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
+    my $v2   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
 
     $this = bless {}, $this;
 
+    my $c = $v1->get_linked_computer( LSF => $v2 );
+    return $c if $c;
+
     $this->{vrx} = new Statistics::Basic::Variance($v1);
     $this->{vry} = new Statistics::Basic::Variance($v2);
-    $this->{mnx} = $this->{vrx}{m};
-    $this->{mny} = $this->{vry}{m};
-    $this->{cov} = new Statistics::Basic::Covariance($v1, $v2, undef, $this->{mnx}, $this->{mny});
+    $this->{mnx} = new Statistics::Basic::Mean($v1);
+    $this->{mny} = new Statistics::Basic::Mean($v2);
+    $this->{cov} = new Statistics::Basic::Covariance($v1, $v2);
 
-    $this->recalc;
+    $v1->set_linked_computer( LSF => $this, $v2 );
+    $v2->set_linked_computer( LSF => $this, $v1 );
 
     return $this;
 }
@@ -36,6 +35,10 @@ sub new {
 # recalc {{{
 sub recalc {
     my $this  = shift;
+
+    delete $this->{recalc_needed};
+    delete $this->{alpha};
+    delete $this->{beta};
 
     unless( $this->{vrx}->query ) {
         unless( defined $this->{vrx}->query ) {
@@ -52,15 +55,74 @@ sub recalc {
     $this->{alpha} = ($this->{mny}->query - ($this->{beta} * $this->{mnx}->query));
 
     warn "[recalc LSF] (alpha: $this->{alpha}, beta: $this->{beta})\n" if $ENV{DEBUG};
+}
+# }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
 
-    return 1;
+    warn "[recalc_needed LSF]\n" if $ENV{DEBUG};
 }
 # }}}
 # query {{{
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query LSF ($this->{alpha}, $this->{beta})]\n" if $ENV{DEBUG};
+
     return (wantarray ? ($this->{alpha}, $this->{beta}) : [$this->{alpha}, $this->{beta}] );
+}
+# }}}
+# query_vector1 {{{
+sub query_vector1 {
+    my $this = shift;
+
+    return $this->{cov}->query_vector1;
+}
+# }}}
+# query_vector2 {{{
+sub query_vector2 {
+    my $this = shift;
+
+    return $this->{cov}->query_vector2;
+}
+# }}}
+# query_mean1 {{{
+sub query_mean1 {
+    my $this = shift;
+
+    return $this->{mnx};
+}
+# }}}
+# query_mean2 {{{
+sub query_mean2 {
+    my $this = shift;
+
+    return $this->{mny};
+}
+# }}}
+# query_variance1 {{{
+sub query_variance1 {
+    my $this = shift;
+
+    return $this->{vrx};
+}
+# }}}
+# query_variance2 {{{
+sub query_variance2 {
+    my $this = shift;
+
+    return $this->{vry};
+}
+# }}}
+# query_covariance {{{
+sub query_covariance {
+    my $this = shift;
+
+    return $this->{cov};
 }
 # }}}
 
@@ -76,14 +138,8 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size LSF] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{vrx}->set_size( $size );
-    $this->{vry}->set_size( $size );
-
-    $this->{cov}->recalc;
-    $this->recalc;
+    eval { $this->{vrx}->set_size( $size );
+           $this->{vry}->set_size( $size ); }; croak $@ if $@;
 }
 # }}}
 # insert {{{
@@ -96,9 +152,6 @@ sub insert {
 
     $this->{vrx}->insert( $_[0] );
     $this->{vry}->insert( $_[1] );
-
-    $this->{cov}->recalc;
-    $this->recalc;
 }
 # }}}
 # ginsert {{{
@@ -114,10 +167,7 @@ sub ginsert {
     $this->{vry}->ginsert( $_[1] );
 
     croak "The two vectors in a LeastSquareFit object must be the same length."
-        unless $this->{vrx}->{v}->size == $this->{vry}->{v}->size;
-
-    $this->{cov}->recalc;
-    $this->recalc;
+        unless $this->{vrx}->size == $this->{vry}->size;
 }
 # }}}
 # set_vector {{{
@@ -133,10 +183,6 @@ sub set_vector {
     $this->{vry}->set_vector( $_[1] );
 
     croak "The two vectors in a LeastSquareFit object must be the same length."
-        unless $this->{vrx}->{v}->size == $this->{vry}->{v}->size;
-
-    $this->{cov}->recalc;
-
-    return $this->recalc;
+        unless $this->{vrx}->size == $this->{vry}->size;
 }
 # }}}
