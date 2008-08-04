@@ -3,9 +3,10 @@ use strict;
 use Test;
 use Statistics::Basic;
 
-plan tests => 7;
+plan tests => 8;
 
-my  $cov = new Statistics::Basic::Covariance([1 .. 3], [1 .. 3]);
+my $cov = new Statistics::Basic::Covariance([1 .. 3], [1 .. 3]);
+my $var = new Statistics::Basic::Variance( $cov->query_vector1 );
 
 ok( $cov->query, (2/3) );
 
@@ -13,10 +14,11 @@ ok( $cov->query, (2/3) );
 ok( $cov->query, (5/4) );
 
     $cov->insert( 9, 9 );
-ok( $cov->query, (45/4) );
+ok( $cov->query, (155/16) ); # 38.75/4; 3.75 = mean (1,2,3,9); 38.75 = sum( map {(3.75-$_)**2} 1,2,3,9 )
+ok( $var->query, $cov->query );
 
     $cov->insert( [10 .. 11], [11 .. 12] );
-ok( $cov->query, (83/4) );
+ok( $cov->query, (173/16) ); # 173 = 4*sum( ($m1-3)*($m2-3), ($m1-9)*($m2-9), ($m1-10)*($m2-11), ($m1-11)*($m2-12) )   
 
     $cov->set_vector( [10 .. 11], [11 .. 12] );
 ok( $cov->query, (1/4) );

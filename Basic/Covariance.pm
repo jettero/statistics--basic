@@ -26,6 +26,9 @@ sub new {
                      $this->{"m$x"} = eval { Statistics::Basic::Mean->new($vector, $set_size) }; croak $@ if $@;
     }
 
+    $this->{v1}->set_linked_computer( covariance => $this, $this->{v2} );
+    $this->{v2}->set_linked_computer( covariance => $this, $this->{v1} );
+
     return $this;
 }
 # }}}
@@ -38,7 +41,7 @@ sub recalc {
 
     warn "[recalc covariance] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 
-    croak "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
+    die "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
 
     my $cardinality = $c1;
        $cardinality -- if $ENV{UNBIAS};
@@ -54,13 +57,13 @@ sub recalc {
     my $m2 = $this->{m2}->query;
 
     if( $ENV{DEBUG} >= 2 ) {
-        for my $i (0 .. $#{ $v1 }) {
+        for my $i (0 .. $#$v1) {
             warn "[recalc covariance] ( $v1->[$i] - $m1 ) * ( $v2->[$i] - $m2 )\n";
         }
     }
 
-    for my $i (0 .. $#{ $v1 }) {
-        $sum += (( $v1->[$i] - $m1 ) * ( $v2->[$i] - $m2 ));
+    for my $i (0 .. $#$v1) {
+        $sum += ( $v1->[$i] - $m1 ) * ( $v2->[$i] - $m2 );
     }
 
     $this->{covariance} = ($sum / $cardinality);
@@ -68,11 +71,51 @@ sub recalc {
     warn "[recalc covariance] ($sum/$cardinality) = $this->{covariance}\n" if $ENV{DEBUG};
 }
 # }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
+
+    warn "[recalc_needed covariance]\n" if $ENV{DEBUG};
+}
+# }}}
 # query {{{
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query covariance $this->{covariance}]\n" if $ENV{DEBUG};
+
     return $this->{covariance};
+}
+# }}}
+# query_vector1 {{{
+sub query_vector1 {
+    my $this = shift;
+
+    return $this->{v1};
+}
+# }}}
+# query_vector2 {{{
+sub query_vector2 {
+    my $this = shift;
+
+    return $this->{v2};
+}
+# }}}
+# query_mean1 {{{
+sub query_mean1 {
+    my $this = shift;
+
+    return $this->{m1};
+}
+# }}}
+# query_mean2 {{{
+sub query_mean2 {
+    my $this = shift;
+
+    return $this->{m2};
 }
 # }}}
 
@@ -88,10 +131,8 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    eval { $this->{m1}->set_size( $size );
-           $this->{m2}->set_size( $size ); }; croak $@ if $@;
-
-    $this->recalc;
+    eval { $this->{v1}->set_size( $size );
+           $this->{v2}->set_size( $size ); }; croak $@ if $@;
 }
 # }}}
 # insert {{{
@@ -102,10 +143,8 @@ sub insert {
 
     croak "this insert() takes precisely two arguments.  They can be arrayrefs if you like." unless 2 == int @_;
 
-    $this->{m1}->insert( $_[0] );
-    $this->{m2}->insert( $_[1] );
-
-    $this->recalc;
+    $this->{v1}->insert( $_[0] );
+    $this->{v2}->insert( $_[1] );
 }
 # }}}
 # ginsert {{{
@@ -117,18 +156,13 @@ sub ginsert {
     croak "this ginsert() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{m1}->ginsert( $_[0] );
-    $this->{m2}->ginsert( $_[1] );
+    $this->{v1}->ginsert( $_[0] );
+    $this->{v2}->ginsert( $_[1] );
 
     if( ref $_[0] ) {
-        croak "The two vectors in a Covariance object must be the same length."
-            unless $this->{v1}->size == $this->{m2}->size;
-               # note, that this comparison is intentionally asymmetric
-               # in theory it proves that the vectors in {v1} and {m2} are the same
-               # vectors...
+        die "The two vectors in a Covariance object must be the same length."
+            unless $this->{v1}->size == $this->{v2}->size;
     }
-
-    $this->recalc;
 }
 # }}}
 # set_vector {{{
@@ -140,12 +174,10 @@ sub set_vector {
     croak "this set_vector() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{m1}->set_vector( $_[0] );
-    $this->{m2}->set_vector( $_[1] );
+    $this->{v1}->set_vector( $_[0] );
+    $this->{v2}->set_vector( $_[1] );
 
-    croak "The two vectors in a Covariance object must be the same length."
-        unless $this->{v1}->size == $this->{m2}->size;
-
-    $this->recalc;
+    die "The two vectors in a Covariance object must be the same length."
+        unless $this->{v1}->size == $this->{v2}->size;
 }
 # }}}
