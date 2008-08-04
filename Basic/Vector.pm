@@ -6,6 +6,8 @@ use warnings;
 use Carp;
 use Scalar::Util qw(blessed weaken);
 
+our $tag_number = 0;
+
 use Statistics::Basic;
 
 use overload
@@ -26,7 +28,7 @@ sub new {
 
     return $vector if blessed($vector) and $vector->isa(__PACKAGE__);
 
-    my $this = bless {s=>0, c=>{}, v=>[]}, $class;
+    my $this = bless {tag=>(++$tag_number), s=>0, c=>{}, v=>[]}, $class;
        $this->set_vector( @_ );
 
     return $this;
@@ -58,6 +60,17 @@ sub set_computer {
     }
 }
 # }}}
+# set_linked_computer {{{
+sub set_linked_computer {
+    my $this = shift;
+    my $key  = shift;
+    my $var  = shift;
+
+    my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
+
+    $this->set_computer( $new_key => $var );
+}
+# }}}
 # get_computer {{{
 sub get_computer {
     my $this = shift;
@@ -68,6 +81,14 @@ sub get_computer {
     $this->{c}{$k};
 }
 # }}}
+sub get_linked_computer {
+    my $this = shift;
+    my $key  = shift;
+
+    my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
+
+    $this->get_computer( $new_key );
+}
 
 # fix_size {{{
 sub fix_size {
