@@ -16,12 +16,18 @@ $ENV{DEBUG} ||= 0;
 # new {{{
 sub new {
     my $this = shift;
-    my $v1   = new Statistics::Basic::Vector( shift );
-    my $v2   = new Statistics::Basic::Vector( shift );
+    my $v1   = eval { Statistics::Basic::Vector->( shift ) }; croak $@ if $@;
+    my $v2   = eval { Statistics::Basic::Vector->( shift ) }; croak $@ if $@;
 
     $this = bless {}, $this;
 
+    my $c $v1->get_linked_computer( correlation => $v2 );
+    return $c if $c;
+
     $this->{cov} = new Statistics::Basic::Covariance( $v1, $v2 );
+
+    $v1->set_linked_computer( correlation => $v2 );
+    $v2->set_linked_computer( correlation => $v1 );
 
     return $this;
 }
@@ -29,6 +35,9 @@ sub new {
 # recalc {{{
 sub recalc {
     my $this  = shift;
+
+    delete $this->{recalc_needed};
+    delete $this->{correlation};
 
     my $c  = $this->{cov}->query; return unless defined $c;
     my $s1 = $this->{sd1}->query; return unless defined $s1;
@@ -51,6 +60,10 @@ sub recalc {
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query correlation $this->{mean}]\n" if $ENV{DEBUG};
+
     return $this->{correlation};
 }
 # }}}
@@ -67,14 +80,8 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    warn "[set_size correlation] $size\n" if $ENV{DEBUG};
-    croak "strange size" if $size < 1;
-
-    $this->{sd1}->set_size( $size );
-    $this->{sd2}->set_size( $size );
-
-    $this->{cov}->recalc;
-    $this->recalc;
+    eval { $this->{sd1}->set_size( $size );
+           $this->{sd2}->set_size( $size ); }; croak $@ if $@;
 }
 # }}}
 # insert {{{
@@ -87,9 +94,6 @@ sub insert {
 
     $this->{sd1}->insert( $_[0] );
     $this->{sd2}->insert( $_[1] );
-
-    $this->{cov}->recalc;
-    $this->recalc;
 }
 # }}}
 # ginsert {{{
@@ -104,11 +108,9 @@ sub ginsert {
     $this->{sd1}->ginsert( $_[0] );
     $this->{sd2}->ginsert( $_[1] );
 
+    my @s = $this->{cov}->size;
     croak "The two vectors in a Correlation object must be the same length."
-        unless $this->{sd1}->{v}->size == $this->{sd2}->{v}->size;
-
-    $this->{cov}->recalc;
-    $this->recalc;
+        unless $s[0] == $s[1];
 }
 # }}}
 # set_vector {{{
