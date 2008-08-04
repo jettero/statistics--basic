@@ -1,3 +1,7 @@
+0.50: Mon Aug  4 07:30:41 EDT 2008
+   - added vector tags and the ability to add "computers" linked
+     to other vectors
+
 0.50: Sun Aug  3 16:15:52 EDT 2008
    - I started the new smarter linking
    - fixed an unimportant memory leak with Scalar::Util::weaken()
