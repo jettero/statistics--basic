@@ -1,6 +1,7 @@
 0.50: Mon Aug  4 07:30:41 EDT 2008
    - added vector tags and the ability to add "computers" linked
      to other vectors
+   - renamed CoVariance to Covariance
 
 0.50: Sun Aug  3 16:15:52 EDT 2008
    - I started the new smarter linking
@@ -59,7 +60,7 @@
      around the world... finished implementing those.
 
 0.34:  Tue Dec  2 14:45:11 EST 2003
-   - jettero tought the ::CoVariance module to take ::Mean
+   - jettero tought the ::Covariance module to take ::Mean
      objects as optional arguments to keep the ::Correlation
      object from uselessly recalculating the mean as
      mentioned in the entry below in 0.33.
@@ -79,7 +80,7 @@
 
 0.02:  Mon Dec  1 00:28:50 EST 2003
    - jettero made some base packages, namely: StdDev,
-     Variance, CoVariance, and Mean.
+     Variance, Covariance, and Mean.
 
 0.01:  Sun Nov 30 11:55:03 EST 2003
    - jettero made a skeleton package

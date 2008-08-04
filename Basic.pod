@@ -12,7 +12,7 @@
     Statistics::Basic::StdDev;
 
     # for use with two vectors:
-    Statistics::Basic::CoVariance;
+    Statistics::Basic::Covariance;
     Statistics::Basic::Correlation;
 
 =head1 EXAMPLES
@@ -41,7 +41,7 @@ And last, you might need the mean of [3, 7] after all the above
     print $mo->query, "\n"; # and the average is now 5/2!  Tadda!
 
 These functions all work pretty much the same for ::StdDev and ::Variance but
-they work slightly differently for CoVariance and Correlation.
+they work slightly differently for Covariance and Correlation.
 
 Not surprisingly, the correlation of [1..3] and [1..3] is 1.0:
 

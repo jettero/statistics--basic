@@ -5,7 +5,7 @@ use Statistics::Basic;
 
 plan tests => 7;
 
-my  $cov = new Statistics::Basic::CoVariance([1 .. 3], [1 .. 3]);
+my  $cov = new Statistics::Basic::Covariance([1 .. 3], [1 .. 3]);
 
 ok( $cov->query, (2/3) );
 
@@ -25,7 +25,7 @@ ok( $cov->query, (1/4) );
 ok( $cov->query, (105/4) );
 
 
-my  $j = new Statistics::Basic::CoVariance;
+my  $j = new Statistics::Basic::Covariance;
     $j->set_vector([1 .. 3], [1 .. 3]);
 
 ok( $j->query, (2/3) );

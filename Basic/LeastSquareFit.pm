@@ -8,7 +8,7 @@ use Carp;
 
 use Statistics::Basic::Vector;
 use Statistics::Basic::Variance;
-use Statistics::Basic::CoVariance;
+use Statistics::Basic::Covariance;
 
 $ENV{DEBUG} ||= 0;
 
@@ -26,7 +26,7 @@ sub new {
     $this->{vry} = new Statistics::Basic::Variance($v2);
     $this->{mnx} = $this->{vrx}{m};
     $this->{mny} = $this->{vry}{m};
-    $this->{cov} = new Statistics::Basic::CoVariance($v1, $v2, undef, $this->{mnx}, $this->{mny});
+    $this->{cov} = new Statistics::Basic::Covariance($v1, $v2, undef, $this->{mnx}, $this->{mny});
 
     $this->recalc;
 

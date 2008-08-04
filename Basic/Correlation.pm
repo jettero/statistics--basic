@@ -7,7 +7,7 @@ use Carp;
 
 use Statistics::Basic::Vector;
 use Statistics::Basic::StdDev;
-use Statistics::Basic::CoVariance;
+use Statistics::Basic::Covariance;
 
 $ENV{DEBUG} ||= 0;
 
@@ -21,7 +21,7 @@ sub new {
 
     $this = bless {}, $this;
 
-    $this->{cov} = new Statistics::Basic::CoVariance( $v1, $v2 );
+    $this->{cov} = new Statistics::Basic::Covariance( $v1, $v2 );
     $this->recalc;
 
     return $this;

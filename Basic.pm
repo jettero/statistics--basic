@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 
 use Number::Format;
-use Statistics::Basic::CoVariance;
+use Statistics::Basic::Covariance;
 use Statistics::Basic::Correlation;
 use Statistics::Basic::LeastSquareFit;
 use Statistics::Basic::Mean;

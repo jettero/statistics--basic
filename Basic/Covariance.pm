@@ -1,5 +1,5 @@
 
-package Statistics::Basic::CoVariance;
+package Statistics::Basic::Covariance;
 
 use strict;
 use warnings;
@@ -11,35 +11,20 @@ use Statistics::Basic;
 
 # new {{{
 sub new {
-    my $this     = shift;
-    my @v        = (shift, shift);
+    my $class = shift;
+    my @v     = (shift, shift);
     my $set_size = shift;
 
     warn "[new covariance]\n" if $ENV{DEBUG} >= 2;
 
-    $this = bless {}, $this;
+    my $this = bless {}, $class;
 
     for my $i(0 .. 1) {
         my $x = $i +1;
 
-        if( ref($v[$i]) eq "ARRAY" ) {
-            $this->{"v$x"} = new Statistics::Basic::Vector( $v[$i], $set_size );
-
-        } elsif( ref($v[$i]) eq "Statistics::Basic::Vector" ) {
-            $this->{"v$x"} = $v[$i];
-            $this->{"v$x"}->set_size( $set_size ) if defined $set_size;
-
-        } elsif(defined($v[$i])) {
-            croak "argument to new() must be an arrayref or Statistics::Basic::Vector";
-
-        } else {
-            $this->{"v$x"} = new Statistics::Basic::Vector;
-        }
-
-        $this->{"m$x"} = Statistics::Basic::Mean->new($this->{"v$x"});
+        my $vector = $this->{"v$x"} = eval { new Statistics::Basic::Vector($v[$i], $set_size) }; croak $@ if $@;
+                     $this->{"m$x"} = eval { Statistics::Basic::Mean->new($vector, $set_size) }; croak $@ if $@;
     }
-
-    $this->recalc;
 
     return $this;
 }
@@ -53,11 +38,12 @@ sub recalc {
 
     warn "[recalc covariance] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 
-    croak "the two vectors in a CoVariance object must be the same length" unless $c2 == $c1;
+    croak "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
 
     my $cardinality = $c1;
        $cardinality -- if $ENV{UNBIAS};
 
+    delete $this->{recalc_necessary};
     delete $this->{covariance};
     return unless $cardinality > 0;
 
@@ -135,7 +121,7 @@ sub ginsert {
     $this->{m2}->ginsert( $_[1] );
 
     if( ref $_[0] ) {
-        croak "The two vectors in a CoVariance object must be the same length."
+        croak "The two vectors in a Covariance object must be the same length."
             unless $this->{v1}->size == $this->{m2}->size;
                # note, that this comparison is intentionally asymmetric
                # in theory it proves that the vectors in {v1} and {m2} are the same
@@ -157,7 +143,7 @@ sub set_vector {
     $this->{m1}->set_vector( $_[0] );
     $this->{m2}->set_vector( $_[1] );
 
-    croak "The two vectors in a CoVariance object must be the same length."
+    croak "The two vectors in a Covariance object must be the same length."
         unless $this->{v1}->size == $this->{m2}->size;
 
     $this->recalc;

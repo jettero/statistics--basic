@@ -16,7 +16,7 @@ Basic/Median.pm
 Basic/Mode.pm
 Basic/Variance.pm
 Basic/StdDev.pm
-Basic/CoVariance.pm
+Basic/Covariance.pm
 Basic/Correlation.pm
 Basic/LeastSquareFit.pm
 META.yml
