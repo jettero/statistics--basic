@@ -50,7 +50,7 @@ sub recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
-    warn "[recalc_needed variance]\n" if $ENV{DEBUG};
+    warn "[recalc_needed stddev]\n" if $ENV{DEBUG};
 }
 # }}}
 # query {{{
