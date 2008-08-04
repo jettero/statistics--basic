@@ -37,13 +37,22 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 1;
 
-sub vector   { return Statistics::Basic::Vector->new( $_[0] )   if ref $_[0]; return Statistics::Basic::Vector->new( [@_] );     }
-sub mean     { return Statistics::Basic::Mean->new( $_[0] )     if ref $_[0]; return Statistics::Basic::Mean->new( [@_] );     }
-sub median   { return Statistics::Basic::Median->new( $_[0] )   if ref $_[0]; return Statistics::Basic::Median->new( [@_] );   }
-sub mode     { return Statistics::Basic::Mode->new( $_[0] )     if ref $_[0]; return Statistics::Basic::Mode->new( [@_] );     }
-sub variance { return Statistics::Basic::Variance->new( $_[0] ) if ref $_[0]; return Statistics::Basic::Variance->new( [@_] ); }
-sub stddev   { return Statistics::Basic::StdDev->new( $_[0] )   if ref $_[0]; return Statistics::Basic::StdDev->new( [@_] ); }
+sub vector   { my $r = eval { ref($_[0]) ? Statistics::Basic::Vector->new( $_[0] )   : Statistics::Basic::Vector->new( [@_] );   }; croak $@ if $@; $r }
+sub mean     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mean->new( $_[0] )     : Statistics::Basic::Mean->new( [@_] );     }; croak $@ if $@; $r }
+sub median   { my $r = eval { ref($_[0]) ? Statistics::Basic::Median->new( $_[0] )   : Statistics::Basic::Median->new( [@_] );   }; croak $@ if $@; $r }
+sub mode     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mode->new( $_[0] )     : Statistics::Basic::Mode->new( [@_] );     }; croak $@ if $@; $r }
+sub variance { my $r = eval { ref($_[0]) ? Statistics::Basic::Variance->new( $_[0] ) : Statistics::Basic::Variance->new( [@_] ); }; croak $@ if $@; $r }
+sub stddev   { my $r = eval { ref($_[0]) ? Statistics::Basic::StdDev->new( $_[0] )   : Statistics::Basic::StdDev->new( [@_] );   }; croak $@ if $@; $r }
+
+sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0] ) };     croak $@ if $@; $r}
+sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0] ) };    croak $@ if $@; $r}
+sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0] ) }; croak $@ if $@; $r}
 
 *average = *mean;
 *avg     = *mean;
 *var     = *variance;
+
+*cov = *covariance;
+*cor = *correlation;
+*lsf = *leastsquarefit;
+*LSF = *leastsquarefit;
