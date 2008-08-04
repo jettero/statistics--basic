@@ -16,29 +16,17 @@ use overload
 
 # new {{{
 sub new {
-    my $this     = shift;
-    my $vector   = shift;
-    my $set_size = shift;
+    my $class = shift;
 
     warn "[new median]\n" if $ENV{DEBUG} >= 2;
 
-    $this = bless {}, $this;
+    my $this   = bless {}, $class;
+    my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;
+    my $c      = $vector->get_computer("median"); return $c if defined $c;
 
-    if( ref($vector) eq "ARRAY" ) {
-        $this->{v} = new Statistics::Basic::Vector( $vector, $set_size );
+    $this->{v} = $vector;
 
-    } elsif( ref($vector) eq "Statistics::Basic::Vector" ) {
-        $this->{v} = $vector;
-        $this->{v}->set_size( $set_size ) if defined $set_size;
-
-    } elsif( defined($vector) ) {
-        croak "argument to new() too strange";
-
-    } else {
-        $this->{v} = new Statistics::Basic::Vector;
-    }
-
-    $this->recalc;
+    $vector->set_computer( median => $this );
 
     return $this;
 }
@@ -48,6 +36,7 @@ sub recalc {
     my $this        = shift;
     my $cardinality = $this->{v}->size;
 
+    delete $this->{recalc_needed};
     delete $this->{median};
     return unless $cardinality > 0;
 
@@ -63,11 +52,30 @@ sub recalc {
     warn "[recalc median] vector[int($cardinality/2)] = $this->{median}\n" if $ENV{DEBUG};
 }
 # }}}
+# recalc_needed {{{
+sub recalc_needed {
+    my $this = shift;
+       $this->{recalc_needed} = 1;
+
+    warn "[recalc_needed median]\n" if $ENV{DEBUG};
+}
+# }}}
 # query {{{
 sub query {
     my $this = shift;
 
+    $this->recalc if $this->{recalc_needed};
+
+    warn "[query median $this->{median}]\n" if $ENV{DEBUG};
+
     return $this->{median};
+}
+# }}}
+# query_vector {{{
+sub query_vector {
+    my $this = shift;
+
+    return $this->{v};
 }
 # }}}
 
@@ -84,7 +92,6 @@ sub set_size {
     my $size = shift;
 
     eval { $this->{v}->set_size($size) }; croak $@ if $@;
-    $this->recalc;
 }
 # }}}
 # set_vector {{{
@@ -94,7 +101,6 @@ sub set_vector {
     warn "[set_vector median]\n" if $ENV{DEBUG};
 
     $this->{v}->set_vector(@_);
-    $this->recalc;
 }
 # }}}
 # insert {{{
@@ -104,7 +110,6 @@ sub insert {
     warn "[insert median]\n" if $ENV{DEBUG};
 
     $this->{v}->insert(@_);
-    $this->recalc;
 }
 # }}}
 # ginsert {{{
@@ -114,6 +119,5 @@ sub ginsert {
     warn "[ginsert median]\n" if $ENV{DEBUG};
 
     $this->{v}->ginsert(@_);
-    $this->recalc;
 }
 # }}}
