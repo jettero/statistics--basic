@@ -21,7 +21,7 @@ sub new {
 
     $this = bless {}, $this;
 
-    my $c $v1->get_linked_computer( correlation => $v2 );
+    my $c = $v1->get_linked_computer( correlation => $v2 );
     return $c if $c;
 
     $this->{cov} = new Statistics::Basic::Covariance( $v1, $v2 );
