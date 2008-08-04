@@ -22,8 +22,13 @@ sub new {
     for my $i(0 .. 1) {
         my $x = $i +1;
 
-        my $vector = $this->{"v$x"} = eval { new Statistics::Basic::Vector($v[$i], $set_size) }; croak $@ if $@;
-                     $this->{"m$x"} = eval { Statistics::Basic::Mean->new($vector, $set_size) }; croak $@ if $@;
+        my $vector = $this->{"v$x"} = eval { Statistics::Basic::Vector->new($v[$i], $set_size) }; croak $@ if $@;
+                     $this->{"m$x"} = eval { Statistics::Basic::Mean->new($vector, $set_size) };  croak $@ if $@;
+
+        if( $i == 1 ) {
+            my $c = $vector->get_linked_computer( covariance => $this->{v1} );
+            return $c if $c;
+        }
     }
 
     $this->{v1}->set_linked_computer( covariance => $this, $this->{v2} );

@@ -22,7 +22,6 @@ sub new {
     $this = bless {}, $this;
 
     $this->{cov} = new Statistics::Basic::Covariance( $v1, $v2 );
-    $this->recalc;
 
     return $this;
 }
