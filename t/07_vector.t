@@ -28,10 +28,10 @@ ok( $j->size, 0 );
 
 $j->set_vector([7,9,21]);
 ok( $j->size, 3 );
-ok( $j, "[7, 9, 21]");
+do { local $ENV{DEBUG}=0; ok( $j, "[7, 9, 21]"); };
 
 $j->set_size(0);
-ok( $j, "[]" );
+do { local $ENV{DEBUG}=0; ok( $j, "[]" ); };
 ok( $j->size, 0 );
 
 my $k = $j->copy;
@@ -46,20 +46,22 @@ $j->ginsert(7);
 ok( $j->size, 2 );
 ok( $k->size, 1 );
 
-ok( $j, "[9, 7]" );
-ok( $k, "[7]" );
+do { local $ENV{DEBUG}=0; ok( $j, "[9, 7]" ); };
+do { local $ENV{DEBUG}=0; ok( $k, "[7]" ); };
 
 $k->set_vector($j);
 $j->ginsert(33);
 
-ok( $j, "[9, 7, 33]" );
-ok( $k, "[9, 7, 33]" );
+do { local $ENV{DEBUG}=0; ok( $j, "[9, 7, 33]" ); };
+do { local $ENV{DEBUG}=0; ok( $k, "[9, 7, 33]" ); };
 
 my $w = $j->copy;
 ok( $w->size, $j->size );
-ok( $w, $j );
+do { local $ENV{DEBUG}=0; ok( $w, $j ); };
 
 $w->ginsert(6);
 ok( $w->size-1, $j->size );
-my $str = "$w"; ok($str =~ s/, 6//, 1);
-ok( $str, $j );
+do { local $ENV{DEBUG}=0;
+    my $str = "$w"; ok($str =~ s/, 6//, 1);
+    ok( $str, $j );
+};
