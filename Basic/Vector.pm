@@ -13,9 +13,10 @@ use Statistics::Basic;
 use overload
     '0+' => sub { croak "attempt to use vector as scalar numerical value" },
     '""' => sub {
+        my $this = $_[0];
         local $" = ", ";
-        my @r = map { $Statistics::Basic::fmt->format_number($_, $ENV{IPRES}) } $_[0]->query;
-        "[@r]";
+        my @r = map { $Statistics::Basic::fmt->format_number($_, $ENV{IPRES}) } $this->query;
+        $ENV{DEBUG} ? "vector-$this->{tag}:[@r]" : "[@r]";
     },
     fallback => 1; # tries to do what it would have done if this wasn't present.
 
@@ -27,14 +28,14 @@ sub new {
     my $vector = $_[0];
 
     if( blessed($vector) and $vector->isa(__PACKAGE__) ) {
-        warn "vector->new called with blessed argument, returning vector-$vector->{tag} instead\n" if $ENV{DEBUG} >= 3;
+        warn "vector->new called with blessed argument, returning $vector instead of making another\n" if $ENV{DEBUG} >= 3;
         return $vector;
     }
 
     my $this = bless {tag=>(++$tag_number), s=>0, c=>{}, v=>[]}, $class;
        $this->set_vector( @_ );
 
-    warn "created new vector($this)-$this->{tag}\n" if $ENV{DEBUG} >= 3;
+    warn "created new vector $this\n" if $ENV{DEBUG} >= 3;
 
     return $this;
 }
@@ -44,7 +45,7 @@ sub copy {
     my $this = shift;
     my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
 
-    warn "copied vector($this->{tag} -> $that->{tag})\n" if $ENV{DEBUG} >= 3;
+    warn "copied vector($this -> $that)\n" if $ENV{DEBUG} >= 3;
 
     $that;
 }
@@ -62,7 +63,7 @@ sub set_computer {
     my $this = shift;
 
     while( my ($k,$v) = splice @_, 0, 2 ) {
-        warn "vector-$this->{tag} set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
+        warn "$this set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
         weaken($this->{c}{$k} = $v);
         $v->recalc_needed;
     }
@@ -84,7 +85,7 @@ sub get_computer {
     my $this = shift;
     my $k = shift;
 
-    warn "vector-$this->{tag} get_computer($k): " . overload::StrVal($this->{c}{$k}||"<undef>") . "\n" if $ENV{DEBUG};
+    warn "$this get_computer($k): " . overload::StrVal($this->{c}{$k}||"<undef>") . "\n" if $ENV{DEBUG};
 
     $this->{c}{$k};
 }
@@ -120,7 +121,7 @@ sub fix_size {
         $fixed = 1;
     }
 
-    warn "[fix_size vector-$this->{tag}] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
+    warn "[fix_size $this] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
 
     return $fixed;
 }
@@ -157,7 +158,7 @@ sub insert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[insert vector-$this->{tag}] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[insert $this] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
                 croak "insert() elements do not make sense";
@@ -165,7 +166,7 @@ sub insert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[insert vector-$this->{tag}] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[insert $this] $e\n" if $ENV{DEBUG} >= 2;
         }
     }
 
@@ -181,7 +182,7 @@ sub ginsert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[ginsert vector-$this->{tag}] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[ginsert $this] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
                 croak "ginsert() elements do not make sense";
@@ -189,7 +190,7 @@ sub ginsert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[ginsert vector-$this->{tag}] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[ginsert $this] $e\n" if $ENV{DEBUG} >= 2;
         }
     }
 
@@ -221,6 +222,6 @@ sub set_vector {
         $this->set_size( $set_size );
     }
 
-    warn "[set_vector vector-$this->{tag}] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
+    warn "[set_vector $this] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
 }
 # }}}
