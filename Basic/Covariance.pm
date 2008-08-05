@@ -7,6 +7,11 @@ use Carp;
 
 use Statistics::Basic;
 
+use overload
+    '""' => sub { $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES}) },
+    '0+' => sub { $_[0]->query },
+    fallback => 1; # tries to do what it would have done if this wasn't present.
+
 1;
 
 # new {{{
@@ -40,7 +45,7 @@ sub recalc {
 
     warn "[recalc covariance] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 
-    confess "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
+    confess "the two vectors in a Covariance object must be the same length ($c2!=$c1)" unless $c2 == $c1;
 
     my $cardinality = $c1;
        $cardinality -- if $ENV{UNBIAS};
@@ -155,12 +160,17 @@ sub ginsert {
     croak "this ginsert() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{v1}->ginsert( $_[0] );
-    $this->{v2}->ginsert( $_[1] );
+    my ($v1, $v2) = (@$this{'v1', 'v2'});
+
+    $v1->ginsert( $_[0] );
+    $v2->ginsert( $_[1] );
 
     if( ref $_[0] ) {
-        croak "The two vectors in a Covariance object must be the same length."
-            unless $this->{v1}->size == $this->{v2}->size;
+        my $c1 = $v1->size;
+        my $c2 = $v2->size;
+
+        croak "The two vectors in a Covariance object must be the same length ($c1!=$c2)."
+            unless $c1 == $c2;
     }
 }
 # }}}
@@ -173,10 +183,15 @@ sub set_vector {
     croak "this set_vector() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{v1}->set_vector( $_[0] );
-    $this->{v2}->set_vector( $_[1] );
+    my ($v1, $v2) = (@$this{'v1', 'v2'});
 
-    confess "The two vectors in a Covariance object must be the same length."
-        unless $this->{v1}->size == $this->{v2}->size;
+    $v1->set_vector( $_[0] );
+    $v2->set_vector( $_[1] );
+
+    my $c1 = $v1->size;
+    my $c2 = $v2->size;
+
+    confess "The two vectors in a Covariance object must be the same length ($c1!=$c2)."
+        unless $c1 == $c2;
 }
 # }}}
