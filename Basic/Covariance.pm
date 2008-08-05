@@ -46,7 +46,7 @@ sub recalc {
 
     warn "[recalc covariance] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 
-    die "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
+    confess "the two vectors in a Covariance object must be the same length" unless $c2 == $c1;
 
     my $cardinality = $c1;
        $cardinality -- if $ENV{UNBIAS};
@@ -165,7 +165,7 @@ sub ginsert {
     $this->{v2}->ginsert( $_[1] );
 
     if( ref $_[0] ) {
-        die "The two vectors in a Covariance object must be the same length."
+        croak "The two vectors in a Covariance object must be the same length."
             unless $this->{v1}->size == $this->{v2}->size;
     }
 }
@@ -182,7 +182,7 @@ sub set_vector {
     $this->{v1}->set_vector( $_[0] );
     $this->{v2}->set_vector( $_[1] );
 
-    die "The two vectors in a Covariance object must be the same length."
+    confess "The two vectors in a Covariance object must be the same length."
         unless $this->{v1}->size == $this->{v2}->size;
 }
 # }}}
