@@ -81,6 +81,7 @@ sub get_computer {
     $this->{c}{$k};
 }
 # }}}
+# get_linked_computer {{{
 sub get_linked_computer {
     my $this = shift;
     my $key  = shift;
@@ -89,6 +90,7 @@ sub get_linked_computer {
 
     $this->get_computer( $new_key );
 }
+# }}}
 
 # fix_size {{{
 sub fix_size {

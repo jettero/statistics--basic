@@ -12,27 +12,21 @@ use Statistics::Basic;
 # new {{{
 sub new {
     my $class = shift;
-    my @v     = (shift, shift);
-    my $set_size = shift;
+    my $v1    = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
+    my $v2    = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
 
     warn "[new covariance]\n" if $ENV{DEBUG} >= 2;
 
-    my $this = bless {}, $class;
+    my $this = bless {v1=>$v1, v2=>$v2}, $class;
 
-    for my $i(0 .. 1) {
-        my $x = $i +1;
+    my $c = $v1->get_linked_computer( covariance => $v2 );
+    return $c if $c;
 
-        my $vector = $this->{"v$x"} = eval { Statistics::Basic::Vector->new($v[$i], $set_size) }; croak $@ if $@;
-                     $this->{"m$x"} = eval { Statistics::Basic::Mean->new($vector, $set_size) };  croak $@ if $@;
+    $this->{m1} = eval { Statistics::Basic::Mean->new($v1) }; croak $@ if $@;
+    $this->{m2} = eval { Statistics::Basic::Mean->new($v2) }; croak $@ if $@;
 
-        if( $i == 1 ) {
-            my $c = $vector->get_linked_computer( covariance => $this->{v1} );
-            return $c if $c;
-        }
-    }
-
-    $this->{v1}->set_linked_computer( covariance => $this, $this->{v2} );
-    $this->{v2}->set_linked_computer( covariance => $this, $this->{v1} );
+    $v1->set_linked_computer( covariance => $this, $v2 );
+    $v2->set_linked_computer( covariance => $this, $v1 );
 
     return $this;
 }
