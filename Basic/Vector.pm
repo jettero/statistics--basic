@@ -26,19 +26,17 @@ sub new {
     my $class  = shift;
     my $vector = $_[0];
 
-    return $vector if blessed($vector) and $vector->isa(__PACKAGE__);
+    if( blessed($vector) and $vector->isa(__PACKAGE__) ) {
+        warn "vector->new called with blessed argument, returning vector-$vector->{tag} instead\n" if $ENV{DEBUG} >= 3;
+        return $vector;
+    }
 
     my $this = bless {tag=>(++$tag_number), s=>0, c=>{}, v=>[]}, $class;
        $this->set_vector( @_ );
 
-    return $this;
-}
-# }}}
-# query {{{
-sub query {
-    my $this = shift;
+    warn "created new vector($this)-$this->{tag}\n" if $ENV{DEBUG} >= 3;
 
-    return (wantarray ? @{$this->{v}} : $this->{v});
+    return $this;
 }
 # }}}
 # copy {{{
@@ -46,7 +44,17 @@ sub copy {
     my $this = shift;
     my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
 
+    warn "copied vector($this->{tag} -> $that->{tag})" if $ENV{DEBUG} >= 3;
+
     $that;
+}
+# }}}
+
+# query {{{
+sub query {
+    my $this = shift;
+
+    return (wantarray ? @{$this->{v}} : $this->{v});
 }
 # }}}
 # set_computer {{{
@@ -112,7 +120,7 @@ sub fix_size {
         $fixed = 1;
     }
 
-    warn "[fix_size vector] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
+    warn "[fix_size vector-$this->{tag}] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
 
     return $fixed;
 }
@@ -149,7 +157,7 @@ sub insert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[insert vector] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[insert vector-$this->{tag}] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
                 croak "insert() elements do not make sense";
@@ -157,7 +165,7 @@ sub insert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[insert vector] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[insert vector-$this->{tag}] $e\n" if $ENV{DEBUG} >= 2;
         }
     }
 
@@ -173,7 +181,7 @@ sub ginsert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[ginsert vector] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[ginsert vector-$this->{tag}] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
                 croak "ginsert() elements do not make sense";
@@ -181,7 +189,7 @@ sub ginsert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[ginsert vector] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[ginsert vector-$this->{tag}] $e\n" if $ENV{DEBUG} >= 2;
         }
     }
 
@@ -213,6 +221,6 @@ sub set_vector {
         $this->set_size( $set_size );
     }
 
-    warn "[set_vector vector] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
+    warn "[set_vector vector-$this->{tag}] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
 }
 # }}}
