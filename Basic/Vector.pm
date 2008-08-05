@@ -44,7 +44,7 @@ sub copy {
     my $this = shift;
     my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
 
-    warn "copied vector($this->{tag} -> $that->{tag})" if $ENV{DEBUG} >= 3;
+    warn "copied vector($this->{tag} -> $that->{tag})\n" if $ENV{DEBUG} >= 3;
 
     $that;
 }
