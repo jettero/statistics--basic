@@ -16,9 +16,9 @@ my $cov = covariance($v1, $v2);
 
 ok( refaddr($cov->query_vector1), refaddr($v1) );
 ok( refaddr($cov->query_vector2), refaddr($v2) );
-# ok( $cov, 1 );
+ok( $cov, 2 );
 
 my $cor = correlation($v1, $v2);
 ok( refaddr($cor->query_vector1), refaddr($v1) );
 ok( refaddr($cor->query_vector2), refaddr($v2) );
-# ok( $cor, 1 );
+ok( $cor, 1 );
