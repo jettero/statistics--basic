@@ -62,7 +62,7 @@ sub set_computer {
     my $this = shift;
 
     while( my ($k,$v) = splice @_, 0, 2 ) {
-        warn "set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
+        warn "vector-$this->{tag} set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
         weaken($this->{c}{$k} = $v);
         $v->recalc_needed;
     }
@@ -84,7 +84,7 @@ sub get_computer {
     my $this = shift;
     my $k = shift;
 
-    warn "get_computer($k): " . overload::StrVal($this->{c}{$k}||"<undef>") . "\n" if $ENV{DEBUG};
+    warn "vector-$this->{tag} get_computer($k): " . overload::StrVal($this->{c}{$k}||"<undef>") . "\n" if $ENV{DEBUG};
 
     $this->{c}{$k};
 }

@@ -17,10 +17,10 @@ use overload
 # new {{{
 sub new {
     my $class = shift;
-    my $v1    = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
-    my $v2    = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
+    my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) }; croak $@ if $@;
+    my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) }; croak $@ if $@;
 
-    warn "[new covariance]\n" if $ENV{DEBUG} >= 2;
+    warn "[new covariance v1 is vector-$v1->{tag} v2 is vector-$v2->{tag}]\n" if $ENV{DEBUG} >= 2;
 
     my $this = bless {v1=>$v1, v2=>$v2}, $class;
 
