@@ -47,9 +47,9 @@ sub mode     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mode->new( $_[0] )
 sub variance { my $r = eval { ref($_[0]) ? Statistics::Basic::Variance->new( $_[0] ) : Statistics::Basic::Variance->new( [@_] ); }; croak $@ if $@; $r }
 sub stddev   { my $r = eval { ref($_[0]) ? Statistics::Basic::StdDev->new( $_[0] )   : Statistics::Basic::StdDev->new( [@_] );   }; croak $@ if $@; $r }
 
-sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0] ) };     croak $@ if $@; $r}
-sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0] ) };    croak $@ if $@; $r}
-sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0] ) }; croak $@ if $@; $r}
+sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0],$_[1] ) };     croak $@ if $@; $r}
+sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0],$_[1] ) };    croak $@ if $@; $r}
+sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0],$_[1] ) }; croak $@ if $@; $r}
 
 *average = *mean;
 *avg     = *mean;
