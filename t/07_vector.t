@@ -3,7 +3,7 @@ use strict;
 use Test;
 use Statistics::Basic;
 
-plan tests => 18;
+plan tests => 23;
 
 my $normalize    = undef;
 my $no_normalize = 1;
@@ -54,3 +54,12 @@ $j->ginsert(33);
 
 ok( $j, "[9, 7, 33]" );
 ok( $k, "[9, 7, 33]" );
+
+my $w = $j->copy;
+ok( $w->size, $j->size );
+ok( $w, $j );
+
+$w->ginsert(6);
+ok( $w->size-1, $j->size );
+my $str = "$w"; ok($str =~ s/, 6//, 1);
+ok( $str, $j );
