@@ -1,0 +1,53 @@
+=head1 NAME
+
+Statistics::Basic::Correlation - find the correlation between two arrays
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $correlation = correlation( [1,2,3], [1,2,3] );
+
+Or this way:
+
+    my $v1  = vector(1,2,3);
+    my $v2  = vector(1,2,3);
+    my $cor = cor($v1,$v2);
+
+And then either query the values or print them like so:
+
+    print "The correlation between $v1 and $v2: $correlation\n";
+    my $correlation = $lsf->query;
+    my $alternative = 0+$correlation;
+
+Create a 20 point "moving" correlationL like so:
+
+    my $sth = $dbh->prepare("select col1,col2 from data where something");
+    my $len = 20;
+    my $cor = corr();
+       $cor->set_size($len);
+
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
+
+    my $count = $len;
+    while( $sth->fetch ) {
+
+        $lhs->insert( $lhs, $rhs );
+        if( -- $count <= 0 ) {
+            print "Correlation: $cor\n";
+        }
+    }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut
