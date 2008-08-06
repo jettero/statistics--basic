@@ -17,8 +17,8 @@ Or this way:
 And then either query the values or print them like so:
 
     print "The correlation between $v1 and $v2: $correlation\n";
-    my $correlation = $lsf->query;
-    my $alternative = 0+$correlation;
+    my $cq = $cor->query;
+    my $c0 = 0+$correlation;
 
 Create a 20 point "moving" correlationL like so:
 
