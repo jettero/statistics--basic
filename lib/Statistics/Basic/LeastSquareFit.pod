@@ -1,78 +1,58 @@
 =head1 NAME
 
-Statistics::Basic::LeastSquareFit - find the least square fit for two vectors
+Statistics::Basic::LeastSquareFit - find the least square fit for two arrays
 
 =head1 SYNOPSIS
 
 A machine to calculate the Least Square Fit of given vectors x and y.
 
-The module returns alpha and beta from the formula:
+The module returns the alpha and beta that best fits this formula:
 
-y = alpha + beta * x
+    $y = $beta * $x + $alpha
 
-=head1 ENV VARIABLES
+Invoke it this way:
 
-=head2 DEBUG
+    my $lsf = leastsquarefit( [1,2,3], [1,2,3] );
 
-Try setting $ENV{DEBUG}=1; or $ENV{DEBUG}=2; to see the internals.
+Or this way:
 
-Also, from your bash prompt you can 'DEBUG=1 perl ./myprog.pl' to
-enable debugging dynamically.
+    my $v1  = vector(1,2,3);
+    my $v2  = vector(1,2,3);
+    my $lsf = lsf($v1,$v2);
 
-=head1 EXAMPLE (written for Satish <dachs@mri>)
+And then either query the values or print them like so:
 
-    use strict;
-    use Statistics::Basic::LeastSquareFit;
+    print "The LSF for $v1 and $v2: $lsf\n";
+    my ($alpha, $beta) = $lsf->query;
 
-    STYLE_ONE: {
-        open F1, $ARGV[0] or die "couldn't open first file: $!";
-        open F2, $ARGV[1] or die "couldn't open second file: $!";
+Create a 20 point "moving" LSF like so:
 
-        my $v1 = [ map(int $_, <F1>) ];
-        my $v2 = [ map(int $_, <F2>) ];
+    my $sth = $dbh->prepare("select col1,col2 from data where something");
+    my $len = 20;
+    my $lsf = lsf();
+       $lsf->set_size($Len);
 
-        my $lsf = new Statistics::Basic::LeastSquareFit($v1, $v2);
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
 
-        close F1;
-        close F2;
+    my $count = $Len;
+    while( $sth->fetch ) {
 
-        my ($alpha, $beta) = $lsf->query;
-
-        print "STYLE_ONE: \$alpha = $alpha; \$beta = $beta\n";
-    }
-
-    STYLE_TWO: {
-        my $lsf = new Statistics::Basic::LeastSquareFit();
-
-        open F1, $ARGV[0] or die "couldn't open first file: $!";
-        open F2, $ARGV[1] or die "couldn't open second file: $!";
-        
-        while(my $f1 = <F1> and my $f2 = <F2>) {
-
-            $lsf->ginsert( $f1, $f2 ); 
-
-            # The growing insert increases the size of the vectors 
-            # on each insert.  The non-growing insert shifts older 
-            # values back off the queue (for a moving average).
-
+        $lhs->insert( $lhs, $rhs );
+        if( -- $count <= 0 ) {
+            print "LSF: $lsf\n";
         }
-
-        close F1;
-        close F2;
-
-        my ($alpha, $beta) = $lsf->query;
-
-        print "STYLE_TWO: \$alpha = $alpha; \$beta = $beta\n";
     }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
 
 =head1 AUTHOR
 
-Please contact me with ANY suggestions, no matter how pedantic.
-
-Jettero Heller <japh@voltar-confed.org>
+Paul Miller <jettero@cpan.org>
 
 =head1 SEE ALSO
 
-perl(1)
+perl(1), L<Statistics::Basic>
 
 =cut
