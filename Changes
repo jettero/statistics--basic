@@ -1,18 +1,4 @@
-0.50: Mon Aug  4 07:30:41 EDT 2008
-   - added vector tags and the ability to add "computers" linked
-     to other vectors
-   - renamed CoVariance to Covariance
-
-0.50: Sun Aug  3 16:15:52 EDT 2008
-   - I started the new smarter linking
-   - fixed an unimportant memory leak with Scalar::Util::weaken()
-
-0.50: Sun Aug  3 07:44:31 EDT 2008
-   - I modernized and updated the crap out of the vector class
-   - I tested most of that new stuff also
-   - I added the "computer" storage devices to the Vector class
-
-0.50: Fri Aug  1 07:16:51 EDT 2008
+1.00: Fri Aug 1 - Wed Aug 6 2008
    - bringing this distro up to date, apparently people actually
      use it.
    - tons of doc fixes
@@ -20,6 +6,14 @@
    - pre-reqed in Number::Format for ""
    - forget returning undef cardinality, vector sizes are 0 when
      they don't have a size set.
+   - added vector tags and the ability to add "computers" linked
+     to other vectors
+   - renamed CoVariance to Covariance
+   - I modernized and updated the crap out of the vector class
+   - I tested most of that new stuff also
+   - I added the "computer" storage devices to the Vector class
+   - I started the new smarter linking
+   - fixed an unimportant memory leak with Scalar::Util::weaken()
 
 0.42:  Wed Jan 25 17:22:11 EST 2006
    - jettero patched in Orien's things
