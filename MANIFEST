@@ -27,4 +27,13 @@ t/53_persistance.t
 t/53_co_persistance.t
 lib/Statistics/Basic.pod
 lib/Statistics/Basic/LeastSquareFit.pod
+lib/Statistics/Basic/Correlation.pod
+lib/Statistics/Basic/Covariance.pod
+lib/Statistics/Basic/Mean.pod
+lib/Statistics/Basic/Median.pod
+lib/Statistics/Basic/Mode.pod
+lib/Statistics/Basic/StdDev.pod
+lib/Statistics/Basic/Variance.pod
+lib/Statistics/Basic/Vector.pod
 t/54_doc_example.t
+t/19_combo.t
