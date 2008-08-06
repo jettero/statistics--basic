@@ -1,0 +1,62 @@
+=head1 NAME
+
+Statistics::Basic::Mode - find the standard deviation of an array
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $mode = mode(1,2,3,3);
+
+Or this way:
+
+    my $v1  = vector(1,2,3,3);
+    my $mod = mode($v1);
+
+And then either query the values or print them like so:
+
+    print "The mod of $v1: $mod\n";
+    my $vq = $mod->query;
+    my $v0 = 0+$mod; # this will croak occasionally, see below
+
+The mode of an array is not necessarily a scalar.  The mode of this vector is a
+vector:
+
+    use Scalar::Util qw(blessed);
+
+    my $mod = mode(1,2,3);
+    my $v2  = $mod->query;
+    print "hrm, there's three elements in this mode: $mod\n"
+        if blessed($v2) and $v2->isa("Statistics::Basic::Vector");
+
+Create a 20 point "moving" mode like so:
+
+    my $sth = $dbh->prepare("select col1 from data where something");
+    my $len = 20;
+    my $mod = mode();
+       $mod->set_size($len);
+
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my $val ) or die $dbh->errstr;
+
+    my $count = $len;
+    while( $sth->fetch ) {
+
+        $mod->insert( $val );
+        if( -- $count <= 0 ) {
+            print "Mode: $mod\n";
+        }
+    }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut
