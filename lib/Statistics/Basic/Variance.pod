@@ -15,7 +15,7 @@ Or this way:
 
 And then either query the values or print them like so:
 
-    print "The variance between $v1 and $v2: $variance\n";
+    print "The variance of $v1: $variance\n";
     my $vq = $var->query;
     my $v0 = 0+$var;
 
