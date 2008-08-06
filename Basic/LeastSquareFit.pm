@@ -7,6 +7,14 @@ use Carp;
 
 use Statistics::Basic;
 
+use overload
+    '""' => sub {
+        my ($alpha,$beta) = map{$Statistics::Basic::fmt->format_number($_, $ENV{IPRES})} $_[0]->query;
+        "alpha: $alpha, beta: $beta";
+    },
+    '0+' => sub { croak "the result of LSF may not be used as a number" },
+    fallback => 1; # tries to do what it would have done if this wasn't present.
+
 1;
 
 # new {{{
