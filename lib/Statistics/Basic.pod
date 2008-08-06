@@ -33,7 +33,7 @@ to be recalculated.
 Like above, this is somewhat less efficient.  Consider building vectors to do
 it.
 
-    my $v2  = vector([1 ... 3]);
+    my $v2  = vector(1,2,3);
     my $cor = correlation( $v1, $v2 );
 
 All of the functions above return objects that interpolate or evaluate as a
