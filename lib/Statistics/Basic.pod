@@ -1,0 +1,269 @@
+=head1 NAME
+
+    Statistics::Basic A collection of very basic statistics formulae for vectors.
+
+=head1 SYNOPSIS
+
+    use Statistics::Basic qw(:all);
+
+These actually return objects, not numbers.  The objects will interpolate as
+nicely formated numbers (with C<$ENV{IRES}>, defaulting to 2, precision using
+L<Number::Format>).  Or the full actual number will be returned when the object
+is used as a number.
+
+    my $mean   = mean(   [1 .. 3] );
+    my $median = median( [1 .. 3] );
+    my $mode   = mode(   [1 .. 3] );
+
+Although it works to give arrayrefs to these functions...
+
+    my $variance = variance( [1 .. 3] );
+    my $stddev   = stddev(   [1 .. 3] );
+
+... it's better to pass vector objects so the mean and median above doesn't need
+to be recalculated.
+
+    my $v1       = $mean->query_fector;
+    my $variance = variance( $v1 );
+    my $stddev   = stddev(   $v1 );
+
+    my $covariance  = covariance(  [1 .. 3], [1 .. 3] );
+    my $correlation = correlation( [1 .. 3], [1 .. 3] );
+
+Like above, this is somewhat less efficient.  Consider building vectors to do
+it.
+
+    my $v2  = vector([1 ... 3]);
+    my $cor = correlation( $v1, $v2 );
+
+All of the functions above return objects that interpolate or evaluate as a
+single string.  L<Statistics::Basic::LeastSquareFit> is different.  It always
+returns two values...
+
+    my $lsf = leastsquarefit($v1, $v2);
+
+C<$lsf> will interpolate fine, showing C<"alpha: $alpha, beta: $veta">, but it
+will C<croak> if you try to use the object as a number.
+
+    my ($alpha, $beta) = $lsf->query;
+
+In fact, all of the objects allow you to explicitly query, if you're not in the
+mood to use L<overload>.
+
+The following shortcut functions can be used in place of calling the module's
+c<new()> method directly.
+
+=head1 DETAILS
+
+Most of the objects have a variety of query functions that allow you to extract
+the objects used within.  Although, the objects are smart enough to prevent
+needless duplication.  That is, the following would test would pass:
+
+   use Statistics::Basic qw(:all);
+
+   my $v1 = vector(1,2,3,4,5);
+   my $v2 = vector($v1);
+   my $sd = stddev( $v1 );
+   my $v3 = $sd->query_vector;
+   my $m1 = mean( $v1 );
+   my $m2 = $sd->query_mean;
+   my $m3 = Statistics::Basic::Mean->new( $v1 );
+   my $v4 = $m3->query_vector;
+
+   use Scalar::Util qw(refaddr);
+   use Test; plan tests => 5;
+
+   ok( refaddr($v1), refaddr($v2) );
+   ok( refaddr($v2), refaddr($v3) );
+   ok( refaddr($m1), refaddr($m2) );
+   ok( refaddr($m2), refaddr($m3) );
+   ok( refaddr($v3), refaddr($v4) );
+
+   # this is t/54_* in the distribution
+
+Also, note that the mean is only calculated once even though we've calculated a
+variance and a standard deviation above.
+
+Suppose you'd like a copy of the L<Statistics::Basic::Variance> object that the
+L<Statistics::Basic::StdDev> object is using.  All of the objects within should
+be accessible with query functions as follows.
+
+=over query functions
+
+=item query
+
+This method exists in all of the objects.  L<Statistics::Basic::LeastSquareFit>
+is the only one that returns two values (alpha and beta) as a list.  All of the
+other C<query()> methods return a single number, the number the module purports
+to calculate.
+
+=item query_mean
+
+Returns the L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Variance> and L<Statistics::Basic::StdDev>.
+
+=item query_mean1
+
+Returns the first L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
+L<Statistics::Basic::LeastSquareFit>.
+
+=item query_mean2
+
+Returns the second L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
+L<Statistics::Basic::LeastSquareFit>.
+
+=item query_covariance
+
+Returns the L<Statistics::Basic::Covariance> object used by
+L<Statistics::Basic::Correlation> and L<Statistics::Basic::LeastSquareFit>.
+
+=item query_variance
+
+Returns the L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::StdDev>.
+
+=item query_variance1
+
+Returns the first L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::LeastSquareFit>.
+
+=item query_variance2
+
+Returns the first L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::LeastSquareFit>.
+
+=item query_vector
+
+Returns the L<Statistics::Basic::Vector> object used by any of the single vector
+modules.
+
+=item query_vector1
+
+Returns the first L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=item query_vector2
+
+Returns the second L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=back
+
+All of the shortcuts basically just call new for you.  They all take either
+arrayrefs B<or> lists as arguments, which the exception of the shortcuts that
+need two vectors to process (e.g. L<Statistics::Basic::Correlation>.
+
+=over shortcuts
+
+=item vector
+
+Arguments to C<vector()> can be any of: an arrayref, a list of numbers, or a
+blessed vector object.  If passed a blessed vector object, vector will just
+return the vector passed in.
+
+=item mean average avg
+
+You can choose to call C<mean()> as C<average()> or C<avg()>.  Arguments can be
+any of: an arrayref, a list of numbers, or a blessed vector object.
+
+=item median
+
+Arguments can be any of: an arrayref, a list of numbers, or a blessed vector
+object.
+
+=item mode
+
+Arguments can be any of: an arrayref, a list of numbers, or a blessed vector
+object.
+
+=item variance var
+
+You can choose to call C<variance()> as C<var()>.  Arguments can be any of: an
+arrayref, a list of numbers, or a blessed vector object.  If you will also be
+calculating the mean of the same list of numbers it's recommended to do this:
+
+    my $vec  = vector(1,2,3);
+    my $mean = mean($vec);
+    my $var  = variance($vec);
+
+This would also work:
+
+    my $mean = mean(1,2,3);
+    my $var  = variance($mean->query_vector);
+
+This will calculate the same mean twice:
+
+    my $mean = mean(1,2,3);
+    my $var  = variance(1,2,3);
+
+If you really only need the variance, ignore the above and this is fine:
+
+    my $variance = variance(1,2,3,4,5);
+
+=item stddev
+
+Arguments can be any of: an arrayref, a list of numbers, or a blessed vector
+object.  Pass a vector object to C<stddev()> to avoid recalculating the variance
+and mean if applicable (see C<variance>).
+
+=item covariance cov
+
+Arguments to C<covariance()> or C<cov()> must be arrayrefs or vector objects.
+There must be precisely two arguments (or none, setting the vectors to two empty
+ones), and they must be the same length.
+
+=item correlation cor corr
+
+Arguments to C<correlation()> or C<cor()>/C<corr()> must be arrayrefs or vector
+objects.  There must be precisely two arguments (or none, setting the vectors to
+two empty ones), and they must be the same length.
+
+=item leastsquarefit LSF lsf
+
+Arguments to C<leastsquarefit()> or C<lsf()>/C<LSF()> must be arrayrefs or
+vector objects.  There must be precisely two arguments (or none, setting the
+vectors to two empty ones), and they must be the same length.
+
+=back
+
+=over ENV VARIABLES
+
+=item DEBUG
+
+Try setting C<$ENV{DEBUG}=1>; or C<$ENV{DEBUG}=2>; to see the internals.
+
+Also, from your bash prompt you can C<'DEBUG=1 perl ./myprog.pl'> to
+enable debugging dynamically.
+
+=item UNBIAS
+
+This module uses the sum(X - mean(X))/N definition of variance.
+If you wish to use the unbiased, sum(X-mean(X)/(N-1) definition, then 
+set the C<$ENV{UNBIAS}=1>;
+
+This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
+
+=item IRES
+
+C<$ENV{IRES}>, which defaults to 2, is passed to L<Number::Format> as the second
+argument to C<format_number> during string interpolation (see: L<overload>).
+
+=back
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+I am using this software in my own projects...  If you find bugs, please
+please please let me know. :) Actually, let me know if you find it handy at
+all.  Half the fun of releasing this stuff is knowing that people use it.
+
+=head1 COPYRIGHT
+
+LGPL!  I included a lgpl-2.1.txt.gz for your reading enjoyment.
+
+=head1 SEE ALSO
+
+perl(1), L<Number::Format>, L<overload>

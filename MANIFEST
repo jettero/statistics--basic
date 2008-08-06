@@ -23,7 +23,8 @@ META.yml
 t/10_median.t
 t/10_mode.t
 lgpl-2.1.txt.gz
-Basic/LeastSquareFit.pod
-Basic.pod
 t/53_persistance.t
 t/53_co_persistance.t
+lib/Statistics/Basic.pod
+lib/Statistics/Basic/LeastSquareFit.pod
+t/54_doc_example.t
