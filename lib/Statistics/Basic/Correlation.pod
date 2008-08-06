@@ -20,7 +20,7 @@ And then either query the values or print them like so:
     my $cq = $cor->query;
     my $c0 = 0+$correlation;
 
-Create a 20 point "moving" correlationL like so:
+Create a 20 point "moving" correlation like so:
 
     my $sth = $dbh->prepare("select col1,col2 from data where something");
     my $len = 20;
