@@ -33,7 +33,7 @@ Create a 20 point "moving" correlation like so:
     my $count = $len;
     while( $sth->fetch ) {
 
-        $lhs->insert( $lhs, $rhs );
+        $cor->insert( $lhs, $rhs );
         if( -- $count <= 0 ) {
             print "Correlation: $cor\n";
         }

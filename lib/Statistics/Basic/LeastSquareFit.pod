@@ -38,7 +38,7 @@ Create a 20 point "moving" LSF like so:
     my $count = $len;
     while( $sth->fetch ) {
 
-        $lhs->insert( $lhs, $rhs );
+        $lsf->insert( $lhs, $rhs );
         if( -- $count <= 0 ) {
             print "LSF: $lsf\n";
         }

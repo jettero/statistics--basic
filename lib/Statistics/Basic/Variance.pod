@@ -1,0 +1,52 @@
+=head1 NAME
+
+Statistics::Basic::Variance - find the variance of an array
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $variance = variance( [1,2,3] );
+
+Or this way:
+
+    my $v1  = vector(1,2,3);
+    my $var = var($v1);
+
+And then either query the values or print them like so:
+
+    print "The variance between $v1 and $v2: $variance\n";
+    my $vq = $var->query;
+    my $v0 = 0+$var;
+
+Create a 20 point "moving" variance like so:
+
+    my $sth = $dbh->prepare("select col1 from data where something");
+    my $len = 20;
+    my $var = var();
+       $var->set_size($len);
+
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my $val ) or die $dbh->errstr;
+
+    my $count = $len;
+    while( $sth->fetch ) {
+
+        $var->insert( $val );
+        if( -- $count <= 0 ) {
+            print "Variance: $var\n";
+        }
+    }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut
