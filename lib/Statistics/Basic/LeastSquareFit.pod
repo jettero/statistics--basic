@@ -30,12 +30,12 @@ Create a 20 point "moving" LSF like so:
     my $sth = $dbh->prepare("select col1,col2 from data where something");
     my $len = 20;
     my $lsf = lsf();
-       $lsf->set_size($Len);
+       $lsf->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
 
-    my $count = $Len;
+    my $count = $len;
     while( $sth->fetch ) {
 
         $lhs->insert( $lhs, $rhs );
