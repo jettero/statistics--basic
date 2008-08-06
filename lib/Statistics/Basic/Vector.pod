@@ -1,0 +1,29 @@
+=head1 NAME
+
+Statistics::Basic::Vector - a class for handling arrays of numbers
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $vector      = vector(1,2,3);
+    my $same_vector = vector($vector);
+    my $different   = $vector->copy;
+
+This module tracks which of the other L<Statistics::Basic> modules I<use> it.
+That's it's primary purpose.  It does have interpolation though...
+
+    print "$vector\n"; # pretty printed
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut
