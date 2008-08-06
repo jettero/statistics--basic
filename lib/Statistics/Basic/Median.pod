@@ -1,0 +1,52 @@
+=head1 NAME
+
+Statistics::Basic::Median - find the median of an array
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $median = median(1,2,3);
+
+Or this way:
+
+    my $v1  = vector(1,2,3);
+    my $med = median($v1);
+
+And then either query the values or print them like so:
+
+    print "The median of $v1: $med\n";
+    my $mq = $med->query;
+    my $m0 = 0+$med;
+
+Create a 20 point "moving" median like so:
+
+    my $sth = $dbh->prepare("select col1 from data where something");
+    my $len = 20;
+    my $med = median();
+       $std->set_size($len);
+
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my $val ) or die $dbh->errstr;
+
+    my $count = $len;
+    while( $sth->fetch ) {
+
+        $med->insert( $val );
+        if( -- $count <= 0 ) {
+            print "Median: $med\n";
+        }
+    }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut

@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Mode - find the standard deviation of an array
+Statistics::Basic::Mode - find the mode of an array
 
 =head1 SYNOPSIS
 
@@ -16,8 +16,8 @@ Or this way:
 And then either query the values or print them like so:
 
     print "The mod of $v1: $mod\n";
-    my $vq = $mod->query;
-    my $v0 = 0+$mod; # this will croak occasionally, see below
+    my $mq = $mod->query;
+    my $m0 = 0+$mod; # this will croak occasionally, see below
 
 The mode of an array is not necessarily a scalar.  The mode of this vector is a
 vector:

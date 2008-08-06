@@ -16,8 +16,8 @@ Or this way:
 And then either query the values or print them like so:
 
     print "The stddev of $v1: $std\n";
-    my $vq = $std->query;
-    my $v0 = 0+$std;
+    my $sq = $std->query;
+    my $s0 = 0+$std;
 
 Create a 20 point "moving" stddev like so:
 
