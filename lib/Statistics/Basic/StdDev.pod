@@ -1,0 +1,52 @@
+=head1 NAME
+
+Statistics::Basic::StdDev - find the standard deviation of an array
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $stddev = stddev(1,2,3);
+
+Or this way:
+
+    my $v1  = vector(1,2,3);
+    my $std = stddev($v1);
+
+And then either query the values or print them like so:
+
+    print "The stddev between $v1 and $v2: $std\n";
+    my $vq = $std->query;
+    my $v0 = 0+$std;
+
+Create a 20 point "moving" stddev like so:
+
+    my $sth = $dbh->prepare("select col1 from data where something");
+    my $len = 20;
+    my $std = stddev();
+       $std->set_size($len);
+
+    $sth->execute or die $dbh->errstr;
+    $sth->bind_columns( my $val ) or die $dbh->errstr;
+
+    my $count = $len;
+    while( $sth->fetch ) {
+
+        $std->insert( $val );
+        if( -- $count <= 0 ) {
+            print "StdDev: $std\n";
+        }
+    }
+
+The full details are probably in the base module.  If you have questions, just
+let me know.
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut

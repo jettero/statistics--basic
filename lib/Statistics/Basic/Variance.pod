@@ -6,7 +6,7 @@ Statistics::Basic::Variance - find the variance of an array
 
 Invoke it this way:
 
-    my $variance = variance( [1,2,3] );
+    my $variance = variance(1,2,3);
 
 Or this way:
 
