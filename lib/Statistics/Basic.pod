@@ -1,6 +1,6 @@
 =head1 NAME
 
-    Statistics::Basic A collection of very basic statistics formulae for vectors.
+    Statistics::Basic - A collection of very basic statistics modules
 
 =head1 SYNOPSIS
 
@@ -11,14 +11,14 @@ nicely formated numbers (with C<$ENV{IRES}>, defaulting to 2, precision using
 L<Number::Format>).  Or the full actual number will be returned when the object
 is used as a number.
 
-    my $mean   = mean(   [1 .. 3] );
-    my $median = median( [1 .. 3] );
-    my $mode   = mode(   [1 .. 3] );
+    my $mean   = mean(   1,2,3 );
+    my $median = median( 1,2,3 );
+    my $mode   = mode(  [1..3] ); # they also take arrayrefs
 
 Although it works to give arrayrefs to these functions...
 
-    my $variance = variance( [1 .. 3] );
-    my $stddev   = stddev(   [1 .. 3] );
+    my $variance = variance( 1,2,3 );
+    my $stddev   = stddev(   1,2,3 );
 
 ... it's better to pass vector objects so the mean and median above doesn't need
 to be recalculated.
