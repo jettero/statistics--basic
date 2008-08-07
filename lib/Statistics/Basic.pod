@@ -7,38 +7,43 @@
     use Statistics::Basic qw(:all);
 
 These actually return objects, not numbers.  The objects will interpolate as
-nicely formated numbers (with C<$ENV{IRES}>, defaulting to 2, precision using
-L<Number::Format>).  Or the full actual number will be returned when the object
-is used as a number.
+nicely formated numbers (using L<Number::Format>).  Or the actual number will be
+returned when the object is used as a number.
 
-    my $mean   = mean(   1,2,3 );
     my $median = median( 1,2,3 );
-    my $mode   = mode(  [1..3] ); # they also take arrayrefs
-
-Although it works to give arrayrefs to these functions...
+    my $mean   = mean(  [1,2,3]); # array refs are ok too
 
     my $variance = variance( 1,2,3 );
     my $stddev   = stddev(   1,2,3 );
 
-... it's better to pass vector objects so the mean and median above doesn't need
-to be recalculated.
+Although passing unblessed numbers and array refs to these functions works, it's
+sometimes better to pass vector objects so the objects can reuse calculated
+values.
 
     my $v1       = $mean->query_fector;
     my $variance = variance( $v1 );
     my $stddev   = stddev(   $v1 );
 
+Here, the mean used by the variance and the variance used by the standard
+deviation will not need to be recalculated.  Now consider these two
+calculations.
+
     my $covariance  = covariance(  [1 .. 3], [1 .. 3] );
     my $correlation = correlation( [1 .. 3], [1 .. 3] );
 
-Like above, this is somewhat less efficient.  Consider building vectors to do
-it.
+Here, the covariance would need to be recalculated by the correlation.  But if
+we instead build vectors first then that wouldn't happen.
 
+    # $v1 is defined above
     my $v2  = vector(1,2,3);
+    my $cov = covariance(  $v1, $v2 );
     my $cor = correlation( $v1, $v2 );
+
+Now C<$cor> can reuse the variance calculated in C<$cov>.
 
 All of the functions above return objects that interpolate or evaluate as a
 single string or as a number.  L<Statistics::Basic::LeastSquareFit> and
-L<Statistics::Basic::Mode> are different.
+L<Statistics::Basic::Mode> are different:
 
     my $unimodal   = mode(1,2,3,3);
     my $multimodal = mode(1,2,3);
@@ -52,10 +57,12 @@ error.  But it interpolates just fine.
 
     my $lsf = leastsquarefit($v1, $v2);
 
-This C<$lsf> will interpolate fine, showing C<"alpha: $alpha, beta: $veta">, but
+This C<$lsf> will interpolate fine, showing C<"alpha: $alpha, beta: $beta">, but
 it will C<croak> if you try to use the object as a number.
 
+    my $v3             = $multimodal->query;
     my ($alpha, $beta) = $lsf->query;
+    my $average        = $mean->query;
 
 All of the objects allow you to explicitly query, if you're not in the mood to
 use L<overload>.
@@ -67,7 +74,7 @@ use L<overload>.
     );
 
 The following shortcut functions can be used in place of calling the module's
-c<new()> method directly.
+C<new()> method directly.
 
 =head1 DETAILS
 
