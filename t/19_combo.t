@@ -24,7 +24,7 @@ $s->insert(6);
 ok($m,   mean(4,5,6)); print STDERR " $s; $m        ";
 ok($s, stddev(4,5,6));
 
-print STDERR "\n                   ";
+print STDERR "\n                            ";
 
 $v = vector(1,2,3);
 $m = mean($v);
