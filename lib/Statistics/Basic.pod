@@ -76,10 +76,89 @@ use L<overload>.
         $stddev->query,
     );
 
+=head1 SHORTCUTS
+
 The following shortcut functions can be used in place of calling the module's
 C<new()> method directly.
 
-=head1 DETAILS
+They all basically just call new for you.  They all take either
+array refs B<or> lists as arguments, which the exception of the shortcuts that
+need two vectors to process (e.g. L<Statistics::Basic::Correlation>.
+
+=over
+
+=item C<vector()>
+
+Arguments to C<vector()> can be any of: an array ref, a list of numbers, or a
+blessed vector object.  If passed a blessed vector object, vector will just
+return the vector passed in.
+
+=item C<mean()> C<average()> C<avg()>
+
+You can choose to call C<mean()> as C<average()> or C<avg()>.  Arguments can be
+any of: an array ref, a list of numbers, or a blessed vector object.
+
+=item C<median()>
+
+Arguments can be any of: an array ref, a list of numbers, or a blessed vector
+object.
+
+=item C<mode()>
+
+Arguments can be any of: an array ref, a list of numbers, or a blessed vector
+object.
+
+=item C<variance()> C<var()>
+
+You can choose to call C<variance()> as C<var()>.  Arguments can be any of: an
+array ref, a list of numbers, or a blessed vector object.  If you will also be
+calculating the mean of the same list of numbers it's recommended to do this:
+
+    my $vec  = vector(1,2,3);
+    my $mean = mean($vec);
+    my $var  = variance($vec);
+
+This would also work:
+
+    my $mean = mean(1,2,3);
+    my $var  = variance($mean->query_vector);
+
+This will calculate the same mean twice:
+
+    my $mean = mean(1,2,3);
+    my $var  = variance(1,2,3);
+
+If you really only need the variance, ignore the above and this is fine:
+
+    my $variance = variance(1,2,3,4,5);
+
+=item C<stddev()>
+
+Arguments can be any of: an array ref, a list of numbers, or a blessed vector
+object.  Pass a vector object to C<stddev()> to avoid recalculating the variance
+and mean if applicable (see C<variance>).
+
+=item C<covariance()> C<cov()>
+
+Arguments to C<covariance()> or C<cov()> must be array ref or vector objects.
+There must be precisely two arguments (or none, setting the vectors to two empty
+ones), and they must be the same length.
+
+=item C<correlation()> C<cor()> C<corr()>
+
+Arguments to C<correlation()> or C<cor()>/C<corr()> must be array ref or vector
+objects.  There must be precisely two arguments (or none, setting the vectors to
+two empty ones), and they must be the same length.
+
+=item C<leastsquarefit()> C<LSF()> C<lsf()>
+
+Arguments to C<leastsquarefit()> or C<lsf()>/C<LSF()> must be array ref or
+vector objects.  There must be precisely two arguments (or none, setting the
+vectors to two empty ones), and they must be the same length.
+
+=back
+
+=head1 REUSE DETAILS
 
 Most of the objects have a variety of query functions that allow you to extract
 the objects used within.  Although, the objects are smart enough to prevent
@@ -114,7 +193,97 @@ Suppose you'd like a copy of the L<Statistics::Basic::Variance> object that the
 L<Statistics::Basic::StdDev> object is using.  All of the objects within should
 be accessible with query functions as follows.
 
+=head1 QUERY FUNCTIONS
+
+=over
+
+=item C<query()>
+
+This method exists in all of the objects.  L<Statistics::Basic::LeastSquareFit>
+is the only one that returns two values (alpha and beta) as a list.  All of the
+other C<query()> methods return a single number, the number the module purports
+to calculate.
+
+=item C<query_mean()>
+
+Returns the L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Variance> and L<Statistics::Basic::StdDev>.
+
+=item C<query_mean1()>
+
+Returns the first L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_mean2()>
+
+Returns the second L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_covariance()>
+
+Returns the L<Statistics::Basic::Covariance> object used by
+L<Statistics::Basic::Correlation> and L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_variance()>
+
+Returns the L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::StdDev>.
+
+=item C<query_variance1()>
+
+Returns the first L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_variance2()>
+
+Returns the first L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_vector()>
+
+Returns the L<Statistics::Basic::Vector> object used by any of the single vector
+modules.
+
+=item C<query_vector1()>
+
+Returns the first L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=item C<query_vector2()>
+
+Returns the second L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=item C<is_multimodal()>
+
+L<Statistics::Basic::Mode> objects sometimes return L<Statistics::Basic::Vector>
+objects instead of numbers.  When C<is_multimodal()> is true, the mode is a
+vector, not a scalar.
+
+=item C<y_given_x()>
+
+L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
+This function can be used to find the C<y> for a given C<x> based on the
+calculated C<$beta> (slope) and C<$alpha> (y-offset).
+
+=item C<x_given_y()>
+
+L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
+This function can be used to find the C<x> for a given C<y> based on the
+calculated C<$beta> (slope) and C<$alpha> (y-offset).
+
+This function can produce divide-by-zero errors since it must divide by the
+slope to find the C<x> value.  (The slope should rarely be zero though, that's a
+vertical line and would represent very odd data points.)
+
+=back
+
 =head1 INSERT and SET FUNCTIONS
+
+These objects are all intended to be useful while processing long columns of
+data, like data you'd find in a database.
 
 =over
 
@@ -227,172 +396,6 @@ kicked out after new C<insert()>s.
     print "", $c->query_vector2, "\n";
      # [0, 0, 0, 0, 0, 0, 3]
      # [0, 0, 0, 0, 0, 0, 3]
-
-=back
-
-=head1 QUERY FUNCTIONS
-
-=over
-
-=item C<query()>
-
-This method exists in all of the objects.  L<Statistics::Basic::LeastSquareFit>
-is the only one that returns two values (alpha and beta) as a list.  All of the
-other C<query()> methods return a single number, the number the module purports
-to calculate.
-
-=item C<query_mean()>
-
-Returns the L<Statistics::Basic::Mean> object used by
-L<Statistics::Basic::Variance> and L<Statistics::Basic::StdDev>.
-
-=item C<query_mean1()>
-
-Returns the first L<Statistics::Basic::Mean> object used by
-L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
-L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_mean2()>
-
-Returns the second L<Statistics::Basic::Mean> object used by
-L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
-L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_covariance()>
-
-Returns the L<Statistics::Basic::Covariance> object used by
-L<Statistics::Basic::Correlation> and L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_variance()>
-
-Returns the L<Statistics::Basic::Variance> object used by
-L<Statistics::Basic::StdDev>.
-
-=item C<query_variance1()>
-
-Returns the first L<Statistics::Basic::Variance> object used by
-L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_variance2()>
-
-Returns the first L<Statistics::Basic::Variance> object used by
-L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_vector()>
-
-Returns the L<Statistics::Basic::Vector> object used by any of the single vector
-modules.
-
-=item C<query_vector1()>
-
-Returns the first L<Statistics::Basic::Vector> object used by any of the two
-vector modules.
-
-=item C<query_vector2()>
-
-Returns the second L<Statistics::Basic::Vector> object used by any of the two
-vector modules.
-
-=item C<is_multimodal()>
-
-L<Statistics::Basic::Mode> objects sometimes return L<Statistics::Basic::Vector>
-objects instead of numbers.  When C<is_multimodal()> is true, the mode is a
-vector, not a scalar.
-
-=item C<y_given_x()>
-
-L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
-This function can be used to find the C<y> for a given C<x> based on the
-calculated C<$beta> (slope) and C<$alpha> (y-offset).
-
-=item C<x_given_y()>
-
-L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
-This function can be used to find the C<x> for a given C<y> based on the
-calculated C<$beta> (slope) and C<$alpha> (y-offset).
-
-This function can produce divide-by-zero errors since it must divide by the
-slope to find the C<x> value.  (The slope should rarely be zero though, that's a
-vertical line and would represent very odd data points.)
-
-=back
-
-All of the shortcuts basically just call new for you.  They all take either
-array refs B<or> lists as arguments, which the exception of the shortcuts that
-need two vectors to process (e.g. L<Statistics::Basic::Correlation>.
-
-=head1 SHORTCUTS
-
-=over
-
-=item C<vector()>
-
-Arguments to C<vector()> can be any of: an array ref, a list of numbers, or a
-blessed vector object.  If passed a blessed vector object, vector will just
-return the vector passed in.
-
-=item C<mean()> C<average()> C<avg()>
-
-You can choose to call C<mean()> as C<average()> or C<avg()>.  Arguments can be
-any of: an array ref, a list of numbers, or a blessed vector object.
-
-=item C<median()>
-
-Arguments can be any of: an array ref, a list of numbers, or a blessed vector
-object.
-
-=item C<mode()>
-
-Arguments can be any of: an array ref, a list of numbers, or a blessed vector
-object.
-
-=item C<variance()> C<var()>
-
-You can choose to call C<variance()> as C<var()>.  Arguments can be any of: an
-array ref, a list of numbers, or a blessed vector object.  If you will also be
-calculating the mean of the same list of numbers it's recommended to do this:
-
-    my $vec  = vector(1,2,3);
-    my $mean = mean($vec);
-    my $var  = variance($vec);
-
-This would also work:
-
-    my $mean = mean(1,2,3);
-    my $var  = variance($mean->query_vector);
-
-This will calculate the same mean twice:
-
-    my $mean = mean(1,2,3);
-    my $var  = variance(1,2,3);
-
-If you really only need the variance, ignore the above and this is fine:
-
-    my $variance = variance(1,2,3,4,5);
-
-=item C<stddev()>
-
-Arguments can be any of: an array ref, a list of numbers, or a blessed vector
-object.  Pass a vector object to C<stddev()> to avoid recalculating the variance
-and mean if applicable (see C<variance>).
-
-=item C<covariance()> C<cov()>
-
-Arguments to C<covariance()> or C<cov()> must be array ref or vector objects.
-There must be precisely two arguments (or none, setting the vectors to two empty
-ones), and they must be the same length.
-
-=item C<correlation()> C<cor()> C<corr()>
-
-Arguments to C<correlation()> or C<cor()>/C<corr()> must be array ref or vector
-objects.  There must be precisely two arguments (or none, setting the vectors to
-two empty ones), and they must be the same length.
-
-=item C<leastsquarefit()> C<LSF()> C<lsf()>
-
-Arguments to C<leastsquarefit()> or C<lsf()>/C<LSF()> must be array ref or
-vector objects.  There must be precisely two arguments (or none, setting the
-vectors to two empty ones), and they must be the same length.
 
 =back
 
