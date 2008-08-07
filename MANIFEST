@@ -37,3 +37,4 @@ lib/Statistics/Basic/Variance.pod
 lib/Statistics/Basic/Vector.pod
 t/54_doc_example.t
 t/19_combo.t
+README
