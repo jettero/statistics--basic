@@ -114,7 +114,9 @@ Suppose you'd like a copy of the L<Statistics::Basic::Variance> object that the
 L<Statistics::Basic::StdDev> object is using.  All of the objects within should
 be accessible with query functions as follows.
 
-=over insert functions
+=head1 INSERT and SET FUNCTIONS
+
+=over
 
 =item C<insert()>
 
@@ -228,7 +230,9 @@ kicked out after new C<insert()>s.
 
 =back
 
-=over query functions
+=head1 QUERY FUNCTIONS
+
+=over
 
 =item C<query()>
 
@@ -317,7 +321,9 @@ All of the shortcuts basically just call new for you.  They all take either
 array refs B<or> lists as arguments, which the exception of the shortcuts that
 need two vectors to process (e.g. L<Statistics::Basic::Correlation>.
 
-=over shortcuts
+=head1 SHORTCUTS
+
+=over
 
 =item C<vector()>
 
@@ -390,7 +396,9 @@ vectors to two empty ones), and they must be the same length.
 
 =back
 
-=over ENV VARIABLES
+=head1 ENVIRONMENT VARIABLES
+
+=over
 
 =item C<$ENV{DEBUG}>
 
