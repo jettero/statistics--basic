@@ -79,8 +79,7 @@ use L<overload>.
 =head1 SHORTCUTS
 
 The following shortcut functions can be used in place of calling the module's
-C<new()> method directly -- actually, they do little more than call new fore
-you.
+C<new()> method directly.
 
 They all take either array refs B<or> lists as arguments, which the exception of
 the shortcuts that need two vectors to process (e.g.
