@@ -3,7 +3,7 @@ use strict;
 use Test;
 use Statistics::Basic qw(:all);
 
-plan tests => 8;
+plan tests => 16;
 
 my $v = vector(1,2,3);
 my $m = mean($v);
@@ -23,3 +23,26 @@ ok($s, stddev(3,4,5));
 $s->insert(6);
 ok($m,   mean(4,5,6)); print STDERR " $s; $m        ";
 ok($s, stddev(4,5,6));
+
+print STDERR "\n                   ";
+
+$v = vector(1,2,3);
+$m = mean($v);
+$s = stddev($v);
+
+ok($m,   mean(1,2,3));       print STDERR " $s; $m        ";
+ok($s, stddev(1,2,3));
+
+$v->ginsert(4);
+ok($m,   mean(1,2,3,4));     print STDERR " $s; $m        ";
+ok($s, stddev(1,2,3,4));
+
+$m->ginsert(5);
+ok($m,   mean(1,2,3,4,5));   print STDERR " $s; $m        ";
+ok($s, stddev(1,2,3,4,5));
+
+$s->ginsert(6);
+ok($m,   mean(1,2,3,4,5,6)); print STDERR " $s; $m        ";
+ok($s, stddev(1,2,3,4,5,6));
+
+print STDERR "\n";
