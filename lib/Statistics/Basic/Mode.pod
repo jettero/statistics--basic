@@ -22,10 +22,14 @@ And then either query the values or print them like so:
 The mode of an array is not necessarily a scalar.  The mode of this vector is a
 vector:
 
-    use Scalar::Util qw(blessed);
-
     my $mod = mode(1,2,3);
     my $v2  = $mod->query;
+
+    print "hrm, there's three elements in this mode: $mod\n"
+        if $mod->is_multimodal;
+
+    use Scalar::Util qw(blessed);
+
     print "hrm, there's three elements in this mode: $mod\n"
         if blessed($v2) and $v2->isa("Statistics::Basic::Vector");
 

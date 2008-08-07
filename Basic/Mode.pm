@@ -6,6 +6,7 @@ use warnings;
 use Carp;
 
 use Statistics::Basic;
+use Scalar::Util qw(blessed);
 
 use overload
     '""' => sub {
@@ -85,6 +86,14 @@ sub query_vector {
     my $this = shift;
 
     return $this->{v};
+}
+# }}}
+# is_multimodal {{{
+sub is_multimodal {
+    my $this = shift;
+    my $that = $this->query;
+
+    return (blessed($that) ? 1:0);
 }
 # }}}
 
