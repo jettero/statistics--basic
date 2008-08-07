@@ -81,7 +81,7 @@ use L<overload>.
 The following shortcut functions can be used in place of calling the module's
 C<new()> method directly.
 
-They all take either array refs B<or> lists as arguments, which the exception of
+They all take either array refs B<or> lists as arguments, with the exception of
 the shortcuts that need two vectors to process (e.g.
 L<Statistics::Basic::Correlation>.
 
