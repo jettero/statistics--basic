@@ -134,6 +134,26 @@ sub query_covariance {
 }
 # }}}
 
+# y_given_x {{{
+sub y_given_x {
+    my $this = shift;
+    my ($alpha, $beta) = $this->query;
+    my $x = shift;
+
+    return ($beta*$x + $alpha);
+}
+# }}}
+# x_given_y {{{
+sub x_given_y {
+    my $this = shift;
+    my ($alpha, $beta) = $this->query;
+    my $y = shift;
+
+    my $x = eval { ( ($y-$alpha)/$beta ) }; croak $@ if $@;
+    return $x;
+}
+# }}}
+
 # size {{{
 sub size {
     my $this = shift;

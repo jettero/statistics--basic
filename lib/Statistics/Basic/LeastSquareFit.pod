@@ -25,6 +25,15 @@ And then either query the values or print them like so:
     print "The LSF for $v1 and $v2: $lsf\n";
     my ($alpha, $beta) = $lsf->query;
 
+Suppose you want to draw a line.  Here is how you would calculate the C<x> for a
+given C<y> or vice versa:
+
+    my $y = $lsf->y_given_x( 7 );
+    my $x = $lsf->x_given_y( 7 );
+
+(Note that C<x_given_y()> can sometimes produce a divide-by-zero error since it
+has to divide by the C<$beta>.)
+
 Create a 20 point "moving" LSF like so:
 
     my $sth = $dbh->prepare("select col1,col2 from data where something");
