@@ -15,6 +15,7 @@ use Statistics::Basic::Mode;
 use Statistics::Basic::StdDev;
 use Statistics::Basic::Variance;
 use Statistics::Basic::Vector;
+use Statistics::Basic::ComputedVector;
 
 our $VERSION = "1.0";
 our $fmt = new Number::Format;
@@ -39,6 +40,8 @@ our @EXPORT_OK   = (qw(
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 1;
+
+sub cvec     { my $r = eval { ref($_[0]) ? Statistics::Basic::ComputedVector->new( $_[0] )   : Statistics::Basic::ComputedVector->new( [@_] );   }; croak $@ if $@; $r }
 
 sub vector   { my $r = eval { ref($_[0]) ? Statistics::Basic::Vector->new( $_[0] )   : Statistics::Basic::Vector->new( [@_] );   }; croak $@ if $@; $r }
 sub mean     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mean->new( $_[0] )     : Statistics::Basic::Mean->new( [@_] );     }; croak $@ if $@; $r }
