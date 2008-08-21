@@ -209,7 +209,7 @@ sub set_vector {
         $this->{s} = int @$vector;
         $_->recalc_needed for values %{$this->{c}};
 
-    } elsif( ref($vector) eq "Statistics::Basic::Vector") {
+    } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
         $this->{v} = $vector->{v}; # this links the vectors together
         $this->{c} = $vector->{c}; # so we should link their computers too
