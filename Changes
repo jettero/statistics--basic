@@ -3,6 +3,7 @@
      vector, but will be recomputable.
    - computed vectors and a test have been added...
    - added a filtered-outlier test
+   - documented the new computed vectors
 
 1.00: Thu Aug  7 07:24:36 EDT 2008
    - finished up the docs, they still need to be proofread

@@ -156,7 +156,35 @@ Arguments to C<leastsquarefit()> or C<lsf()>/C<LSF()> must be array ref or
 vector objects.  There must be precisely two arguments (or none, setting the
 vectors to two empty ones), and they must be the same length.
 
+=item C<computed()>
+
+Argument must be a blessed vector object.
+
 =back
+
+=head1 COMPUTED VECTORS
+
+Sometimes it will be handy to have a vector computed from another (or at least
+that updates based on the first).  Consider the case of outliers:
+
+    my @a = ( (1,2,3) x 7, 15 );
+    my @b = ( (1,2,3) x 7 );
+
+    my $v1 = vector(@a);
+    my $v2 = vector(@b);
+    my $v3 = computed($v1);
+       $v3->set_filter(sub {
+           my $m = mean($v1);
+           my $s = stddev($v1);
+
+           grep { abs($_-$m) <= $s } @_;
+       });
+
+This filter sets C<$v3> to always be equal to C<$v1> such that all the elements
+that differ from the mean by more than a standard deviation are removed.  As
+such, C<"$v2" eq "$v3"> since C<15> is clearly an outlier by inspection.
+
+=head2 OUTLIERS
 
 =head1 REUSE DETAILS
 
@@ -164,27 +192,27 @@ Most of the objects have a variety of query functions that allow you to extract
 the objects used within.  Although, the objects are smart enough to prevent
 needless duplication.  That is, the following would test would pass:
 
-   use Statistics::Basic qw(:all);
+    use Statistics::Basic qw(:all);
 
-   my $v1 = vector(1,2,3,4,5);
-   my $v2 = vector($v1);
-   my $sd = stddev( $v1 );
-   my $v3 = $sd->query_vector;
-   my $m1 = mean( $v1 );
-   my $m2 = $sd->query_mean;
-   my $m3 = Statistics::Basic::Mean->new( $v1 );
-   my $v4 = $m3->query_vector;
+    my $v1 = vector(1,2,3,4,5);
+    my $v2 = vector($v1);
+    my $sd = stddev( $v1 );
+    my $v3 = $sd->query_vector;
+    my $m1 = mean( $v1 );
+    my $m2 = $sd->query_mean;
+    my $m3 = Statistics::Basic::Mean->new( $v1 );
+    my $v4 = $m3->query_vector;
 
-   use Scalar::Util qw(refaddr);
-   use Test; plan tests => 5;
+    use Scalar::Util qw(refaddr);
+    use Test; plan tests => 5;
 
-   ok( refaddr($v1), refaddr($v2) );
-   ok( refaddr($v2), refaddr($v3) );
-   ok( refaddr($m1), refaddr($m2) );
-   ok( refaddr($m2), refaddr($m3) );
-   ok( refaddr($v3), refaddr($v4) );
+    ok( refaddr($v1), refaddr($v2) );
+    ok( refaddr($v2), refaddr($v3) );
+    ok( refaddr($m1), refaddr($m2) );
+    ok( refaddr($m2), refaddr($m3) );
+    ok( refaddr($v3), refaddr($v4) );
 
-   # this is t/54_* in the distribution
+    # this is t/54_* in the distribution
 
 Also, note that the mean is only calculated once even though we've calculated a
 variance and a standard deviation above.

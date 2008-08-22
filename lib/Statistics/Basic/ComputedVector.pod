@@ -1,0 +1,24 @@
+=head1 NAME
+
+Statistics::Basic::ComputedVector - a class for computing filtered vectors
+
+=head1 SYNOPSIS
+
+Invoke it this way:
+
+    my $vector   = vector(1,2,3);
+    my $computed = computed($vector);
+       $computed->set_filter(sub{
+           # NOTE: only interested in even numbers:
+           grep { !($_ % 2) } @_
+       });
+
+=head1 AUTHOR
+
+Paul Miller <jettero@cpan.org>
+
+=head1 SEE ALSO
+
+perl(1), L<Statistics::Basic>
+
+=cut
