@@ -40,13 +40,13 @@ sub recalc {
     delete $this->{median};
     return unless $cardinality > 0;
 
-    my @v = (sort {$a <=> $b} ($this->{v}->query()));
+    my @v = (sort {$a <=> $b} ($this->{v}->query));
     my $center = int($cardinality/2);
     if ($cardinality%2) {
         $this->{median} = $v[$center];
 
     } else {
-        $this->{median} = ($v[$center] + $v[$center-1]) / 2.0;
+        $this->{median} = ($v[$center] + $v[$center-1]);
     }
 
     warn "[recalc median] vector[int($cardinality/2)] = $this->{median}\n" if $ENV{DEBUG};
