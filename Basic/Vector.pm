@@ -100,6 +100,22 @@ sub get_linked_computer {
     $this->get_computer( $new_key );
 }
 # }}}
+# inform_computers_of_change {{{
+sub inform_computers_of_change {
+    my $this = shift;
+
+    for my $k (keys %{ $this->{c} }) {
+        my $v = $this->{c}{$k};
+
+        if( defined($v) and blessed($v) ) {
+            $v->recalc_needed;
+
+        } else {
+            delete $this->{c}{$k};
+        }
+    }
+}
+# }}}
 
 # fix_size {{{
 sub fix_size {
@@ -137,7 +153,7 @@ sub set_size {
     if( $this->{s} != $size ) {
         $this->{s} = $size;
         $this->fix_size($norm);
-        $_->recalc_needed for values %{$this->{c}};
+        $this->inform_computers_of_change;
     }
 }
 # }}}
@@ -171,7 +187,7 @@ sub insert {
     }
 
     $this->fix_size;
-    $_->recalc_needed for values %{$this->{c}};
+    $this->inform_computers_of_change;
 }
 # }}}
 # ginsert {{{
@@ -195,7 +211,7 @@ sub ginsert {
     }
 
     $this->{s} = @{$this->{v}};
-    $_->recalc_needed for values %{$this->{c}};
+    $this->inform_computers_of_change;
 }
 # }}}
 # set_vector {{{
@@ -207,7 +223,7 @@ sub set_vector {
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = $vector;
         $this->{s} = int @$vector;
-        $_->recalc_needed for values %{$this->{c}};
+        $this->inform_computers_of_change;
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};

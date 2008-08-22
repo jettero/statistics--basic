@@ -56,7 +56,7 @@ sub recalc {
     }
 
     warn "[recalc computed vector]\n" if $ENV{DEBUG};
-    $_->recalc_needed for values %{$this->{c}};
+    $this->inform_computers_of_change;
 }
 # }}}
 # recalc_needed {{{
