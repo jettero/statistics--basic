@@ -41,3 +41,4 @@ README
 t/08_cvec.t
 Basic/ComputedVector.pm
 t/08_filter_outliers.t
+lib/Statistics/Basic/ComputedVector.pod
