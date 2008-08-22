@@ -1,6 +1,8 @@
-1.50: Thu Aug 21 07:09:33 EDT 2008
+1.50: Fri Aug 22 06:56:17 EDT 2008
    - adding a computed vector class that will act just like a
      vector, but will be recomputable.
+   - computed vectors and a test have been added...
+   - added a filtered-outlier test
 
 1.00: Thu Aug  7 07:24:36 EDT 2008
    - finished up the docs, they still need to be proofread
