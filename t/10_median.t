@@ -1,9 +1,9 @@
 
 use strict;
 use Test;
-use Statistics::Basic;
+use Statistics::Basic qw(:all);
 
-plan tests => 6;
+plan tests => 8;
 
 my  $sbm = new Statistics::Basic::Median([1 .. 3]);
 
@@ -25,3 +25,6 @@ my  $j = new Statistics::Basic::Median;
     $j->set_vector( [1 .. 3] );
 
 ok($j->query, 2);
+
+ok( median(6, 47, 49, 15, 42, 41, 7, 39, 43, 40, 36), 40   );
+ok( median(7, 15, 36, 39, 40, 41),                    37.5 );

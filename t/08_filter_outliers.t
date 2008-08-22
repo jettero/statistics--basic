@@ -37,7 +37,7 @@ ok( $Q3, 43 );
 
 $v1->set_vector([7, 15, 36, 39, 40, 41]);
 
-$Q2 = median( $v1 ); warn " $v1 -> $Q2 ";
+$Q2 = median( $v1 );
 $Q1 = median( $lh );
 $Q3 = median( $uh );
 
