@@ -17,7 +17,7 @@ use Statistics::Basic::Variance;
 use Statistics::Basic::Vector;
 use Statistics::Basic::ComputedVector;
 
-our $VERSION = "1.5";
+our $VERSION = "1.53";
 our $fmt = new Number::Format;
 
 $ENV{DEBUG} ||= 0;
