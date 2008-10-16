@@ -1,3 +1,9 @@
+1.531: Thu Oct 16 16:26:12 EDT 2008
+   - A really minor bugfix thanks to Michiel van Loon
+   - I'm also requiring the latest version of Number::Format to
+     see if that mysterious separator problem disappears for
+     the rare tester that has a problem with it.
+
 1.53: Fri Aug 22 17:34:02 EDT 2008
    - did some cleanup on the recalc code
    - still showing a bug in the new t/08_filter tests... 
