@@ -10,8 +10,7 @@ use Statistics::Basic;
 use overload
     '""' => sub { $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES}) },
     '0+' => sub { $_[0]->query },
-    '==' => sub { exists($ENV{TOLER}) ? (abs($_[0]-$_[1])<$ENV{TOLER}) : ($_[0] == $_[1]) },
-    'eq' => sub { "$_[0]" eq "$_[1]" },
+    ( exists($ENV{TOLER}) ?  ('==' => sub { abs($_[0]-$_[1])<=$ENV{TOLER} }) : () )
     fallback => 1; # tries to do what it would have done if this wasn't present.
 
 1;
