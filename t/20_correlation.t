@@ -1,9 +1,8 @@
+BEGIN { $ENV{TOLER} = 0.000_001; }
 
 use strict;
 use Test;
 use Statistics::Basic qw(:all);
-
-$ENV{TOLER} = 0.000_001;
 
 plan tests => 7;
 
