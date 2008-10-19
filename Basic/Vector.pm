@@ -174,7 +174,7 @@ sub insert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[insert $this] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[insert $this] @$e\n" if $ENV{DEBUG} >= 1;
 
             } else {
                 croak "insert() elements do not make sense" unless blessed $e; # we'll assume blessed refs are ok
@@ -182,7 +182,7 @@ sub insert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[insert $this] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[insert $this] $e\n" if $ENV{DEBUG} >= 1;
         }
     }
 
@@ -198,7 +198,7 @@ sub ginsert {
         if( ref($e) ) {
             if( ref($e) eq "ARRAY" ) {
                 push @{ $this->{v} }, @$e;
-                warn "[ginsert $this] @$e\n" if $ENV{DEBUG} >= 2;
+                warn "[ginsert $this] @$e\n" if $ENV{DEBUG} >= 1;
 
             } else {
                 croak "insert() elements do not make sense" unless blessed $e; # we'll assume blessed refs are ok
@@ -206,7 +206,7 @@ sub ginsert {
 
         } else {
             push @{ $this->{v} }, $e;
-            warn "[ginsert $this] $e\n" if $ENV{DEBUG} >= 2;
+            warn "[ginsert $this] $e\n" if $ENV{DEBUG} >= 1;
         }
     }
 
