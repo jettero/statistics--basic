@@ -11,7 +11,6 @@ my  $corr = new Statistics::Basic::Correlation([1 .. 10], [1 .. 10]);
 ok( $corr == 1.0 );
 
     $corr->insert( 11, 7 );
-warn "$corr == ( (129.0/20) / (sqrt(609.0/100) * sqrt(165.0/20))))\n";
 ok( $corr == ( (129.0/20) / (sqrt(609.0/100) * sqrt(165.0/20))));
 
     $corr->set_vector( [11 .. 13], [11 .. 13] );
