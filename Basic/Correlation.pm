@@ -75,7 +75,7 @@ sub query {
 
     $this->recalc if $this->{recalc_needed};
 
-    warn "[query correlation $this->{mean}]\n" if $ENV{DEBUG};
+    warn "[query correlation $this->{correlation}]\n" if $ENV{DEBUG};
 
     return $this->{correlation};
 }

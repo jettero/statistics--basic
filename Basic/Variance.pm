@@ -73,7 +73,7 @@ sub query {
 
     $this->recalc if $this->{recalc_needed};
 
-    warn "[query variance $this->{mean}]\n" if $ENV{DEBUG};
+    warn "[query variance $this->{variance}]\n" if $ENV{DEBUG};
 
     return $this->{variance};
 }
