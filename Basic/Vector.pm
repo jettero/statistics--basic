@@ -177,7 +177,7 @@ sub insert {
                 warn "[insert $this] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
-                croak "insert() elements do not make sense";
+                croak "insert() elements do not make sense" unless blessed $e; # we'll assume blessed refs are ok
             }
 
         } else {
@@ -201,7 +201,7 @@ sub ginsert {
                 warn "[ginsert $this] @$e\n" if $ENV{DEBUG} >= 2;
 
             } else {
-                croak "ginsert() elements do not make sense";
+                croak "insert() elements do not make sense" unless blessed $e; # we'll assume blessed refs are ok
             }
 
         } else {
