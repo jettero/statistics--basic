@@ -451,6 +451,17 @@ This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
 C<$ENV{IRES}>, which defaults to 2, is passed to L<Number::Format> as the second
 argument to C<format_number> during string interpolation (see: L<overload>).
 
+=item C<$ENV{TOLER}>
+
+When set C<$ENV{TOLER}> (which by default doesn't exist in the environment
+hash), this instructs the stats objects to test true when I<within> some
+tolerable range, pretty much like this:
+
+    sub is_equal {
+        return abs($_[0]-$_[1])<$ENV{TOLER} if exists($ENV{TOLER});
+        return $_[0] ==$_[1]
+    }
+
 =back
 
 =head1 AUTHOR

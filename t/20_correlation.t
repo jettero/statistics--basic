@@ -7,7 +7,7 @@ plan tests => 7;
 
 my  $corr = new Statistics::Basic::Correlation([1 .. 10], [1 .. 10]);
 
-ok( abs($corr->query - 1) < 0.00001 );
+ok( $corr->query == 1.0 );
 
     $corr->insert( 11, 7 );
 ok( $corr->query == ( (129/20) / (sqrt(609/100) * sqrt(165/20))));
