@@ -8,7 +8,7 @@ use Carp;
 use Statistics::Basic;
 
 use overload
-    '""' => sub { $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES}) },
+    '""' => sub { my $v = $_[0]->query; $Statistics::Basic::fmt->format_number("$v", $ENV{IPRES}) },
     '0+' => sub { $_[0]->query },
     ( exists($ENV{TOLER}) ?  ('==' => sub { abs($_[0]-$_[1])<=$ENV{TOLER} }) : () ),
     'eq' => sub { "$_[0]" eq "$_[1]" },

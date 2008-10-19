@@ -470,6 +470,9 @@ from the shell, you must use a C<BEGIN> block to do it, e.g.:
     BEGIN { $ENV{TOLER} = 0.000_000_001 }
     use Statistics::Basic qw(:all);
 
+You can I<change> the tolerance at runtime, but it must be set (or unset) at
+compile time before the package loads.
+
 =back
 
 =head1 AUTHOR

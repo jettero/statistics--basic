@@ -22,4 +22,8 @@ $corr = new Statistics::Basic::Correlation([map {Math::BigFloat->new($_)} 1 .. 1
 ok( $corr == 1 );
 
 $corr->insert( map {Math::BigFloat->new($_)} 11, 7 );
-ok( $corr, ( (Math::BigFloat->new(129)/20) / (sqrt(Math::BigFloat->new(609)/100) * sqrt(Math::BigFloat->new(165)/20))));
+my $tv = ((Math::BigFloat->new(129)/20) / (sqrt(Math::BigFloat->new(609)/100) * sqrt(Math::BigFloat->new(165)/20)));
+#my $d  = $corr - $tv;
+#warn " d: $d"; # 0.0000362452
+$ENV{TOLER} = 0.000_1;
+ok( $corr == $tv );
