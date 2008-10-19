@@ -2,6 +2,8 @@
    - rather than fixing more of the tests using
      abs(blah-blarg)<tolerance, I've moved to overload '==' to do
      it for me iff $ENV{TOLER} is set to a tolerance.
+   - I rather trivially allow Math::Big* inserts, but this isn't
+     documented nor tested well.
 
 1.531: Thu Oct 16 16:26:12 EDT 2008
    - A really minor bugfix thanks to Michiel van Loon
