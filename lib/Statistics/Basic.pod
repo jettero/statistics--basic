@@ -462,6 +462,14 @@ tolerable range, pretty much like this:
         return $_[0] ==$_[1]
     }
 
+Caveat: Because of certain peculiarities of the overload system and for
+efficiency, this environment variable must exist prior to the compile time
+import of L<Statistics::Basic>.  If you wish to set this in perl, rather than
+from the shell, you must use a C<BEGIN> block to do it, e.g.:
+
+    BEGIN { $ENV{TOLER} = 0.000_000_001 }
+    use Statistics::Basic qw(:all);
+
 =back
 
 =head1 AUTHOR
