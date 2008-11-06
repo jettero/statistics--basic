@@ -1,3 +1,6 @@
+1.6001: Thu Nov  6 07:02:25 EST 2008
+   - reply to http://cpanratings.perl.org/#4956
+
 1.6: Sun Oct 19 07:24:19 EDT 2008
    - rather than fixing more of the tests using
      abs(blah-blarg)<tolerance, I've moved to overload '==' to do

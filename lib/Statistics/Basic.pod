@@ -446,6 +446,10 @@ set the C<$ENV{UNBIAS}=1>;
 
 This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
 
+[NOTE 2008-11-06: In reply to L<http://cpanratings.perl.org/#4956>, this can
+also be called "population (n)" vs "sample (n-1)" and is indeed fully addressed
+right here!]
+
 =item C<$ENV{IRES}>
 
 C<$ENV{IRES}>, which defaults to 2, is passed to L<Number::Format> as the second
