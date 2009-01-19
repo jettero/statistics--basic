@@ -12,6 +12,14 @@ unless( eval 'use Math::BigFloat; 1' ) {
     exit 0;
 }
 
+my $v = $Math::BigFloat::VERSION;
+warn " [M::BF version: $v]\n";
+if( $v < 1.60 ) {
+    warn " [skipping all Math::BigFloat tests, mysterious problems crop up without recent versions of M::BF]\n";
+    skip(1,1,1) for 1 .. $t;
+    exit 0;
+}
+
 my  $corr = new Statistics::Basic::Correlation([1 .. 10], [1 .. 10]);
 ok( $corr == 1 );
 

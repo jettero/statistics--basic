@@ -1,3 +1,9 @@
+1.6001: Mon Jan 19 07:16:55 EST 2009
+   - I'm skipping the t/60_ tests without recent versions of
+     Math::BigFloat.  No idea what causes the problems, but since
+     the module isn't required, it doesn't even tell me the
+     version of the module.
+
 1.6001: Thu Nov  6 07:06:24 EST 2008
    - noted the population vs sample issue (again)
 
