@@ -3,6 +3,13 @@
      Math::BigFloat.  No idea what causes the problems, but since
      the module isn't required, it doesn't even tell me the
      version of the module.
+   - Perl's locale support is embarrassingly buggy.  Under
+     certain conditions, Number::Format will die because perl's
+     POSIX getlocale stuff returns some (but not all) of certain
+     locales.  This stuff is reproducible on almost any
+     machine, so I didn't bother to report it.  WRW installed a
+     fix in NF 1.61(a) that sets the thousands_sep to "" when
+     it's the same as the decimal_point.  Fixed (sorta).
 
 1.6001: Thu Nov  6 07:06:24 EST 2008
    - noted the population vs sample issue (again)
