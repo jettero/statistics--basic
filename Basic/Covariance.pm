@@ -22,12 +22,13 @@ sub new {
     my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) }; croak $@ if $@;
     my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) }; croak $@ if $@;
 
-    warn "[new covariance v1:$v1 v2:$v2]\n" if $ENV{DEBUG} >= 2;
+    if( my $c = $v1->get_linked_computer( covariance => $v2 ) ) {
+        warn "[linked covariance v1:$v1 v2:$v2]\n" if $ENV{DEBUG} >= 2;
+        return $c;
+    }
 
     my $this = bless {v1=>$v1, v2=>$v2}, $class;
-
-    my $c = $v1->get_linked_computer( covariance => $v2 );
-    return $c if $c;
+    warn "[new covariance v1:$this->{v1} v2:$this->{v2}]\n" if $ENV{DEBUG} >= 2;
 
     $this->{m1} = eval { Statistics::Basic::Mean->new($v1) }; croak $@ if $@;
     $this->{m2} = eval { Statistics::Basic::Mean->new($v2) }; croak $@ if $@;

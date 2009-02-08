@@ -1,3 +1,10 @@
+1.6003: Sun Feb  8 17:21:39 EST 2009
+   - perl 5.8.0 can't deal with this program, requiring 5.8.1:
+
+     my $o = bless {v1=>1, v2=>2}, "class";
+     print "K:$_; V:$o->{$_}\n" for keys %$o;
+     print "K:$_; V:$o->{$_}\n" for qw(v1 v2 v3);
+
 1.6002: Mon Jan 19 07:16:55 EST 2009
    - I'm skipping the t/60_ tests without recent versions of
      Math::BigFloat.  No idea what causes the problems, but since
