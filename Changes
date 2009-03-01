@@ -1,3 +1,6 @@
+1.6004: Sun Mar  1 07:15:37 EST 2009
+   - doc bug found by Raj Chandran
+
 1.6003: Sun Feb  8 17:21:39 EST 2009
    - perl 5.8.0 can't deal with this program, requiring 5.8.1:
 

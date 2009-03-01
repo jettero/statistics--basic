@@ -450,9 +450,9 @@ This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
 also be called "population (n)" vs "sample (n-1)" and is indeed fully addressed
 right here!]
 
-=item C<$ENV{IRES}>
+=item C<$ENV{IPRES}>
 
-C<$ENV{IRES}>, which defaults to 2, is passed to L<Number::Format> as the second
+C<$ENV{IPRES}>, which defaults to 2, is passed to L<Number::Format> as the second
 argument to C<format_number> during string interpolation (see: L<overload>).
 
 =item C<$ENV{TOLER}>
