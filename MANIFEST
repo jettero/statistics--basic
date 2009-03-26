@@ -19,10 +19,8 @@ Basic/StdDev.pm
 Basic/Covariance.pm
 Basic/Correlation.pm
 Basic/LeastSquareFit.pm
-META.yml
 t/10_median.t
 t/10_mode.t
-lgpl-2.1.txt.gz
 t/53_persistance.t
 t/53_co_persistance.t
 lib/Statistics/Basic.pod
