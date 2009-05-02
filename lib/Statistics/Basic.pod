@@ -1,6 +1,6 @@
 =head1 NAME
 
-    Statistics::Basic - A collection of very basic statistics modules
+Statistics::Basic - A collection of very basic statistics modules
 
 =head1 SYNOPSIS
 
