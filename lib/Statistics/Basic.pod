@@ -184,7 +184,13 @@ This filter sets C<$v3> to always be equal to C<$v1> such that all the elements
 that differ from the mean by more than a standard deviation are removed.  As
 such, C<"$v2" eq "$v3"> since C<15> is clearly an outlier by inspection.
 
-=head2 OUTLIERS
+    print "$v1\n";
+    print "$v3\n";
+
+... prints:
+
+    [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 15]
+    [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
 
 =head1 REUSE DETAILS
 
