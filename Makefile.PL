@@ -19,11 +19,11 @@ WriteMakefile(
             META_MERGE => {
                 keywords => ['stats','statistics', 'mean', 'average', 'correlation'],
                 resources=> {
-                    repository => 'http://github.com/jettero/statistics--basic/tree',
+                    repository => 'http://github.com/jettero/statistics--basic',
                 },
             },
 
-        LICENSE	=> 'lgpl2',
+        LICENSE	=> 'LGPL',
     ) : ()),
 
 );
