@@ -481,7 +481,7 @@ compile time before the package loads.
 
 =head1 AUTHOR
 
-Paul Miller <jettero@cpan.org>
+Paul Miller C<< <jettero@cpan.org> >>
 
 I am using this software in my own projects...  If you find bugs, please
 please please let me know. :) Actually, let me know if you find it handy at
@@ -489,7 +489,7 @@ all.  Half the fun of releasing this stuff is knowing that people use it.
 
 =head1 COPYRIGHT
 
-LGPL!  I included a lgpl-2.1.txt.gz for your reading enjoyment.
+Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
