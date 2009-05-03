@@ -15,7 +15,7 @@ WriteMakefile(
     },
 
     ($ExtUtils::MakeMaker::VERSION ge '6.48'? 
-        (MIN_PERL_VERSION => 5.008,
+        (MIN_PERL_VERSION => 5.008001,
             META_MERGE => {
                 keywords => ['stats','statistics', 'mean', 'average', 'correlation'],
                 resources=> {
