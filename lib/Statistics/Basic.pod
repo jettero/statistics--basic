@@ -158,7 +158,13 @@ vectors to two empty ones), and they must be the same length.
 
 =item C<computed()>
 
-Argument must be a blessed vector object.
+Argument must be a blessed vector object.  See the section on
+L<COMPUTED VECTORS> for more information on this.
+
+=item C<filter_missing_values()>
+
+This function should be two vector arguments.  See the section on
+L<MISSING VALUES> for further information on this function.
 
 =back
 
@@ -191,6 +197,52 @@ such, C<"$v2" eq "$v3"> since C<15> is clearly an outlier by inspection.
 
     [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 15]
     [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
+
+=head1 MISSING VALUES
+
+Something I get asked about quite a lot is, "can S::B handle missing values?"
+The answer used to be, "that really depends on your data set, use
+L<grep|perlfunc/grep>," but I recently decided (5/29/09) that it was time to
+just go ahead and add this feature.
+
+Strictly speaking, the feature was already there.  You simply need to add a
+couple filters to your data.  See C<t/75_filtered_missings.t> for the test
+example.
+
+This is what people usually mean when they ask if S::B can "handle" missing
+data:
+
+    my $v1 = vector(1,2,3,undef,4);
+    my $v2 = vector(1,2,3,4, undef);
+    my $v3 = computed($v1);
+    my $v4 = computed($v2);
+
+    $v3->set_filter(sub {
+        my @v = $v2->query;
+        map {$_[$_]} grep { defined $v[$_] and defined $_[$_] } 0 .. $#_;
+    });
+
+    $v4->set_filter(sub {
+        my @v = $v1->query;
+        map {$_[$_]} grep { defined $v[$_] and defined $_[$_] } 0 .. $#_;
+    });
+
+But I've made it even simpler.  Since this is such a common request, I have
+provided a helper function to build the filters automatically:
+
+    my $v1 = vector(1,2,3,undef,4);
+    my $v2 = vector(1,2,3,4, undef);
+
+    my ($f1, $f2) = filter_missing_values($v1, $v2);
+
+Note that in practice, you would still manipulate (insert, and shift) C<$v1> and
+C<$v2>, I<not> the computed vectors!  But for correlations and the like, you
+would use C<$f1> and C<$f2>.
+
+    $v1->insert(5);
+    $v2->insert(6);
+
+    my $correlation = correlation($f1, $f2);
 
 =head1 REUSE DETAILS
 

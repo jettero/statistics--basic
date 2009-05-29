@@ -39,6 +39,7 @@ our @EXPORT_OK   = (qw(
     covariance cov
     correlation cor corr
     leastsquarefit LSF lsf
+    filter_missing_values
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -56,6 +57,24 @@ sub stddev   { my $r = eval { ref($_[0]) ? Statistics::Basic::StdDev->new( $_[0]
 sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0],$_[1] ) };     croak $@ if $@; $r}
 sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0],$_[1] ) };    croak $@ if $@; $r}
 sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0],$_[1] ) }; croak $@ if $@; $r}
+
+sub filter_missing_values {
+    my ($v1,$v2) = @_;
+    my $v3 = eval { computed($v1) }; croak $@ if $@;
+    my $v4 = eval { computed($v2) }; croak $@ if $@;
+
+    $v3->set_filter(sub {
+        my @v = $v2->query;
+        map {$_[$_]} grep { defined $v[$_] and defined $_[$_] } 0 .. $#_;
+    });
+
+    $v4->set_filter(sub {
+        my @v = $v1->query;
+        map {$_[$_]} grep { defined $v[$_] and defined $_[$_] } 0 .. $#_;
+    });
+
+    return ($v3,$v4);
+}
 
 *average = *mean;
 *avg     = *mean;
