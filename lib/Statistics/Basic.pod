@@ -161,7 +161,7 @@ vectors to two empty ones), and they must be the same length.
 Argument must be a blessed vector object.  See the section on
 L<COMPUTED VECTORS> for more information on this.
 
-=item C<filter_missing_values()>
+=item C<handle_missing_values()>
 
 This function should be two vector arguments.  See the section on
 L<MISSING VALUES> for further information on this function.

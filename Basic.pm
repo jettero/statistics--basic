@@ -39,7 +39,7 @@ our @EXPORT_OK   = (qw(
     covariance cov
     correlation cor corr
     leastsquarefit LSF lsf
-    filter_missing_values
+    handle_missing_values
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -58,7 +58,7 @@ sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0],$_
 sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0],$_[1] ) };    croak $@ if $@; $r}
 sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0],$_[1] ) }; croak $@ if $@; $r}
 
-sub filter_missing_values {
+sub handle_missing_values {
     my ($v1,$v2) = @_;
     my $v3 = eval { computed($v1) }; croak $@ if $@;
     my $v4 = eval { computed($v2) }; croak $@ if $@;
