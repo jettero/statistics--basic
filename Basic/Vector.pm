@@ -15,7 +15,7 @@ use overload
     '""' => sub {
         my $this = $_[0];
         local $" = ", ";
-        my @r = map { $Statistics::Basic::fmt->format_number($_, $ENV{IPRES}) } $this->query;
+        my @r = map { defined $_ ? $Statistics::Basic::fmt->format_number($_, $ENV{IPRES}) : "_" } $this->query;
         $ENV{DEBUG} ? "vector-$this->{tag}:[@r]" : "[@r]";
     },
     fallback => 1; # tries to do what it would have done if this wasn't present.
