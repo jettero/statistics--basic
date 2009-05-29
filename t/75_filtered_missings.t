@@ -2,7 +2,7 @@
 use Test;
 use Statistics::Basic qw(:all);
 
-plan tests => 6;
+plan tests => 8;
 
 $SIG{__WARN__} = sub { die " FATAL WARNING: $_[0] " };
 
@@ -30,3 +30,8 @@ $v4->set_filter(sub {
 
 ok("$v3", "[1, 2, 3]");
 ok("$v4", "[1, 2, 3]");
+
+my ($v5, $v6) = filter_missing_values($v1, $v2);
+
+ok("$v5", "$v3");
+ok("$v6", "$v4");
