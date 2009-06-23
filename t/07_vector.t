@@ -3,7 +3,7 @@ use strict;
 use Test;
 use Statistics::Basic;
 
-plan tests => 23;
+plan tests => 25;
 
 my $fill   = undef;
 my $nofill = 1;
@@ -13,9 +13,11 @@ ok( $v->size, 3 );
 
 $v->set_size( 4, $fill ); # fix_size() fills in with 0s
 ok( $v->size, 4 ); 
+ok( $v->query_filled );
 
 $v->set_size( 6, $nofill ); # waits for you to insert()
 ok( $v->size, 4 );
+ok( !$v->query_filled );
 
 $v->insert(5);     # this runs the normalizer whether you like it or not
 ok( $v->size, 6 ); # and of course, by normalizer, we mean 0-padder
