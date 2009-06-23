@@ -164,7 +164,7 @@ L<COMPUTED VECTORS> for more information on this.
 =item C<handle_missing_values()>
 
 This function should be two vector arguments.  See the section on
-L<MISSING VALUES> for further information on this function.
+L</MISSING VALUES> for further information on this function.
 
 =back
 
@@ -233,7 +233,7 @@ provided a helper function to build the filters automatically:
     my $v1 = vector(1,2,3,undef,4);
     my $v2 = vector(1,2,3,4, undef);
 
-    my ($f1, $f2) = filter_missing_values($v1, $v2);
+    my ($f1, $f2) = handle_missing_values($v1, $v2);
 
 Note that in practice, you would still manipulate (insert, and shift) C<$v1> and
 C<$v2>, I<not> the computed vectors!  But for correlations and the like, you

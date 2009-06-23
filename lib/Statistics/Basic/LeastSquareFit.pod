@@ -57,6 +57,31 @@ Create a 20 point "moving" LSF like so:
 The full details are probably in the base module.  If you have questions, just
 let me know.
 
+=head1 METHODS
+
+This list of methods skips the methods inherited from
+L<Statistics::Basic::_TwoVectorBase> (things like
+L<insert()|Statistics::Basic::_TwoVectorBase/insert()>, and
+L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
+
+=over 4
+
+=item B<new()>
+
+Create a new L<Statistics::Basic::LeastSquareFit> object.  This function takes
+two arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
+objects.  This function is called when the
+L<leastsquarefirt()|Statistics::Basic/leastsquarefit() LSF() lsf()>
+shortcut-function is called.
+
+=back
+
+=head1 OVERLOADS
+
+This object is overloaded.  It tries to return an appropriate string or number,
+depending on the context.  See L<Statistics::Basic::_TwoVectorBase/OVERLOAD> for
+further information.
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
@@ -67,6 +92,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
 
 =cut

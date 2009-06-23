@@ -26,6 +26,7 @@ lib/Statistics/Basic/Mode.pod
 lib/Statistics/Basic/StdDev.pod
 lib/Statistics/Basic/Variance.pod
 lib/Statistics/Basic/Vector.pod
+lib/Statistics/Basic/_OneVectorBase.pod
 lib/Statistics/Basic/_TwoVectorBase.pod
 t/05_load_them.t
 t/07_vector.t

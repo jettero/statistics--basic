@@ -7,9 +7,6 @@ use Carp;
 
 use base 'Statistics::Basic::_OneVectorBase';
 
-1;
-
-# new {{{
 sub new {
     my $class = shift;
 
@@ -25,8 +22,7 @@ sub new {
 
     return $this;
 }
-# }}}
-# _recalc {{{
+
 sub _recalc {
     my $this        = shift;
     my $sum         = 0; 
@@ -42,4 +38,5 @@ sub _recalc {
 
     warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
 }
-# }}}
+
+1;
