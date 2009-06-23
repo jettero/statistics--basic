@@ -304,8 +304,7 @@ L<Statistics::Basic::LeastSquareFit>.
 =item C<query_mean2()>
 
 Returns the second L<Statistics::Basic::Mean> object used by
-L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
-L<Statistics::Basic::LeastSquareFit>.
+L<Statistics::Basic::Covariance>, and L<Statistics::Basic::Correlation>.
 
 =item C<query_covariance()>
 
@@ -318,11 +317,6 @@ Returns the L<Statistics::Basic::Variance> object used by
 L<Statistics::Basic::StdDev>.
 
 =item C<query_variance1()>
-
-Returns the first L<Statistics::Basic::Variance> object used by
-L<Statistics::Basic::LeastSquareFit>.
-
-=item C<query_variance2()>
 
 Returns the first L<Statistics::Basic::Variance> object used by
 L<Statistics::Basic::LeastSquareFit>.
