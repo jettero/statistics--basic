@@ -65,6 +65,8 @@ sub set_vector {
     warn "[set_vector " . ref($this) . "]\n" if $ENV{DEBUG};
 
     $this->{v}->set_vector(@_);
+
+    return $this;
 }
 # }}}
 # insert {{{
@@ -74,6 +76,8 @@ sub insert {
     warn "[insert " . ref($this) . "]\n" if $ENV{DEBUG};
 
     $this->{v}->insert(@_);
+
+    return $this;
 }
 # }}}
 # ginsert {{{
@@ -83,6 +87,8 @@ sub ginsert {
     warn "[ginsert " . ref($this) . "]\n" if $ENV{DEBUG};
 
     $this->{v}->ginsert(@_);
+
+    return $this;
 }
 # }}}
 
