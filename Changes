@@ -4,9 +4,11 @@
    - worked on the docs, they need a good deal of work
    - noticed a half-way implemented set_vector fill-disabler, why
      isn't it finished?
-     - added a query_fill to check to see if a vector is full
+     - added a query_filled to check to see if a vector is full
      - made sure the _OVB and _TVB base classes know about the
        half implemented fill disabler
+     - use query_filled in various places, to make it automagic
+       like everything else
 
 1.6600: Mon Jun 22 18:51:33 EDT 2009
    - started added best practices stuff to the dist

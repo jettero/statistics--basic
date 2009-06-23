@@ -32,10 +32,12 @@ sub new {
 # }}}
 # _recalc {{{
 sub _recalc {
-    my $this  = shift;
-    my $sum   = 0;
-    my $c1    = $this->{v1}->size;
-    my $c2    = $this->{v2}->size;
+    my $this = shift;
+    my $sum  = 0;
+    my $v1   = $this->{v1};
+    my $v2   = $this->{v2};
+    my $c1   = $v1->size;
+    my $c2   = $v2->size;
 
     warn "[recalc " . ref($this) . "] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 
@@ -47,9 +49,11 @@ sub _recalc {
     delete $this->{recalc_necessary};
     delete $this->{_value};
     return unless $cardinality > 0;
+    return unless $v1->query_filled;
+    return unless $v2->query_filled;
 
-    my $v1 = $this->{v1}->query;
-    my $v2 = $this->{v2}->query;
+    $v1 = $v1->query;
+    $v2 = $v2->query;
 
     my $m1 = $this->{m1}->query;
     my $m2 = $this->{m2}->query;
