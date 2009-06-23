@@ -142,6 +142,14 @@ sub fix_size {
     return $fixed;
 }
 # }}}
+# query_filled {{{
+sub query_filled {
+    my $this = shift;
+
+    return if @{$this->{v}} != $this->{s};
+    return 1;
+}
+# }}}
 # set_size {{{
 sub set_size {
     my $this = shift;
