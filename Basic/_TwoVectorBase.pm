@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use Carp;
 
+use Statistics::Basic; # make sure all the basic classes are loaded
+
 use overload
     '""' => sub { defined( my $v = $_[0]->query ) || return "n/a"; $Statistics::Basic::fmt->format_number("$v", $ENV{IPRES}) },
     '0+' => sub { $_[0]->query },
