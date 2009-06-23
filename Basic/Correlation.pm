@@ -19,9 +19,9 @@ sub new {
     my $c = $v1->get_linked_computer( correlation => $v2 );
     return $c if $c;
 
-    $this->{sd1} = new Statistics::Basic::StdDev($v1);
-    $this->{sd2} = new Statistics::Basic::StdDev($v2);
-    $this->{cov} = new Statistics::Basic::Covariance( $v1, $v2 );
+    $this->{sd1} = eval { Statistics::Basic::StdDev->new($v1) }; croak $@ if $@;
+    $this->{sd2} = eval { Statistics::Basic::StdDev->new($v2) }; croak $@ if $@;
+    $this->{cov} = eval { Statistics::Basic::Covariance->new( $v1, $v2 ) }; croak $@ if $@;
 
     $v1->set_linked_computer( correlation => $this, $v2 );
     $v2->set_linked_computer( correlation => $this, $v1 );
