@@ -8,10 +8,8 @@ Statistics::Basic::_OneVectorBase - base class objects like Mean
 
 =item B<query()>
 
-Query the value of the object.  These packages are based on the idea of moving
-"moving" computations.  If the intended size of the vectors -- that set by
-L</set_size()> -- isn't yet met, this function will return the undefined value,
-rather than the calculated object value.
+Query the value of the object.  It will return the undefined value until there's
+something to calculate.
 
 =item B<insert()>
 
