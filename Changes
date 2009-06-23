@@ -1,3 +1,7 @@
+1.6600: Tue Jun 23 07:13:09 EDT 2009
+   - installed a lotta DRY on the two vector classes, will
+     continue this tonight and on lunch break most likely.
+
 1.6600: Mon Jun 22 18:51:33 EDT 2009
    - started added best practices stuff to the dist
 
