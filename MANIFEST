@@ -9,6 +9,7 @@ Basic/Mode.pm
 Basic/StdDev.pm
 Basic/Variance.pm
 Basic/Vector.pm
+Basic/_OneVectorBase.pm
 Basic/_TwoVectorBase.pm
 Changes
 MANIFEST
