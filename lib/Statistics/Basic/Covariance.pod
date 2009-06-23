@@ -42,6 +42,56 @@ Create a 20 point "moving" covariance like so:
 The full details are probably in the base module.  If you have questions, just
 let me know.
 
+=head1 METHODS
+
+This list of methods skips the methods inherited from
+L<Statistics::Basic::_TwoVectorBase>
+(things like L<query()|Statistics::Basic::_TwoVectorBase/query()>,
+L<insert()|Statistics::Basic::_TwoVectorBase/insert()>,
+and L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
+
+=over 4
+
+=item B<new()>
+
+Create a new L<Statistics::Basic::Covariance> object.  This function takes two
+arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
+objects.  This function is called when the
+L<covariance()|Statistics::Basic/covariance() cov()> shortcut-function
+is called.
+
+=item B<query_vector1()>
+
+Return the L<Statistics::Basic::Vector> for the first vector.
+
+=item B<query_vector2()>
+
+Return the L<Statistics::Basic::Vector> object for the second vector.
+
+=item B<query_mean1()>
+
+Returns the L<Statistics::Basic::Mean> object for the first vector.
+
+=item B<query_mean2()>
+
+Returns the L<Statistics::Basic::Mean> object for the second vector.
+
+=back
+
+=head1 OVERLOADS
+
+This object is overloaded.  If evaluated as a string, it will attempt to print a
+pretty value for the covariance (or C<n/a>, see
+L<query()|Statistics::Basic::_TwoVectorBase/query()> above).
+
+If evaluated as a number, it will try to return the raw result of
+L<query()|Statistics::Basic::_TwoVectorBase/query()>, possibly turning the
+resulting C<undef> (if applicable) into a 0 in the process -- note that Perl
+does this 0-izing, not the overload.
+
+The C<eq> and C<==> operators are also overloaded, trying to do the right thing.
+Also see L<$ENV{TOLER}|Statistics::Basic/$ENV{TOLER}> for further information.
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
@@ -52,6 +102,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
 
 =cut
