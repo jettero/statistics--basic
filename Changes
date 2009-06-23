@@ -9,6 +9,7 @@
        half implemented fill disabler
      - use query_filled in various places, to make it automagic
        like everything else
+     - add constants for FILL and NOFILL on set_size
 
 1.6600: Mon Jun 22 18:51:33 EDT 2009
    - started added best practices stuff to the dist

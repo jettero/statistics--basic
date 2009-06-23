@@ -17,6 +17,9 @@ use Statistics::Basic::Variance;
 use Statistics::Basic::Vector;
 use Statistics::Basic::ComputedVector;
 
+use constant FILL   => 0;
+use constant NOFILL => 1;
+
 our $VERSION = '1.6600';
 our $fmt = new Number::Format;
 
@@ -40,6 +43,7 @@ our @EXPORT_OK   = (qw(
     correlation cor corr
     leastsquarefit LSF lsf
     handle_missing_values
+    FILL NOFILL
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 

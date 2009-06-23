@@ -1,21 +1,18 @@
 
 use strict;
 use Test;
-use Statistics::Basic;
+use Statistics::Basic qw(FILL NOFILL);
 
 plan tests => 25;
-
-my $fill   = undef;
-my $nofill = 1;
 
 my  $v = new Statistics::Basic::Vector([1 .. 3]);
 ok( $v->size, 3 );
 
-$v->set_size( 4, $fill ); # fix_size() fills in with 0s
+$v->set_size( 4, FILL ); # fix_size() fills in with 0s
 ok( $v->size, 4 ); 
 ok( $v->query_filled );
 
-$v->set_size( 6, $nofill ); # waits for you to insert()
+$v->set_size( 6, NOFILL ); # waits for you to insert()
 ok( $v->size, 4 );
 ok( !$v->query_filled );
 
