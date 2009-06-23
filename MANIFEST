@@ -45,4 +45,4 @@ t/75_filtered_missings.t
 t/critic.t
 t/pod.t
 t/pod_coverage.t
-Basic/_two_vector_base.pm
+Basic/_TwoVectorBase.pm
