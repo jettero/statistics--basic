@@ -54,6 +54,8 @@ sub set_size {
     my $nofl = shift;
 
     eval { $this->{v}->set_size($size, $nofl) }; croak $@ if $@;
+
+    return $this;
 }
 # }}}
 # set_vector {{{
