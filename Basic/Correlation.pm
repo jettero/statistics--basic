@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic;
 use base 'Statistics::Basic::_TwoVectorBase';
 
 # new {{{
@@ -22,6 +21,8 @@ sub new {
     $this->{sd1} = eval { Statistics::Basic::StdDev->new($v1) }; croak $@ if $@;
     $this->{sd2} = eval { Statistics::Basic::StdDev->new($v2) }; croak $@ if $@;
     $this->{cov} = eval { Statistics::Basic::Covariance->new( $v1, $v2 ) }; croak $@ if $@;
+
+    $this->{_vectors} = [ $v1, $v2 ];
 
     $v1->set_linked_computer( correlation => $this, $v2 );
     $v2->set_linked_computer( correlation => $this, $v1 );

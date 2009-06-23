@@ -26,7 +26,8 @@ sub query {
 sub size {
     my $this = shift;
 
-    return $this->{cov}->size;
+    my @v = @{$this->{_vectors}};
+    return ($v[0]->size, $v[1]->size); # list rather than map{} so this can be a scalar
 }
 # }}}
 # set_size {{{
@@ -34,8 +35,9 @@ sub set_size {
     my $this = shift;
     my $size = shift;
 
-    eval { $this->{sd1}->set_size( $size );
-           $this->{sd2}->set_size( $size ); }; croak $@ if $@;
+    eval { $_->set_size( $size ) for @{$this->{_vectors}}; 1 } or croak $@;
+
+    return $this;
 }
 # }}}
 # insert {{{
@@ -46,8 +48,10 @@ sub insert {
 
     croak ref($this) . "-insert() takes precisely two arguments.  They can be arrayrefs if you like." unless 2 == int @_;
 
-    $this->{sd1}->insert( $_[0] );
-    $this->{sd2}->insert( $_[1] );
+    my $c = 0;
+    $_->insert( $_[$c++] ) for @{$this->{_vectors}};
+
+    return $this;
 }
 # }}}
 # ginsert {{{
@@ -59,12 +63,14 @@ sub ginsert {
     croak "" . ref($this) . "-ginsert() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{sd1}->ginsert( $_[0] );
-    $this->{sd2}->ginsert( $_[1] );
+    my $c = 0;
+    $_->ginsert( $_[$c++] ) for @{$this->{_vectors}};
 
-    my @s = $this->{cov}->size;
-    croak "The two vectors in a " . ref($this) . " object must be the same length."
+    my @s = $this->size;
+    croak "Uneven ginsert detected, the two vectors in a " . ref($this) . " object must remain the same length."
         unless $s[0] == $s[1];
+
+    return $this;
 }
 # }}}
 # set_vector {{{
@@ -76,12 +82,14 @@ sub set_vector {
     croak "this set_vector() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
 
-    $this->{sd1}->set_vector( $_[0] );
-    $this->{sd2}->set_vector( $_[1] );
+    my $c = 0;
+    $_->set_vector( $_[$c++] ) for @{$this->{_vectors}};
 
-    my @s = $this->{cov}->size;
-    croak "The two vectors in a " . ref($this) . " object must be the same length."
+    my @s = $this->size;
+    croak "Uneven set_vector detected, the two vectors in a " . ref($this) . " object must remain the same length."
         unless $s[0] == $s[1];
+
+    return $this;
 }
 # }}}
 # _recalc_needed {{{
