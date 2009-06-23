@@ -39,8 +39,8 @@ sub new {
     return $this;
 }
 # }}}
-# recalc {{{
-sub recalc {
+# _recalc {{{
+sub _recalc {
     my $this        = shift;
     my $cardinality = $this->{v}->size;
 
@@ -62,8 +62,8 @@ sub recalc {
     warn "[recalc mode] count of $this->{mode} = $max\n" if $ENV{DEBUG};
 }
 # }}}
-# recalc_needed {{{
-sub recalc_needed {
+# _recalc_needed {{{
+sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
@@ -74,7 +74,7 @@ sub recalc_needed {
 sub query {
     my $this = shift;
 
-    $this->recalc if $this->{recalc_needed};
+    $this->_recalc if $this->{recalc_needed};
 
     warn "[query mode $this->{mode}]\n" if $ENV{DEBUG};
 

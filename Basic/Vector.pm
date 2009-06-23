@@ -65,7 +65,7 @@ sub set_computer {
     while( my ($k,$v) = splice @_, 0, 2 ) {
         warn "$this set_computer($k => " . overload::StrVal($v) . ")\n" if $ENV{DEBUG};
         weaken($this->{c}{$k} = $v);
-        $v->recalc_needed;
+        $v->_recalc_needed;
     }
 }
 # }}}
@@ -108,7 +108,7 @@ sub inform_computers_of_change {
         my $v = $this->{c}{$k};
 
         if( defined($v) and blessed($v) ) {
-            $v->recalc_needed;
+            $v->_recalc_needed;
 
         } else {
             delete $this->{c}{$k};

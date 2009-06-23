@@ -34,8 +34,8 @@ sub new {
     return $this;
 }
 # }}}
-# recalc {{{
-sub recalc {
+# _recalc {{{
+sub _recalc {
     my $this        = shift;
     my $first       = shift;
     my $sum         = 0;
@@ -59,8 +59,8 @@ sub recalc {
     warn "[recalc variance] ($sum/$cardinality) = $this->{variance}\n" if $ENV{DEBUG};
 }
 # }}}
-# recalc_needed {{{
-sub recalc_needed {
+# _recalc_needed {{{
+sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
@@ -71,7 +71,7 @@ sub recalc_needed {
 sub query {
     my $this = shift;
 
-    $this->recalc if $this->{recalc_needed};
+    $this->_recalc if $this->{recalc_needed};
 
     warn "[query variance $this->{variance}]\n" if $ENV{DEBUG};
 

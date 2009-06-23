@@ -37,8 +37,8 @@ sub new {
     return $this;
 }
 # }}}
-# recalc {{{
-sub recalc {
+# _recalc {{{
+sub _recalc {
     my $this  = shift;
 
     delete $this->{recalc_needed};
@@ -61,8 +61,8 @@ sub recalc {
     return 1;
 }
 # }}}
-# recalc_needed {{{
-sub recalc_needed {
+# _recalc_needed {{{
+sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
@@ -73,7 +73,7 @@ sub recalc_needed {
 sub query {
     my $this = shift;
 
-    $this->recalc if $this->{recalc_needed};
+    $this->_recalc if $this->{recalc_needed};
 
     warn "[query correlation $this->{correlation}]\n" if $ENV{DEBUG};
 

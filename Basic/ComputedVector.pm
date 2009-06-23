@@ -21,7 +21,7 @@ sub new {
     croak "input vector must be supplied to ComputedVector" unless defined $that;
 
     my $this = bless { c=>{}, input_vector=>$that, output_vector=>Statistics::Basic::Vector->new() }, $class;
-       $this->recalc;
+       $this->_recalc;
 
     if( $_[0] ) {
         eval { $this->set_computer(@_) }; croak $@ if $@;
@@ -41,8 +41,8 @@ sub set_filter {
     $this->{input_vector}->set_computer( "cvec_$a" => $this );
 }
 # }}}
-# recalc {{{
-sub recalc {
+# _recalc {{{
+sub _recalc {
     my $this = shift;
 
     delete $this->{recalc_needed};
@@ -59,8 +59,8 @@ sub recalc {
     $this->inform_computers_of_change;
 }
 # }}}
-# recalc_needed {{{
-sub recalc_needed {
+# _recalc_needed {{{
+sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
@@ -71,7 +71,7 @@ sub recalc_needed {
 sub size {
     my $this = shift;
 
-    $this->recalc if $this->{recalc_needed};
+    $this->_recalc if $this->{recalc_needed};
 
     $this->{output_vector}->size;
 }
@@ -80,7 +80,7 @@ sub size {
 sub query {
     my $this = shift;
 
-    $this->recalc if $this->{recalc_needed};
+    $this->_recalc if $this->{recalc_needed};
 
     return $this->{output_vector}->query;
 }
