@@ -46,8 +46,9 @@ let me know.
 
 This list of methods skips the methods inherited from
 L<Statistics::Basic::_TwoVectorBase>
-(things like L<insert()|Statistics::Basic::_TwoVectorBase/insert()>,
-L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>, et al).
+(things like L<query()|Statistics::Basic::_TwoVectorBase/query()>,
+L<insert()|Statistics::Basic::_TwoVectorBase/insert()>,
+and L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
 
 =over 4
 
@@ -84,9 +85,11 @@ Returns the L<Statistics::Basic::Mean> object for the second vector.
 =head1 OVERLOADS
 
 This object is overloaded.  If evaluated as a string, it will attempt to print a
-pretty value for the correlation (or C<n/a>, see L</query()> above).
+pretty value for the correlation (or C<n/a>, see
+L<query()|Statistics::Basic::_TwoVectorBase/query()> above).
 
-If evaluated as a number, it will try to return the raw result of L</query()>,
+If evaluated as a number, it will try to return the raw result of
+L<query()|Statistics::Basic::_TwoVectorBase/query()>,
 possibly turning the resulting undef (if applicable) into a 0 in the process --
 note that Perl does this 0-izing, not the overload.
 
