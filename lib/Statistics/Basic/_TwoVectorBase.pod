@@ -6,6 +6,13 @@ Statistics::Basic::_TwoVectorBase - base class objects like Correlation
 
 =over 4
 
+=item B<query()>
+
+Query the value of the object.  These packages are based on the idea of moving
+"moving" computations.  If the intended size of the vectors -- that set by
+L</set_size()> -- isn't yet met, this function will return the undefined value,
+rather than the calculated object value.
+
 =item B<insert()>
 
 Insert two new new values into the vectors.  This function must be given
