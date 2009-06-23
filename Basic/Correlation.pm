@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 
 use Statistics::Basic;
-use base 'Statistics::Basic::_two_vector_base';
+use base 'Statistics::Basic::_TwoVectorBase';
 
 # new {{{
 sub new {

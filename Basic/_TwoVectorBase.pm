@@ -1,4 +1,4 @@
-package Statistics::Basic::_two_vector_base;
+package Statistics::Basic::_TwoVectorBase;
 
 use strict;
 use warnings;
