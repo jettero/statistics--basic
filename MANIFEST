@@ -9,6 +9,7 @@ Basic/Mode.pm
 Basic/StdDev.pm
 Basic/Variance.pm
 Basic/Vector.pm
+Basic/_TwoVectorBase.pm
 Changes
 MANIFEST
 Makefile.PL
@@ -24,6 +25,7 @@ lib/Statistics/Basic/Mode.pod
 lib/Statistics/Basic/StdDev.pod
 lib/Statistics/Basic/Variance.pod
 lib/Statistics/Basic/Vector.pod
+lib/Statistics/Basic/_TwoVectorBase.pod
 t/05_load_them.t
 t/07_vector.t
 t/08_cvec.t
@@ -45,4 +47,3 @@ t/75_filtered_missings.t
 t/critic.t
 t/pod.t
 t/pod_coverage.t
-Basic/_TwoVectorBase.pm
