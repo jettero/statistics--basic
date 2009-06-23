@@ -44,6 +44,11 @@ let me know.
 
 =head1 METHODS
 
+This list of methods skips the methods inherited from
+L<Statistics::Basic::_TwoVectorBase>
+(things like L<insert()|Statistics::Basic::_TwoVectorBase/insert()>,
+L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>, et al).
+
 =over 4
 
 =item B<new()>
@@ -54,40 +59,12 @@ objects.  This function is called when the
 L<correlation()|Statistics::Basic/correlation() cor() corr()> shortcut-function
 is called.
 
-=item B<insert()>
-
-Insert two new new values into the vectors.
-
-    $correlation_object->insert( 4, 3 );
-
-=item B<ginsert()>
-
-The growing insert inserts new elements, growing the max size of the vector to
-accommodate the new elements (if necessary).
-
-    $correlation_object->ginsert( 4, 3 );
-
 =item B<query()>
 
 Query the correlation.  This package is based on the idea of moving averages and
 moving correlations.  If the intended size of the vectors -- that set by
 L</set_size()> -- isn't yet met, this function will return the undefined value,
 rather than the calculated correlation.
-
-=item B<size()>
-
-The current size of the vectors -- regardless of their max size as set by
-L</set_size()>.
-
-=item B<set_size()>
-
-Set the maximum size for the underlying L<Statistics::Basic::Vector> objects.
-
-=item B<set_vector()>
-
-Set the vector objects used to calculate the correlation.  This function takes
-two arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
-objects.
 
 =item B<query_covariance()>
 
@@ -133,6 +110,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
 
 =cut
