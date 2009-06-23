@@ -148,7 +148,7 @@ sub set_size {
     my $size = shift;
     my $norm = shift;
 
-    croak "strange size" if $size < 0;
+    croak "invalid vector size ($size)" if $size < 0;
 
     if( $this->{s} != $size ) {
         $this->{s} = $size;
@@ -210,7 +210,7 @@ sub ginsert {
         }
     }
 
-    $this->{s} = @{$this->{v}};
+    $this->{s} = @{$this->{v}} if @{$this->{v}} > $this->{s};
     $this->inform_computers_of_change;
 }
 # }}}
