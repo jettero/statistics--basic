@@ -24,15 +24,18 @@ sub new {
 }
 
 sub _recalc {
-    my $this        = shift;
-    my $sum         = 0; 
-    my $cardinality = $this->{v}->size;
+    my $this = shift;
+    my $sum = 0;
+    my $v = $this->{v};
+    my $cardinality = $v->size;
 
     delete $this->{recalc_needed};
     delete $this->{_value};
-    return unless $cardinality > 0;
 
-    $sum += $_ for $this->{v}->query;
+    return unless $cardinality > 0;
+    return unless $v->query_filled; # only applicable in certain circumstances
+
+    $sum += $_ for $v->query;
 
     $this->{_value} = ($sum / $cardinality);
 

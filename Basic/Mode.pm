@@ -41,17 +41,19 @@ sub new {
 # }}}
 # _recalc {{{
 sub _recalc {
-    my $this        = shift;
-    my $cardinality = $this->{v}->size;
+    my $this = shift;
+    my $v = $this->{v};
+    my $cardinality = $v->size;
 
     delete $this->{recalc_needed};
     delete $this->{mode};
     return unless $cardinality > 0;
+    return unless $v->query_filled; # only applicable in certain circumstances
 
     my %mode;
     my $max = 0;
 
-    for my $val ($this->{v}->query) {
+    for my $val ($v->query) {
         my $t = ++ $mode{$val};
         $max = $t if $t > $max;
     }

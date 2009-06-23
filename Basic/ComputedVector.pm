@@ -85,6 +85,15 @@ sub query {
     return $this->{output_vector}->query;
 }
 # }}}
+# query_filled {{{
+sub query_filled {
+    my $this = shift;
+
+    $this->_recalc if $this->{recalc_needed};
+
+    return $this->{output_vector}->query_filled;
+}
+# }}}
 
 sub fix_size   { croak   "fix_size() makes no sense on computed vectors" }
 sub set_size   { croak   "set_size() makes no sense on computed vectors" }

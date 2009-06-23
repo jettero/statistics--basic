@@ -36,23 +36,27 @@ sub new {
 # }}}
 # _recalc {{{
 sub _recalc {
-    my $this        = shift;
-    my $first       = shift;
-    my $sum         = 0;
-    my $cardinality = $this->{v}->size;
-    my $mean        = $this->{m}->query;
+    my $this = shift;
+    my $first = shift;
+    my $sum = 0;
+    my $v = $this->{v};
+    my $cardinality = $v->size;
 
     $cardinality -- if $ENV{UNBIAS};
 
     delete $this->{recalc_needed};
     delete $this->{variance};
+
     return unless $cardinality > 0;
+    return unless $v->query_filled; # only applicable in certain circumstances
+
+    my $mean = $this->{m}->query;
 
     if( $ENV{DEBUG} >= 2 ) {
-        warn "[recalc variance] ( $_ - $mean ) ** 2\n" for $this->{v}->query;
+        warn "[recalc variance] ( $_ - $mean ) ** 2\n" for $v->query;
     }
 
-    $sum += ( $_ - $mean ) ** 2 for $this->{v}->query;
+    $sum += ( $_ - $mean ) ** 2 for $v->query;
 
     $this->{variance} = ($sum / $cardinality);
 
