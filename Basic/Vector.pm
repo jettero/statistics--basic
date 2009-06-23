@@ -120,7 +120,7 @@ sub inform_computers_of_change {
 # fix_size {{{
 sub fix_size {
     my $this = shift;
-    my $norm = not shift; # 0 is normalize, 1 is no normalize
+    my $nofl = shift; # 0 is fill, 1 is no fill
 
     my $fixed = 0;
 
@@ -130,7 +130,7 @@ sub fix_size {
         $fixed = 1;
     }
 
-    if( $norm and $d < 0 ) {
+    if( not $nofl and $d < 0 ) {
         unshift @{$this->{v}}, # unshift so the 0s leave first
             map {0} $d .. -1;  # add $d of them
 
@@ -146,13 +146,13 @@ sub fix_size {
 sub set_size {
     my $this = shift;
     my $size = shift;
-    my $norm = shift;
+    my $nofl = shift;
 
     croak "invalid vector size ($size)" if $size < 0;
 
     if( $this->{s} != $size ) {
         $this->{s} = $size;
-        $this->fix_size($norm);
+        $this->fix_size($nofl);
         $this->inform_computers_of_change;
     }
 }

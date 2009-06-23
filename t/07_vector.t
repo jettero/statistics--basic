@@ -5,16 +5,16 @@ use Statistics::Basic;
 
 plan tests => 23;
 
-my $normalize    = undef;
-my $no_normalize = 1;
+my $fill   = undef;
+my $nofill = 1;
 
 my  $v = new Statistics::Basic::Vector([1 .. 3]);
 ok( $v->size, 3 );
 
-$v->set_size( 4, $normalize ); # fix_size() fills in with 0s
+$v->set_size( 4, $fill ); # fix_size() fills in with 0s
 ok( $v->size, 4 ); 
 
-$v->set_size( 6, $no_normalize ); # waits for you to insert()
+$v->set_size( 6, $nofill ); # waits for you to insert()
 ok( $v->size, 4 );
 
 $v->insert(5);     # this runs the normalizer whether you like it or not
