@@ -1,6 +1,12 @@
-1.6600: Tue Jun 23 07:13:09 EDT 2009
+1.6600: Tue Jun 23 17:39:58 EDT 2009
    - installed a lotta DRY on the two vector classes, will
      continue this tonight and on lunch break most likely.
+   - worked on the docs, they need a good deal of work
+   - noticed a half-way implemented set_vector fill-disabler, why
+     isn't it finished?
+     - added a query_fill to check to see if a vector is full
+     - made sure the _OVB and _TVB base classes know about the
+       half implemented fill disabler
 
 1.6600: Mon Jun 22 18:51:33 EDT 2009
    - started added best practices stuff to the dist
