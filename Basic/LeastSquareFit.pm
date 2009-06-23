@@ -31,7 +31,6 @@ sub new {
     $this->{_vectors} = [ $v1, $v2 ];
 
     $this->{vrx} = eval { Statistics::Basic::Variance->new($v1)        }; croak $@ if $@;
-    $this->{vry} = eval { Statistics::Basic::Variance->new($v2)        }; croak $@ if $@;
     $this->{mnx} = eval { Statistics::Basic::Mean->new($v1)            }; croak $@ if $@;
     $this->{mny} = eval { Statistics::Basic::Mean->new($v2)            }; croak $@ if $@;
     $this->{cov} = eval { Statistics::Basic::Covariance->new($v1, $v2) }; croak $@ if $@;
@@ -50,19 +49,13 @@ sub _recalc {
     delete $this->{alpha};
     delete $this->{beta};
 
-    unless( $this->{vrx}->query ) {
-        unless( defined $this->{vrx}->query ) {
-            warn "[recalc " . ref($this) . "] undef variance...\n" if $ENV{DEBUG};
+    my $vrx = $this->{vrx}->query; return unless defined $vrx; return unless $vrx > 0;
+    my $mnx = $this->{mnx}->query; return unless defined $mnx; return unless $mnx > 0;
+    my $mny = $this->{mny}->query; return unless defined $mny;
+    my $cov = $this->{cov}->query; return unless defined $cov;
 
-        } else {
-            warn "[recalc " . ref($this) . "] narrowly avoided division by zero.  Something is probably wrong.\n" if $ENV{DEBUG};
-        }
-
-        return;
-    }
-
-    $this->{beta}  = ($this->{cov}->query / $this->{vrx}->query);
-    $this->{alpha} = ($this->{mny}->query - ($this->{beta} * $this->{mnx}->query));
+    $this->{beta}  = ($cov / $vrx);
+    $this->{alpha} = ($mny - ($this->{beta} * $mnx));
 
     warn "[recalc " . ref($this) . "] (alpha: $this->{alpha}, beta: $this->{beta})\n" if $ENV{DEBUG};
 }
@@ -100,25 +93,11 @@ sub query_mean1 {
     return $this->{mnx};
 }
 # }}}
-# query_mean2 {{{
-sub query_mean2 {
-    my $this = shift;
-
-    return $this->{mny};
-}
-# }}}
 # query_variance1 {{{
 sub query_variance1 {
     my $this = shift;
 
     return $this->{vrx};
-}
-# }}}
-# query_variance2 {{{
-sub query_variance2 {
-    my $this = shift;
-
-    return $this->{vry};
 }
 # }}}
 # query_covariance {{{
