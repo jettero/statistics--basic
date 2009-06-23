@@ -69,6 +69,7 @@ sub _recalc {
     warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
 }
 # }}}
+
 # query_vector1 {{{
 sub query_vector1 {
     my $this = shift;
