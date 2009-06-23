@@ -36,8 +36,9 @@ sub size {
 sub set_size {
     my $this = shift;
     my $size = shift;
+    my $norm = shift;
 
-    eval { $_->set_size( $size ) for @{$this->{_vectors}}; 1 } or croak $@;
+    eval { $_->set_size( $size, $norm ) for @{$this->{_vectors}}; 1 } or croak $@;
 
     return $this;
 }
