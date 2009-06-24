@@ -73,7 +73,7 @@ sub query_size {
 
     $this->_recalc if $this->{recalc_needed};
 
-    $this->{output_vector}->size;
+    $this->{output_vector}->query_size;
 }
 
 # maybe deprecate this later

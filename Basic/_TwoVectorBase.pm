@@ -29,7 +29,7 @@ sub size {
     my $this = shift;
 
     my @v = @{$this->{_vectors}};
-    return ($v[0]->size, $v[1]->size); # list rather than map{} so this can be a scalar
+    return ($v[0]->query_size, $v[1]->query_size); # list rather than map{} so this can be a scalar
 }
 
 # maybe deprecate this later
@@ -73,7 +73,7 @@ sub ginsert {
     my $c = 0;
     $_->ginsert( $_[$c++] ) for @{$this->{_vectors}};
 
-    my @s = $this->size;
+    my @s = $this->query_size;
     croak "Uneven ginsert detected, the two vectors in a " . ref($this) . " object must remain the same length."
         unless $s[0] == $s[1];
 
@@ -92,7 +92,7 @@ sub set_vector {
     my $c = 0;
     $_->set_vector( $_[$c++] ) for @{$this->{_vectors}};
 
-    my @s = $this->size;
+    my @s = $this->query_size;
     croak "Uneven set_vector detected, the two vectors in a " . ref($this) . " object must remain the same length."
         unless $s[0] == $s[1];
 

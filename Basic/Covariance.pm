@@ -36,8 +36,8 @@ sub _recalc {
     my $sum  = 0;
     my $v1   = $this->{v1};
     my $v2   = $this->{v2};
-    my $c1   = $v1->size;
-    my $c2   = $v2->size;
+    my $c1   = $v1->query_size;
+    my $c2   = $v2->query_size;
 
     warn "[recalc " . ref($this) . "] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
 

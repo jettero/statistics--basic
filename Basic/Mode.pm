@@ -41,7 +41,7 @@ sub new {
 sub _recalc {
     my $this = shift;
     my $v = $this->{v};
-    my $cardinality = $v->size;
+    my $cardinality = $v->query_size;
 
     delete $this->{recalc_needed};
     delete $this->{_value};

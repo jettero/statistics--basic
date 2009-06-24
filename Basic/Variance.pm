@@ -34,7 +34,7 @@ sub _recalc {
     return unless defined $mean;
 
     my $v = $this->{v};
-    my $cardinality = $v->size;
+    my $cardinality = $v->query_size;
        $cardinality -- if $ENV{UNBIAS};
     return unless $cardinality > 0;
 

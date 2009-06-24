@@ -44,7 +44,7 @@ sub query_vector {
 sub size {
     my $this = shift;
 
-    return $this->{v}->size;
+    return $this->{v}->query_size;
 }
 
 # maybe deprecate this later
