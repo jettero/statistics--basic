@@ -1,26 +1,15 @@
-
 package Statistics::Basic::Variance;
 
 use strict;
 use warnings;
 use Carp;
 
-use Statistics::Basic;
+use base 'Statistics::Basic::_OneVectorBase';
 
-use overload
-    '""' => sub { defined( my $v = $_[0]->query ) || return "n/a"; $Statistics::Basic::fmt->format_number("$v", $ENV{IPRES}) },
-    '0+' => sub { $_[0]->query },
-    ( exists($ENV{TOLER}) ? ('==' => sub { abs($_[0]-$_[1])<=$ENV{TOLER} }) : () ),
-    'eq' => sub { "$_[0]" eq "$_[1]" },
-    fallback => 1; # tries to do what it would have done if this wasn't present.
-
-1;
-
-# new {{{
 sub new {
     my $class = shift;
 
-    warn "[new variance]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(shift, @_) }; croak $@ if $@;
@@ -33,109 +22,33 @@ sub new {
 
     return $this;
 }
-# }}}
-# _recalc {{{
+
 sub _recalc {
     my $this = shift;
     my $first = shift;
-    my $sum = 0;
-    my $v = $this->{v};
-    my $cardinality = $v->size;
-
-    $cardinality -- if $ENV{UNBIAS};
 
     delete $this->{recalc_needed};
-    delete $this->{variance};
-
-    return unless $cardinality > 0;
-    return unless $v->query_filled; # only applicable in certain circumstances
+    delete $this->{_value};
 
     my $mean = $this->{m}->query;
+    return unless defined $mean;
+
+    my $v = $this->{v};
+    my $cardinality = $v->size;
+       $cardinality -- if $ENV{UNBIAS};
+    return unless $cardinality > 0;
 
     if( $ENV{DEBUG} >= 2 ) {
-        warn "[recalc variance] ( $_ - $mean ) ** 2\n" for $v->query;
+        warn "[recalc " . ref($this) . "] ( $_ - $mean ) ** 2\n" for $v->query;
     }
+
+    my $sum = 0;
 
     $sum += ( $_ - $mean ) ** 2 for $v->query;
 
-    $this->{variance} = ($sum / $cardinality);
+    $this->{_value} = ($sum / $cardinality);
 
-    warn "[recalc variance] ($sum/$cardinality) = $this->{variance}\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
 }
-# }}}
-# _recalc_needed {{{
-sub _recalc_needed {
-    my $this = shift;
-       $this->{recalc_needed} = 1;
 
-    warn "[recalc_needed variance]\n" if $ENV{DEBUG};
-}
-# }}}
-# query {{{
-sub query {
-    my $this = shift;
-
-    $this->_recalc if $this->{recalc_needed};
-
-    warn "[query variance $this->{variance}]\n" if $ENV{DEBUG};
-
-    return $this->{variance};
-}
-# }}}
-# query_vector {{{
-sub query_vector {
-    my $this = shift;
-
-    return $this->{v};
-}
-# }}}
-# query_mean {{{
-sub query_mean {
-    my $this = shift;
-
-    return $this->{m};
-}
-# }}}
-
-# size {{{
-sub size {
-    my $this = shift;
-
-    return $this->{v}->size;
-}
-# }}}
-# set_size {{{
-sub set_size {
-    my $this = shift;
-    my $size = shift;
-
-    eval { $this->{v}->set_size( $size ) }; croak $@ if $@;
-}
-# }}}
-# insert {{{
-sub insert {
-    my $this = shift;
-
-    warn "[insert variance]\n" if $ENV{DEBUG};
-
-    $this->{v}->insert( @_ );
-}
-# }}}
-# ginsert {{{
-sub ginsert {
-    my $this = shift;
-
-    warn "[ginsert variance]\n" if $ENV{DEBUG};
-
-    $this->{v}->ginsert( @_ );
-}
-# }}}
-# set_vector {{{
-sub set_vector {
-    my $this = shift;
-
-    warn "[set_vector variance]\n" if $ENV{DEBUG};
-
-    $this->{v}->set_vector( @_ );
-}
-# }}}
+1;
