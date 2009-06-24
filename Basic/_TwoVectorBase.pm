@@ -24,8 +24,8 @@ sub query {
     return $this->{_value};
 }
 # }}}
-# size {{{
-sub size {
+# query_size {{{
+sub query_size {
     my $this = shift;
 
     my @v = @{$this->{_vectors}};

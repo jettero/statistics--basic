@@ -40,8 +40,8 @@ sub query_vector {
 }
 # }}}
 
-# size {{{
-sub size {
+# query_size {{{
+sub query_size {
     my $this = shift;
 
     return $this->{v}->query_size;
