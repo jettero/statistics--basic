@@ -51,15 +51,8 @@ sub copy {
 }
 # }}}
 
-# query {{{
-sub query {
-    my $this = shift;
-
-    return (wantarray ? @{$this->{v}} : $this->{v});
-}
-# }}}
-# set_computer {{{
-sub set_computer {
+# _set_computer {{{
+sub _set_computer {
     my $this = shift;
 
     while( my ($k,$v) = splice @_, 0, 2 ) {
@@ -69,8 +62,8 @@ sub set_computer {
     }
 }
 # }}}
-# set_linked_computer {{{
-sub set_linked_computer {
+# _set_linked_computer {{{
+sub _set_linked_computer {
     my $this = shift;
     my $key  = shift;
     my $var  = shift;
@@ -80,8 +73,8 @@ sub set_linked_computer {
     $this->set_computer( $new_key => $var );
 }
 # }}}
-# get_computer {{{
-sub get_computer {
+# _get_computer {{{
+sub _get_computer {
     my $this = shift;
     my $k = shift;
 
@@ -90,8 +83,8 @@ sub get_computer {
     $this->{c}{$k};
 }
 # }}}
-# get_linked_computer {{{
-sub get_linked_computer {
+# _get_linked_computer {{{
+sub _get_linked_computer {
     my $this = shift;
     my $key  = shift;
 
@@ -100,8 +93,8 @@ sub get_linked_computer {
     $this->get_computer( $new_key );
 }
 # }}}
-# inform_computers_of_change {{{
-sub inform_computers_of_change {
+# _inform_computers_of_change {{{
+sub _inform_computers_of_change {
     my $this = shift;
 
     for my $k (keys %{ $this->{c} }) {
@@ -117,8 +110,8 @@ sub inform_computers_of_change {
 }
 # }}}
 
-# fix_size {{{
-sub fix_size {
+# _fix_size {{{
+sub _fix_size {
     my $this = shift;
 
     my $fixed = 0;
@@ -143,6 +136,14 @@ sub fix_size {
     return $fixed;
 }
 # }}}
+
+# query {{{
+sub query {
+    my $this = shift;
+
+    return (wantarray ? @{$this->{v}} : $this->{v});
+}
+# }}}
 # query_filled {{{
 sub query_filled {
     my $this = shift;
@@ -153,27 +154,7 @@ sub query_filled {
     return 1;
 }
 # }}}
-# set_size {{{
-sub set_size {
-    my $this = shift;
-    my $size = shift;
 
-    croak "invalid vector size ($size)" if $size < 0;
-
-    if( $this->{s} != $size ) {
-        $this->{s} = $size;
-        $this->fix_size;
-        $this->inform_computers_of_change;
-    }
-}
-# }}}
-# size {{{
-sub size {
-    my $this = shift;
-
-    return scalar @{$this->{v}};
-}
-# }}}
 # insert {{{
 sub insert {
     my $this = shift;
@@ -222,6 +203,28 @@ sub ginsert {
 
     $this->{s} = @{$this->{v}} if @{$this->{v}} > $this->{s};
     $this->inform_computers_of_change;
+}
+# }}}
+
+# size {{{
+sub size {
+    my $this = shift;
+
+    return scalar @{$this->{v}};
+}
+# }}}
+# set_size {{{
+sub set_size {
+    my $this = shift;
+    my $size = shift;
+
+    croak "invalid vector size ($size)" if $size < 0;
+
+    if( $this->{s} != $size ) {
+        $this->{s} = $size;
+        $this->fix_size;
+        $this->inform_computers_of_change;
+    }
 }
 # }}}
 # set_vector {{{
