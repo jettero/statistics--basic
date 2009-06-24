@@ -1,3 +1,7 @@
+1.6600: Wed Jun 24 17:34:06 EDT 2009
+   - made quite a lot of the methods of Vectors private
+   - trying to make the pods more consistant and informative
+
 1.6600: Wed Jun 24 06:40:20 EDT 2009
    - _OVBed: median, StdDev, Variance
    - fixed bugs resulting from the above
