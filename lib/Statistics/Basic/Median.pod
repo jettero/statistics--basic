@@ -38,9 +38,6 @@ Create a 20 point "moving" median like so:
         }
     }
 
-The full details are probably in the base module.  If you have questions, just
-let me know.
-
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

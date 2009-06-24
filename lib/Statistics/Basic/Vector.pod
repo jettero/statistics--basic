@@ -15,9 +15,6 @@ That's it's primary purpose.  It does have interpolation though...
 
     print "$vector\n"; # pretty printed
 
-The full details are probably in the base module.  If you have questions, just
-let me know.
-
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
