@@ -178,7 +178,7 @@ sub insert {
     }
 
     $this->fix_size;
-    $this->inform_computers_of_change;
+    $this->_inform_computers_of_change;
 }
 # }}}
 # ginsert {{{
@@ -223,7 +223,7 @@ sub set_size {
     if( $this->{s} != $size ) {
         $this->{s} = $size;
         $this->fix_size;
-        $this->inform_computers_of_change;
+        $this->_inform_computers_of_change;
     }
 }
 # }}}
@@ -236,7 +236,7 @@ sub set_vector {
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = $vector;
         $this->{s} = int @$vector;
-        $this->inform_computers_of_change;
+        $this->_inform_computers_of_change;
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
