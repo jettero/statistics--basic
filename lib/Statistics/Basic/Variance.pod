@@ -38,6 +38,31 @@ Create a 20 point "moving" variance like so:
         }
     }
 
+=head1 METHODS
+
+=over 4
+
+=item B<new>
+
+The constructor takes a list of values, a single array ref, or a
+single L<Statistics::Basic::Vector> as arguments.  It returns a
+L<Statistics::Basic::Mean> object.
+
+Note: normally you'd use the
+L<mean()|Statistics::Basic/mean() average() avg()> constructor, rather than
+building these by hand using C<new()>.
+
+=item B<query_mean()>
+
+Returns the L<Statistics::Basic::Mean> object used in the variance computation.
+
+=item B<_OVB::import()>
+
+This module also inherits all the overloads and methods from
+L<Statistics::Basic::_OneVectorBase>.
+
+=back
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

@@ -279,6 +279,87 @@ Suppose you'd like a copy of the L<Statistics::Basic::Variance> object that the
 L<Statistics::Basic::StdDev> object is using.  All of the objects within should
 be accessible with query functions as follows.
 
+=head1 QUERY FUNCTIONS
+
+=over
+
+=item C<query()>
+
+This method exists in all of the objects.  L<Statistics::Basic::LeastSquareFit>
+is the only one that returns two values (alpha and beta) as a list.  All of the
+other C<query()> methods return a single number, the number the module purports
+to calculate.
+
+=item C<query_mean()>
+
+Returns the L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Variance> and L<Statistics::Basic::StdDev>.
+
+=item C<query_mean1()>
+
+Returns the first L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, L<Statistics::Basic::Correlation> and
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_mean2()>
+
+Returns the second L<Statistics::Basic::Mean> object used by
+L<Statistics::Basic::Covariance>, and L<Statistics::Basic::Correlation>.
+
+=item C<query_covariance()>
+
+Returns the L<Statistics::Basic::Covariance> object used by
+L<Statistics::Basic::Correlation> and L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_variance()>
+
+Returns the L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::StdDev>.
+
+=item C<query_variance1()>
+
+Returns the first L<Statistics::Basic::Variance> object used by
+L<Statistics::Basic::LeastSquareFit>.
+
+=item C<query_vector()>
+
+Returns the L<Statistics::Basic::Vector> object used by any of the single vector
+modules.
+
+=item C<query_vector1()>
+
+Returns the first L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=item C<query_vector2()>
+
+Returns the second L<Statistics::Basic::Vector> object used by any of the two
+vector modules.
+
+=item C<is_multimodal()>
+
+L<Statistics::Basic::Mode> objects sometimes return L<Statistics::Basic::Vector>
+objects instead of numbers.  When C<is_multimodal()> is true, the mode is a
+vector, not a scalar.
+
+=item C<y_given_x()>
+
+L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
+This function can be used to find the C<y> for a given C<x> based on the
+calculated C<$beta> (slope) and C<$alpha> (y-offset).
+
+=item C<x_given_y()>
+
+L<Statistics::Basic::LeastSquareFit> is meant for finding a line of best fit.
+This function can be used to find the C<x> for a given C<y> based on the
+calculated C<$beta> (slope) and C<$alpha> (y-offset).
+
+This function can produce divide-by-zero errors since it must divide by the
+slope to find the C<x> value.  (The slope should rarely be zero though, that's a
+vertical line and would represent very odd data points.)
+
+=back
+
 =head1 INSERT and SET FUNCTIONS
 
 These objects are all intended to be useful while processing long columns of

@@ -9,7 +9,8 @@ Statistics::Basic::_OneVectorBase - base class objects like Mean
 =item B<query()>
 
 Query the value of the object.  It will return the undefined value until there's
-something to calculate.
+something to calculate (or until the vector is full if
+L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is in effect).
 
 =item B<insert()>
 
@@ -25,7 +26,6 @@ The growing insert inserts new elements, growing the max size of the vector to
 accommodate the new elements (if necessary).  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
-
 
     $correlation_object->ginsert( 4, 3 );
 
