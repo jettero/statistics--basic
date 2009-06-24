@@ -35,6 +35,7 @@ t/08_filter_outliers.t
 t/10_mean.t
 t/10_median.t
 t/10_mode.t
+t/10_moving_average.t
 t/15_covariance.t
 t/15_variance.t
 t/17_stddev.t
