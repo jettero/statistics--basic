@@ -286,9 +286,11 @@ be accessible with query functions as follows.
 =item C<query()>
 
 This method exists in all of the objects.  L<Statistics::Basic::LeastSquareFit>
-is the only one that returns two values (alpha and beta) as a list.  All of the
-other C<query()> methods return a single number, the number the module purports
-to calculate.
+is the only one that returns two values (alpha and beta) as a list.
+L<Statistics::Basic::Vector> returns either the list of elements in the vector,
+or reference to that array (depending on the context).  All of the other
+C<query()> methods return a single number, the number the module purports to
+calculate.
 
 =item C<query_mean()>
 

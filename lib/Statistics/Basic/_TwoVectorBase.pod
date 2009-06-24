@@ -26,16 +26,15 @@ accommodate the new elements (if necessary).  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
 
-
     $object_instance->ginsert( 4, 3 );
 
-=item B<size()>
+=item B<query_size()>
 
 The current size of the vectors -- regardless of their max size as set by
 L</set_size()>.  This function returns a list, i.e.:
 
-    my @s = $obj->size; # two values
-    my $s = $obj->size; # the right hand value of the list
+    my @s = $obj->query_size; # two values
+    my $s = $obj->query_size; # the right hand value of the list
 
 =item B<set_size()>
 

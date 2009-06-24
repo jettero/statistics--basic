@@ -18,7 +18,7 @@ Insert two new new values into the vectors.  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
 
-    $correlation_object->insert( 4, 3 );
+    $object_instance->insert( 4, 3 );
 
 =item B<ginsert()>
 
@@ -27,15 +27,15 @@ accommodate the new elements (if necessary).  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
 
-    $correlation_object->ginsert( 4, 3 );
+    $object_instance->ginsert( 4, 3 );
 
-=item B<size()>
+=item B<query_size()>
 
 The current size of the vectors -- regardless of their max size as set by
 L</set_size()>.  This function returns a list, i.e.:
 
-    my @s = $cor->size; # two values
-    my $s = $cor->size; # the right hand value of the list
+    my @s = $obj->query_size; # two values
+    my $s = $obj->query_size; # the right hand value of the list
 
 =item B<set_size()>
 
@@ -52,12 +52,14 @@ objects.  They must have the same number of elements.
 
 =head1 OVERLOADS
 
-This object is overloaded.  If evaluated as a string, it will attempt to print a
-pretty value for the correlation (or C<n/a>, see L</query()> above).
+This class provides overloads.  If evaluated as a string, it will attempt to
+print a pretty value for the object (or C<n/a>, see L</query()> above).  the
+resulting string can be tuned, in terms of precision, see
+L<$ENV{IPRES}|Statistics::Basic/$ENV{IPRES}> for further information.
 
 If evaluated as a number, it will try to return the raw result of L</query()>,
-possibly turning the resulting undef (if applicable) into a 0 in the process --
-note that Perl does this 0-izing, not the overload.
+possibly turning the resulting C<undef> (if applicable) into a C<0> in the
+process -- note that Perl does this C<0>-izing, not the overload.
 
 The C<eq> and C<==> operators are also overloaded, trying to do the right thing.
 Also see L<$ENV{TOLER}|Statistics::Basic/$ENV{TOLER}> for further information.
