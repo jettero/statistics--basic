@@ -120,7 +120,6 @@ sub inform_computers_of_change {
 # fix_size {{{
 sub fix_size {
     my $this = shift;
-    my $nofl = shift; # 0 is fill, 1 is no fill
 
     my $fixed = 0;
 
@@ -130,11 +129,13 @@ sub fix_size {
         $fixed = 1;
     }
 
-    if( not $nofl and $d < 0 ) {
-        unshift @{$this->{v}}, # unshift so the 0s leave first
-            map {0} $d .. -1;  # add $d of them
+    unless( $ENV{NOFILL} ) {
+        if( $d < 0 ) {
+            unshift @{$this->{v}}, # unshift so the 0s leave first
+                map {0} $d .. -1;  # add $d of them
 
-        $fixed = 1;
+            $fixed = 1;
+        }
     }
 
     warn "[fix_size $this] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2;
@@ -146,7 +147,9 @@ sub fix_size {
 sub query_filled {
     my $this = shift;
 
-    return if @{$this->{v}} != $this->{s};
+    warn "[query_filled $this $this->{s}]\n" if $ENV{DEBUG} >= 1;
+
+    return if @{$this->{v}} < $this->{s};
     return 1;
 }
 # }}}
@@ -154,13 +157,12 @@ sub query_filled {
 sub set_size {
     my $this = shift;
     my $size = shift;
-    my $nofl = shift;
 
     croak "invalid vector size ($size)" if $size < 0;
 
     if( $this->{s} != $size ) {
         $this->{s} = $size;
-        $this->fix_size($nofl);
+        $this->fix_size;
         $this->inform_computers_of_change;
     }
 }

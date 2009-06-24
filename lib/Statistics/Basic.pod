@@ -502,6 +502,12 @@ This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
 also be called "population (n)" vs "sample (n-1)" and is indeed fully addressed
 right here!]
 
+=item C<$ENV{NOFILL}>
+
+Normally when you set the size of a vector it automatically fills with zeros on
+the first out side of the vector.  You can disable the autofilling with this
+environment variable.
+
 =item C<$ENV{IPRES}>
 
 C<$ENV{IPRES}>, which defaults to 2, is passed to L<Number::Format> as the second

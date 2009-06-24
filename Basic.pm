@@ -17,14 +17,12 @@ use Statistics::Basic::Variance;
 use Statistics::Basic::Vector;
 use Statistics::Basic::ComputedVector;
 
-use constant FILL   => 0;
-use constant NOFILL => 1;
-
 our $VERSION = '1.6600';
 our $fmt = new Number::Format;
 
-$ENV{DEBUG} ||= 0;
-$ENV{IPRES} ||= 2;
+$ENV{NOFILL} ||= 0;
+$ENV{DEBUG}  ||= 0;
+$ENV{IPRES}  ||= 2;
 
 # probably best to not set a default
 # $ENV{TOLER} ||= 0.000_000_000_1; # differences smaller this will test equal for the overloaded objects

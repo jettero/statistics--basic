@@ -1,23 +1,29 @@
 
 use strict;
 use Test;
-use Statistics::Basic qw(FILL NOFILL);
+use Statistics::Basic;
 
-plan tests => 25;
+plan tests => 27;
 
 my  $v = new Statistics::Basic::Vector([1 .. 3]);
 ok( $v->size, 3 );
 
-$v->set_size( 4, FILL ); # fix_size() fills in with 0s
+$v->set_size( 4 ); # fix_size() fills in with 0s
 ok( $v->size, 4 ); 
 ok( $v->query_filled );
 
-$v->set_size( 6, NOFILL ); # waits for you to insert()
-ok( $v->size, 4 );
-ok( !$v->query_filled );
+{ local $ENV{NOFILL} = 1;
+    $v->set_size( 6 ); # waits for you to insert()
+    ok( $v->size, 4 );
+    ok( !$v->query_filled );
 
-$v->insert(5);     # this runs the normalizer whether you like it or not
-ok( $v->size, 6 ); # and of course, by normalizer, we mean 0-padder
+    $v->insert( 9 ); # waits for you to insert()
+    ok( $v->size, 5 );
+    ok( !$v->query_filled );
+}
+
+$v->insert(5); # auto fills
+ok( $v->size, 6 );
 
 $v->insert( [10..13], 14..15 );
 ok( $v->size, 6 );

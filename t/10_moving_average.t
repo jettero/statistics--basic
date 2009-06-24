@@ -3,12 +3,12 @@ use strict;
 use Test;
 use Statistics::Basic qw(:all);
 
-plan tests => 2*(1+(my $t = 8));
+plan tests => 2*(1+(my $t = 3));
 
-my $avg = avg()->set_size($t, NOFILL);
+$ENV{NOFILL} = 1;
 
+my $avg = avg()->set_size($t);
 ok( $avg->size, 0 );
-
 for(1 .. $t) {
     ok( $avg->query, undef );
     $avg->insert(1);
