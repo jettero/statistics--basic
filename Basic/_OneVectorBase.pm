@@ -48,7 +48,7 @@ sub query_size {
 }
 
 # maybe deprecate this later
-*size = *query_size unless $ENV{TEST_AUTHOR};
+*size = \&query_size unless $ENV{TEST_AUTHOR};
 
 # }}}
 # set_size {{{
@@ -94,6 +94,7 @@ sub ginsert {
 
     return $this;
 }
+*append = \&ginsert;
 # }}}
 
 1;

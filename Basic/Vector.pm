@@ -204,6 +204,7 @@ sub ginsert {
     $this->{s} = @{$this->{v}} if @{$this->{v}} > $this->{s};
     $this->_inform_computers_of_change;
 }
+*append = \&ginsert;
 # }}}
 
 # query_size {{{
@@ -214,7 +215,7 @@ sub query_size {
 }
 
 # maybe deprecate this later
-*size = *query_size unless $ENV{TEST_AUTHOR};
+*size = \&query_size unless $ENV{TEST_AUTHOR};
 
 # }}}
 # set_size {{{

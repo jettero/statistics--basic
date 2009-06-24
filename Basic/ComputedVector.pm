@@ -77,7 +77,7 @@ sub query_size {
 }
 
 # maybe deprecate this later
-*size = *query_size unless $ENV{TEST_AUTHOR};
+*size = \&query_size unless $ENV{TEST_AUTHOR};
 
 # }}}
 # query {{{
@@ -102,5 +102,6 @@ sub query_filled {
 sub fix_size   { croak   "fix_size() makes no sense on computed vectors" }
 sub set_size   { croak   "set_size() makes no sense on computed vectors" }
 sub insert     { croak     "insert() makes no sense on computed vectors" }
+sub append     { croak     "append() makes no sense on computed vectors" }
 sub ginsert    { croak    "ginsert() makes no sense on computed vectors" }
 sub set_vector { croak "set_vector() makes no sense on computed vectors" }
