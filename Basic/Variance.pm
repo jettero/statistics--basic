@@ -51,4 +51,6 @@ sub _recalc {
     warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
 }
 
+sub query_mean { return $_[0]->{m} }
+
 1;

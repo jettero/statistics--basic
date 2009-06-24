@@ -14,7 +14,7 @@ sub new {
 
     my $this     = bless {}, $class;
     my $variance = $this->{V} = eval { Statistics::Basic::Variance->new(@_) }; croak $@ if $@;
-    my $vector   = $variance->query_vector;
+    my $vector   = $this->{v} = $variance->query_vector;
     my $c        = $vector->get_computer( 'stddev' ); return $c if defined $c;
 
     $vector->set_computer( stddev => $this );
@@ -34,13 +34,13 @@ sub _recalc {
 
     warn "[recalc " . ref($this) . "] sqrt( $var )\n" if $ENV{DEBUG};
 
-    $this->{stddev} = sqrt( $var );
+    $this->{_value} = sqrt( $var );
 }
 
 sub query_mean {
     my $this = shift;
 
-    return $this->{m};
+    return $this->{V}->query_mean;
 }
 
 1;
