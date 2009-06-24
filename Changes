@@ -2,6 +2,7 @@
    - installed a lotta DRY on the two vector classes, will
      continue this tonight and on lunch break most likely.
    - worked on the docs, they need a good deal of work
+   - _OVBed Mean
    - noticed a half-way implemented set_vector fill-disabler, why
      isn't it finished?
      - added a query_filled to check to see if a vector is full
@@ -12,6 +13,7 @@
      - I gave up on the second argument to set_size... it needs
        to be kinda system wide to work right.  Another $ENV{VAR}.
        *sigh*
+   - _OVBed Mode
 
 1.6600: Mon Jun 22 18:51:33 EDT 2009
    - started added best practices stuff to the dist
