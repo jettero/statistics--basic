@@ -52,6 +52,48 @@ Create a 20 point "moving" mode like so:
         }
     }
 
+=head1 METHODS
+
+=over 4
+
+=item B<new()>
+
+The constructor takes a list of values, a single array ref, or a
+single L<Statistics::Basic::Vector> as arguments.  It returns a
+L<Statistics::Basic::Mean> object.
+
+Note: normally you'd use the
+L<mean()|Statistics::Basic/mean() average() avg()> constructor, rather than
+building these by hand using C<new()>.
+
+=item B<is_multimodal()>
+
+L<Statistics::Basic::Mode> objects sometimes return L<Statistics::Basic::Vector>
+objects instead of numbers.  When C<is_multimodal()> is true, the mode is a
+vector, not a scalar.
+
+=item B<_OVB::import()>
+
+This module also inherits all the overloads and methods from
+L<Statistics::Basic::_OneVectorBase>.
+
+=item B<mode overloads>
+
+If evaluated as a string, L<Statistics::Basic::Mode> will try to format a number
+(like any other L<Statistics::Basic> object), but if the object
+L</is_multimodal()>, it will instead return a L<Statistics::Basic::Vector> for
+stringification.
+
+    $x = mode(1,2,3);
+    $y = mode(1,2,2);
+
+    print "$x, $y\n"; # prints: [1, 2, 3], 2
+
+If evaluated as a number, a L<Statistics::Basic::Mode> will raise an error when
+the object L</is_multimodal()>.
+
+=back
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
@@ -60,9 +102,8 @@ Paul Miller C<< <jettero@cpan.org> >>
 
 Copyright 2009 Paul Miller -- Licensed under the LGPL
 
-
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
 
 =cut

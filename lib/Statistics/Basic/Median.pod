@@ -38,6 +38,27 @@ Create a 20 point "moving" median like so:
         }
     }
 
+=head1 METHODS
+
+=over 4
+
+=item B<new>
+
+The constructor takes a list of values, a single array ref, or a
+single L<Statistics::Basic::Vector> as arguments.  It returns a
+L<Statistics::Basic::Median> object.
+
+Note: normally you'd use the
+L<median()|Statistics::Basic/median> constructor, rather than
+building these by hand using C<new()>.
+
+=item B<_OVB::import()>
+
+This module also inherits all the overloads and methods from
+L<Statistics::Basic::_OneVectorBase>.
+
+=back
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
@@ -48,6 +69,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
 
 =cut
