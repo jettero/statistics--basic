@@ -46,6 +46,10 @@ sub size {
 
     return $this->{v}->size;
 }
+
+# maybe deprecate this later
+*size = *query_size unless $ENV{TEST_AUTHOR};
+
 # }}}
 # set_size {{{
 sub set_size {

@@ -202,16 +202,20 @@ sub ginsert {
     }
 
     $this->{s} = @{$this->{v}} if @{$this->{v}} > $this->{s};
-    $this->inform_computers_of_change;
+    $this->_inform_computers_of_change;
 }
 # }}}
 
-# size {{{
-sub size {
+# query_size {{{
+sub query_size {
     my $this = shift;
 
     return scalar @{$this->{v}};
 }
+
+# maybe deprecate this later
+*size = *query_size unless $ENV{TEST_AUTHOR};
+
 # }}}
 # set_size {{{
 sub set_size {

@@ -31,6 +31,10 @@ sub size {
     my @v = @{$this->{_vectors}};
     return ($v[0]->size, $v[1]->size); # list rather than map{} so this can be a scalar
 }
+
+# maybe deprecate this later
+*size = *query_size unless $ENV{TEST_AUTHOR};
+
 # }}}
 # set_size {{{
 sub set_size {

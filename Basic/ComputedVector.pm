@@ -67,14 +67,18 @@ sub _recalc_needed {
     warn "[recalc_needed mean]\n" if $ENV{DEBUG};
 }
 # }}}
-# size {{{
-sub size {
+# query_size {{{
+sub query_size {
     my $this = shift;
 
     $this->_recalc if $this->{recalc_needed};
 
     $this->{output_vector}->size;
 }
+
+# maybe deprecate this later
+*size = *query_size unless $ENV{TEST_AUTHOR};
+
 # }}}
 # query {{{
 sub query {
