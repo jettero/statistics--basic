@@ -25,7 +25,7 @@ sub new {
 
     $this = bless {}, $this;
 
-    my $c = $v1->get_linked_computer( LSF => $v2 );
+    my $c = $v1->_get_linked_computer( LSF => $v2 );
     return $c if $c;
 
     $this->{_vectors} = [ $v1, $v2 ];
@@ -35,8 +35,8 @@ sub new {
     $this->{mny} = eval { Statistics::Basic::Mean->new($v2)            }; croak $@ if $@;
     $this->{cov} = eval { Statistics::Basic::Covariance->new($v1, $v2) }; croak $@ if $@;
 
-    $v1->set_linked_computer( LSF => $this, $v2 );
-    $v2->set_linked_computer( LSF => $this, $v1 );
+    $v1->_set_linked_computer( LSF => $this, $v2 );
+    $v2->_set_linked_computer( LSF => $this, $v1 );
 
     return $this;
 }

@@ -24,7 +24,7 @@ sub new {
        $this->_recalc;
 
     if( $_[0] ) {
-        eval { $this->set_computer(@_) }; croak $@ if $@;
+        eval { $this->_set_computer(@_) }; croak $@ if $@;
     }
 
     $this;
@@ -38,7 +38,7 @@ sub set_filter {
     $this->{computer} = $cref;
 
     my $a = Scalar::Util::refaddr($this);
-    $this->{input_vector}->set_computer( "cvec_$a" => $this );
+    $this->{input_vector}->_set_computer( "cvec_$a" => $this );
 }
 # }}}
 # _recalc {{{
@@ -56,7 +56,7 @@ sub _recalc {
     }
 
     warn "[recalc computed vector]\n" if $ENV{DEBUG};
-    $this->inform_computers_of_change;
+    $this->_inform_computers_of_change;
 }
 # }}}
 # _recalc_needed {{{

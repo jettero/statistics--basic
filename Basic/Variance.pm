@@ -13,12 +13,12 @@ sub new {
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(shift, @_) }; croak $@ if $@;
-    my $c      = $vector->get_computer("variance"); return $c if defined $c;
+    my $c      = $vector->_get_computer("variance"); return $c if defined $c;
 
     $this->{v} = $vector;
     $this->{m} = eval { Statistics::Basic::Mean->new($vector, @_) }; croak $@ if $@;
 
-    $vector->set_computer( variance => $this );
+    $vector->_set_computer( variance => $this );
 
     return $this;
 }

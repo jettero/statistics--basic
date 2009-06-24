@@ -13,7 +13,7 @@ sub new {
     my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) }; croak $@ if $@;
     my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) }; croak $@ if $@;
 
-    my $c = $v1->get_linked_computer( covariance => $v2 );
+    my $c = $v1->_get_linked_computer( covariance => $v2 );
     return $c if $c;
 
     my $this = bless {v1=>$v1, v2=>$v2}, $class;
@@ -24,8 +24,8 @@ sub new {
     $this->{m1} = eval { Statistics::Basic::Mean->new($v1) }; croak $@ if $@;
     $this->{m2} = eval { Statistics::Basic::Mean->new($v2) }; croak $@ if $@;
 
-    $v1->set_linked_computer( covariance => $this, $v2 );
-    $v2->set_linked_computer( covariance => $this, $v1 );
+    $v1->_set_linked_computer( covariance => $this, $v2 );
+    $v2->_set_linked_computer( covariance => $this, $v1 );
 
     return $this;
 }

@@ -15,7 +15,7 @@ sub new {
 
     $this = bless {}, $this;
 
-    my $c = $v1->get_linked_computer( correlation => $v2 );
+    my $c = $v1->_get_linked_computer( correlation => $v2 );
     return $c if $c;
 
     $this->{sd1} = eval { Statistics::Basic::StdDev->new($v1) }; croak $@ if $@;
@@ -24,8 +24,8 @@ sub new {
 
     $this->{_vectors} = [ $v1, $v2 ];
 
-    $v1->set_linked_computer( correlation => $this, $v2 );
-    $v2->set_linked_computer( correlation => $this, $v1 );
+    $v1->_set_linked_computer( correlation => $this, $v2 );
+    $v2->_set_linked_computer( correlation => $this, $v1 );
 
     return $this;
 }

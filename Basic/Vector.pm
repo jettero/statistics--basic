@@ -70,7 +70,7 @@ sub _set_linked_computer {
 
     my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
 
-    $this->set_computer( $new_key => $var );
+    $this->_set_computer( $new_key => $var );
 }
 # }}}
 # _get_computer {{{
@@ -90,7 +90,7 @@ sub _get_linked_computer {
 
     my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
 
-    $this->get_computer( $new_key );
+    $this->_get_computer( $new_key );
 }
 # }}}
 # _inform_computers_of_change {{{
@@ -177,7 +177,7 @@ sub insert {
         }
     }
 
-    $this->fix_size;
+    $this->_fix_size;
     $this->_inform_computers_of_change;
 }
 # }}}
@@ -226,7 +226,7 @@ sub set_size {
 
     if( $this->{s} != $size ) {
         $this->{s} = $size;
-        $this->fix_size;
+        $this->_fix_size;
         $this->_inform_computers_of_change;
     }
 }

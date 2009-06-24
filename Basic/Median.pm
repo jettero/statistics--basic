@@ -14,11 +14,11 @@ sub new {
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;
-    my $c      = $vector->get_computer("median"); return $c if defined $c;
+    my $c      = $vector->_get_computer("median"); return $c if defined $c;
 
     $this->{v} = $vector;
 
-    $vector->set_computer( median => $this );
+    $vector->_set_computer( median => $this );
 
     return $this;
 }
