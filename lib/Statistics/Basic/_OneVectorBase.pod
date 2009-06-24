@@ -14,39 +14,38 @@ L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is in effect).
 
 =item B<insert()>
 
-Insert two new new values into the vectors.  This function must be given
-precisely two arguments and probably shouldn't be undefined values in most
-cases.
+Insert new values into the vector. 
 
-    $object_instance->insert( 4, 3 );
+    $object_instance->insert( 4, 3 ); # insert a 3 and a 4
 
 =item B<ginsert()>
 
 The growing insert inserts new elements, growing the max size of the vector to
-accommodate the new elements (if necessary).  This function must be given
-precisely two arguments and probably shouldn't be undefined values in most
-cases.
+accommodate the new elements (if necessary).
 
-    $object_instance->ginsert( 4, 3 );
+    $object_instance->ginsert( 4, 3 ); # append a 3 and a 4
 
 =item B<query_size()>
 
-The current size of the vectors -- regardless of their max size as set by
-L</set_size()>.  This function returns a list, i.e.:
+The current size of the vector -- regardless of its max size (as set by
+L</set_size()>).
 
-    my @s = $obj->query_size; # two values
-    my $s = $obj->query_size; # the right hand value of the list
+=item B<query_vector()>
+
+Returns the L<Statistics::Basic::Vector> object used by the computational
+object.
 
 =item B<set_size()>
 
-Set the maximum size for the underlying L<Statistics::Basic::Vector> objects.
-This function requires two arguments.
+Set the maximum size for the underlying L<Statistics::Basic::Vector> object.
+This function requires one arguments.
 
 =item B<set_vector()>
 
-Set the vector objects used to calculate the correlation.  This function takes
-two arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
-objects.  They must have the same number of elements.
+Set the vector objects used to calculate the object's value.  This function
+either takes one argument -- which can either be an arrayref or a
+L<Statistics::Basic::Vector> object -- or it can take a list of elements to
+populate the vector with.
 
 =back
 

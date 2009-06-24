@@ -30,8 +30,8 @@ cases.
 
 =item B<query_size()>
 
-The current size of the vectors -- regardless of their max size as set by
-L</set_size()>.  This function returns a list, i.e.:
+The current size of the vectors -- regardless of their max size (as set by
+L</set_size()>0.  This function returns a list, i.e.:
 
     my @s = $obj->query_size; # two values
     my $s = $obj->query_size; # the right hand value of the list
