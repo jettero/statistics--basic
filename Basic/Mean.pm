@@ -10,7 +10,7 @@ use base 'Statistics::Basic::_OneVectorBase';
 sub new {
     my $class = shift;
 
-    warn "[new mean]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;

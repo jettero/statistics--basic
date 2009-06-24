@@ -25,7 +25,7 @@ use overload
 sub new {
     my $class = shift;
 
-    warn "[new median]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;
@@ -59,7 +59,7 @@ sub _recalc {
 
     $this->{_value} = ( (@a == 1) ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
 
-    warn "[recalc mode] count of $this->{_value} = $max\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] count of $this->{_value} = $max\n" if $ENV{DEBUG};
 }
 
 sub is_multimodal {
