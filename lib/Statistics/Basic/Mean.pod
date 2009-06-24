@@ -71,5 +71,4 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
 
-
 =cut

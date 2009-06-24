@@ -49,7 +49,7 @@ single L<Statistics::Basic::Vector> as arguments.  It returns a
 L<Statistics::Basic::Median> object.
 
 Note: normally you'd use the
-L<median()|Statistics::Basic/median> constructor, rather than
+L<median()|Statistics::Basic/median()> constructor, rather than
 building these by hand using C<new()>.
 
 =item B<_OVB::import()>

@@ -46,11 +46,10 @@ Create a 20 point "moving" variance like so:
 
 The constructor takes a list of values, a single array ref, or a
 single L<Statistics::Basic::Vector> as arguments.  It returns a
-L<Statistics::Basic::Mean> object.
+L<Statistics::Basic::Variance> object.
 
-Note: normally you'd use the
-L<mean()|Statistics::Basic/mean() average() avg()> constructor, rather than
-building these by hand using C<new()>.
+Note: normally you'd use the L<mean()|Statistics::Basic/variance() var()>
+constructor, rather than building these by hand using C<new()>.
 
 =item B<query_mean()>
 
@@ -77,6 +76,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
 
 =cut
