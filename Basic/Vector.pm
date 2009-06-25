@@ -257,5 +257,7 @@ sub set_vector {
     }
 
     warn "[set_vector $this] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
+
+    return $this;
 }
 # }}}
