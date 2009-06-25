@@ -1,3 +1,4 @@
+.perlcriticrc
 Basic.pm
 Basic/ComputedVector.pm
 Basic/Correlation.pm
