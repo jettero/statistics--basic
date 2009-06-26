@@ -63,7 +63,7 @@ L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
 
 =over 4
 
-=item B<new()>
+=item C<new()>
 
 Create a new L<Statistics::Basic::LeastSquareFit> object.  This function takes
 two arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>

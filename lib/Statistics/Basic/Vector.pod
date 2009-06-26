@@ -11,9 +11,26 @@ Invoke it this way:
     my $different   = $vector->copy;
 
 This module tracks which of the other L<Statistics::Basic> modules I<use> it.
-That's it's primary purpose.  It does have interpolation though...
+That's it's primary purpose.  Although, it does also have overloads to print the
+vectors in a pretty fashion.
 
     print "$vector\n"; # pretty printed
+
+=head1 METHODS
+
+=over 4
+
+=item C<new()>
+
+The constructor takes a single array ref or a single
+L<Statistics::Basic::Vector> as its arguments.  It returns a
+L<Statistics::Basic::Vector> object.
+
+Note: normally you'd use the
+L<mean()|Statistics::Basic/vector()> constructor, rather than
+building these by hand using C<new()>.
+
+=back
 
 =head1 AUTHOR
 
