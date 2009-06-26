@@ -6,41 +6,41 @@ Statistics::Basic::_OneVectorBase - base class objects like Mean
 
 =over 4
 
-=item B<query()>
+=item C<query()>
 
 Query the value of the object.  It will return the undefined value until there's
 something to calculate (or until the vector is full if
 L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is in effect).
 
-=item B<insert()>
+=item C<insert()>
 
 Insert new values into the vector. 
 
     $object_instance->insert( 4, 3 ); # insert a 3 and a 4
 
-=item B<ginsert()>
+=item C<append()> C<ginsert()>
 
 The growing insert inserts new elements, growing the max size of the vector to
 accommodate the new elements (if necessary).
 
     $object_instance->ginsert( 4, 3 ); # append a 3 and a 4
 
-=item B<query_size()>
+=item C<query_size()>
 
 The current size of the vector -- regardless of its max size (as set by
 L</set_size()>).
 
-=item B<query_vector()>
+=item C<query_vector()>
 
 Returns the L<Statistics::Basic::Vector> object used by the computational
 object.
 
-=item B<set_size()>
+=item C<set_size()>
 
 Set the maximum size for the underlying L<Statistics::Basic::Vector> object.
 This function requires one arguments.
 
-=item B<set_vector()>
+=item C<set_vector()>
 
 Set the vector objects used to calculate the object's value.  This function
 either takes one argument -- which can either be an arrayref or a
