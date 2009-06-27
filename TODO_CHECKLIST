@@ -1,8 +1,8 @@
 
                         accessors documentation documentation
-                        return    complete(x)   consistent(+) and
-                        object(x)               correct(x)
-                        [n/a (0)]
+                        return    complete      consistent(+) and
+                        object(x) (&&!covering  correct(x)
+                        [n/a (0)] non-exist &f)
 
 Basic/Vector.pm         [x]       [ ]           [  ]
 Basic/ComputedVector.pm [x]       [x]           [  ]
