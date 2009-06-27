@@ -13,6 +13,8 @@ Invoke it this way:
            grep { !($_ % 2) } @_
        });
 
+=head1 METHODS
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

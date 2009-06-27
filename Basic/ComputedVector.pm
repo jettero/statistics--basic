@@ -38,7 +38,7 @@ sub set_filter {
     $this->{computer} = $cref;
 
     my $a = Scalar::Util::refaddr($this);
-    $this->{input_vector}->_set_computer( "cvec_$a" => $this );
+    $this->{input_vector}->_set_computer( "cvec_$a" => $this ); # sets recalc needed in this object
 }
 # }}}
 # _recalc {{{
@@ -54,7 +54,7 @@ sub _recalc {
         $this->{output_vector}->set_vector( [$this->{input_vector}->query] );
     }
 
-    warn "[recalc computed vector]\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "]\n" if $ENV{DEBUG};
     $this->_inform_computers_of_change;
 }
 # }}}
@@ -63,7 +63,7 @@ sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
-    warn "[recalc_needed mean]\n" if $ENV{DEBUG};
+    warn "[recalc_needed " . ref($this) . "]\n" if $ENV{DEBUG};
 }
 # }}}
 # query_size {{{
@@ -88,19 +88,21 @@ sub query {
     return $this->{output_vector}->query;
 }
 # }}}
+
 # query_filled {{{
 sub query_filled {
     my $this = shift;
 
     $this->_recalc if $this->{recalc_needed};
 
-    return $this->{output_vector}->query_filled;
+    return $this->{input_vector}->query_filled;
 }
 # }}}
 
-sub fix_size   { croak   "fix_size() makes no sense on computed vectors" }
-sub set_size   { croak   "set_size() makes no sense on computed vectors" }
-sub insert     { croak     "insert() makes no sense on computed vectors" }
-sub append     { croak     "append() makes no sense on computed vectors" }
-sub ginsert    { croak    "ginsert() makes no sense on computed vectors" }
-sub set_vector { croak "set_vector() makes no sense on computed vectors" }
+sub _fix_size  { croak   "fix_size() makes no sense on computed vectors" }
+sub set_size   { my $this = shift; return $this->{input_vector}->set_size  (@_) }
+sub insert     { my $this = shift; return $this->{input_vector}->insert    (@_) }
+sub ginsert    { my $this = shift; return $this->{input_vector}->ginsert   (@_) }
+sub append     { my $this = shift; return $this->{input_vector}->append    (@_) }
+sub set_vector { my $this = shift; return $this->{input_vector}->set_vector(@_) }
+
