@@ -56,10 +56,17 @@ the new values, rather than shifting things.
 
 =item C<query()>
 
-Returns the contents of the vector either as a list or as an arrayref.
+C<query()> returns the contents of the vector either as a list or as an
+arrayref.
 
     my @copy_of_contents      = $vector->query;
     my $reference_to_contents = $vector->query;
+
+The contents of C<$reference_to_contents> can be altered to alter the contents
+of the vector object, but doing this may screw up the object consistency and
+especially the calculations based on the object.  It's better to use
+L<Statistics::Basic::ComputedVector>s if you need to change the contents in a
+special way.
 
 =item C<query_filled()>
 
