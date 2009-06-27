@@ -417,10 +417,10 @@ uses it).
 
 The mean has been calculated thrice more and only thrice more.
 
-=item C<append()>
+=item C<append()> C<ginsert()>
 
 You can grow the vectors instead of sliding them (FIFO). For this, use
-C<append()>.
+C<append()> (or C<ginsert()>, same thing).
 
     my $v = vector(1,2,3);
     my $m = mean($v);
@@ -431,6 +431,7 @@ C<append()>.
     $s->append(6); print "$s; $m\n"; 1.71; 1.71
 
     print "$v\n"; # [1, 2, 3, 4, 5, 6]
+    print "$s\n"; # 1.71
 
 Of course, with a correlation, or a covariance, it'd look more like this:
 
