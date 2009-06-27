@@ -3,6 +3,10 @@
      possible to insert into them, instead inserting into the
      input_vector.
    - finished a lot more 1.66 docs
+   - since two vectors remain separate objects under
+     $v1->set_vector($v2), they shouldn't be linked together from
+     that -- set_vector now copies instead of linking.
+     computed() vectors can serve that role instead.
 
 1.6600: Wed Jun 24 2009
    - _OVBed: median, StdDev, Variance
