@@ -245,7 +245,7 @@ sub set_size {
 # set_vector {{{
 sub set_vector {
     my $this     = shift;
-    my $vector   = shift;
+    my $vector   = $_[0];
 
     if( ref($vector) eq "ARRAY" ) {
         @{$this->{v}} = @$vector;
@@ -265,7 +265,7 @@ sub set_vector {
         # $this->{v} = $vector->{v}; # this links the vectors together
         # $this->{c} = $vector->{c}; # so we should link their computers too
 
-    } elsif( my @n = grep {looks_like_number($_)} ($vector, @_) ) {
+    } elsif( my @n = grep {looks_like_number($_)} @_ ) {
         @{$this->{v}} = @n;
 
     } elsif( defined $vector ) {
