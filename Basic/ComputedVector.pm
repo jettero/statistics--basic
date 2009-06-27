@@ -11,19 +11,11 @@ use base 'Statistics::Basic::Vector';
 # new {{{
 sub new {
     my $class = shift;
-    my $that  = shift;
-
-    if( defined $that ) {
-        $that = eval { Statistics::Basic::Vector->new($that) } or croak $@;
-    }
+    my $that  = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
     croak "input vector must be supplied to ComputedVector" unless defined $that;
 
     my $this = bless { c=>{}, input_vector=>$that, output_vector=>Statistics::Basic::Vector->new() }, $class;
-       $this->_recalc;
-
-    if( $_[0] ) {
-        eval { $this->_set_computer(@_) } or croak $@;
-    }
+       $this->_recalc_needed;
 
     return $this;
 }
@@ -104,6 +96,7 @@ sub query {
 }
 # }}}
 
+# query_filled {{{
 sub query_filled {
     my $this = shift;
 
@@ -113,6 +106,7 @@ sub query_filled {
 
     return $this->{input_vector}->query_filled;
 }
+# }}}
 
 sub _fix_size  { croak "fix_size() makes no sense on computed vectors" }
 sub set_size   { my $this = shift; $this->{input_vector}->set_size  (@_); return $this }
