@@ -25,7 +25,7 @@ sub new {
         eval { $this->_set_computer(@_) }; croak $@ if $@;
     }
 
-    $this;
+    return $this;
 }
 # }}}
 # copy {{{
@@ -36,7 +36,7 @@ sub copy {
 
     warn "copied computedvector($this -> $that)\n" if $ENV{DEBUG} >= 3;
 
-    $that;
+    return $that;
 }
 # }}}
 # set_filter {{{
@@ -48,6 +48,8 @@ sub set_filter {
 
     my $a = Scalar::Util::refaddr($this);
     $this->{input_vector}->_set_computer( "cvec_$a" => $this ); # sets recalc needed in this object
+
+    return $this;
 }
 # }}}
 # _recalc {{{
@@ -65,6 +67,8 @@ sub _recalc {
 
     warn "[recalc " . ref($this) . "]\n" if $ENV{DEBUG};
     $this->_inform_computers_of_change;
+
+    return;
 }
 # }}}
 # _recalc_needed {{{
@@ -73,6 +77,8 @@ sub _recalc_needed {
        $this->{recalc_needed} = 1;
 
     warn "[recalc_needed " . ref($this) . "]\n" if $ENV{DEBUG};
+
+    return;
 }
 # }}}
 # query_size {{{
@@ -81,7 +87,7 @@ sub query_size {
 
     $this->_recalc if $this->{recalc_needed};
 
-    $this->{output_vector}->query_size;
+    return $this->{output_vector}->query_size;
 }
 
 # maybe deprecate this later
