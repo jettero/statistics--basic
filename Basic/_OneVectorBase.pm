@@ -19,6 +19,8 @@ sub _recalc_needed {
        $this->{recalc_needed} = 1;
 
     warn "[recalc_needed " . ref($this) . "]\n" if $ENV{DEBUG};
+
+    return;
 }
 # }}}
 # query {{{
