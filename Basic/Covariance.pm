@@ -71,6 +71,8 @@ sub _recalc {
     $this->{_value} = ($sum / $cardinality);
 
     warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
+
+    return;
 }
 # }}}
 
