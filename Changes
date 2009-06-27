@@ -1,3 +1,9 @@
+1.6600: Sat Jun 27 06:38:25 EDT 2009
+   - worked on computed vectors a little.  decided it should be
+     possible to insert into them, instead inserting into the
+     input_vector.
+   - finished a lot more 1.66 docs
+
 1.6600: Wed Jun 24 17:34:06 EDT 2009
    - made quite a lot of the methods of Vectors private
    - trying to make the pods more consistent and informative
