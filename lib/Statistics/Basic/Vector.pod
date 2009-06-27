@@ -23,12 +23,65 @@ vectors in a pretty fashion.
 =item C<new()>
 
 The constructor takes a single array ref or a single
-L<Statistics::Basic::Vector> as its arguments.  It returns a
+L<Statistics::Basic::Vector> as its argument.  It returns a
 L<Statistics::Basic::Vector> object.
 
-Note: normally you'd use the
-L<mean()|Statistics::Basic/vector()> constructor, rather than
-building these by hand using C<new()>.
+If given a vector object argument, this function will return the argument rather
+than creating a new vector.
+
+A vector's max size is set to the size of the argument on initialization.
+
+Note: normally you'd use the L<vector()|Statistics::Basic/vector()> constructor,
+rather than building these by hand using C<new()>.
+
+=item C<copy()>
+
+Creates a new vector object with the same contents and size as this one and returns it.
+
+=item C<insert()>
+
+Insert new values into the vector.  If the vector was already full (see
+L</set_size()>), this will also shift oldest elements from the vector to
+compensate.
+
+    $vector->insert( 4, 3 ); # insert a 3 and a 4
+
+=item C<append()> C<ginsert()>
+
+Insert new values into the vector.  If the vector was already full (see
+L</set_size()>), these functions will grow the size of the vector to accommodate
+the new values, rather than shifting things.  compensate.
+
+    $vector->append( 4, 3 ); # append a 3 and a 4
+
+=item C<query()>
+
+Returns the contents of the vector either as a list or as an arrayref.
+
+    my @copy_of_contents      = $vector->query;
+    my $reference_to_contents = $vector->query;
+
+=item C<query_filled()>
+
+Returns true when the vector is the same size as the max size set by
+L</set_size()>.
+
+=item C<query_size()>
+
+Returns the current number of elements in the vector object (not the size set
+with L</set_size()>).
+
+=item C<set_size()>
+
+Sets the max size of the vector.  Note that on initialization with L</new()> or
+with L<vector()|Statistics::Basic/vector()>, this is called automatically.
+
+=item C<set_vector()>
+
+Given a vector or array ref, this will set the contents (and size) of the vector
+to match the argument.  If given a vector object argument, this will make the
+two vectors match, while still remaining separate objects -- which differs from
+the behavior of L</new()>.
 
 =back
 
