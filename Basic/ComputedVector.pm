@@ -8,8 +8,6 @@ use Carp;
 use Statistics::Basic;
 use base 'Statistics::Basic::Vector';
 
-1;
-
 # new {{{
 sub new {
     my $class = shift;
@@ -106,3 +104,4 @@ sub ginsert    { my $this = shift; $this->{input_vector}->ginsert   (@_); return
 sub append     { my $this = shift; $this->{input_vector}->append    (@_); return $this }
 sub set_vector { my $this = shift; $this->{input_vector}->set_vector(@_); return $this }
 
+1;
