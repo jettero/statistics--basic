@@ -68,6 +68,60 @@ Note that continuing from the L</SYNOPSIS> example, this would certainly insert
 a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
 L</query()> because it is odd.
 
+=item C<query()>
+
+C<query()> returns the contents of the computed vector (after filtering) either
+as a list or as an arrayref.
+
+    my @copy_of_contents      = $computed->query;
+    my $reference_to_contents = $computed->query;
+
+Note that changing the C<$reference_to_contents> will not usefully affect the
+contents of the vector itself, but it will adversely affect any computations
+based on the vector.  If you need to change the contents of a vector in a
+special way, use another L<Statistics::Basic::ComputedVector> object instead.
+
+Keeping C<$reference_to_contents> available long term should work acceptably
+(since it refers to the vector contents itself).
+
+=item C<query_filled()>
+
+This returns true when the input vector is full (see
+L<Statistics::Basic::Vector/query_filled()>).  This is of questionable
+usefulness on computed vectors, but is provided for completeness (and internal
+package consistency).
+
+=item C<query_size()>
+
+Return the current size of the computed vector.
+
+=item C<set_filter()>
+
+Set the filtering for the computed vector.  This function takes a single coderef
+argument -- all other arguments will be ignored.  The elements of the input
+vector are passed to your filter coderef in C<@_> and your ref should return the
+calculated elements of the computed vector as a list.
+
+    my $vec = vector(1,2,3);
+    my $pow = computed($vec);
+       $pow->set_filter(sub { return map { $_ ** 2 } @_ })
+
+If you need to call more than one filter function, concatenate them together
+using map or an anonymous sub.
+
+    $pow->set_filter(sub { return f1(f2(f3(f4(@_)))) });
+
+=item C<set_size()>
+ 
+Set the size of the input vector (not the computed vector, that would make
+little sense).
+
+=item C<set_vector()>
+
+Set the contents of the input vector (not the computed one).
+
+=back
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
