@@ -62,11 +62,14 @@ arrayref.
     my @copy_of_contents      = $vector->query;
     my $reference_to_contents = $vector->query;
 
-The contents of C<$reference_to_contents> can be altered to alter the contents
-of the vector object, but doing this may screw up the object consistency and
-especially the calculations based on the object.  It's better to use
-L<Statistics::Basic::ComputedVector>s if you need to change the contents in a
-special way.
+Note that changing the C<$reference_to_contents> will not usefully affect the
+contents of the vector itself, but it will adversely affect any computations
+based on the vector.  If you need to change the contents of a vector in a
+special way, use a L<Statistics::Basic::ComputedVector> object instead.
+
+Keeping C<$reference_to_contents> available long term should work acceptably
+(since it refers to the vector contents itself), but the use of L</set_vector()>
+may change the internal reference -- if not now, then possibly in the future.
 
 =item C<query_filled()>
 
