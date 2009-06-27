@@ -12,11 +12,11 @@ sub new {
     warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this   = bless {}, $class;
-    my $vector = eval { Statistics::Basic::Vector->new(shift, @_) }; croak $@ if $@;
+    my $vector = eval { Statistics::Basic::Vector->new(shift, @_) } or croak $@;
     my $c      = $vector->_get_computer("variance"); return $c if defined $c;
 
     $this->{v} = $vector;
-    $this->{m} = eval { Statistics::Basic::Mean->new($vector, @_) }; croak $@ if $@;
+    $this->{m} = eval { Statistics::Basic::Mean->new($vector, @_) } or croak $@;
 
     $vector->_set_computer( variance => $this );
 

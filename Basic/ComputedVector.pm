@@ -14,7 +14,7 @@ sub new {
     my $that  = shift;
 
     if( defined $that ) {
-        $that = eval { Statistics::Basic::Vector->new($that) }; croak $@ if $@;
+        $that = eval { Statistics::Basic::Vector->new($that) } or croak $@;
     }
     croak "input vector must be supplied to ComputedVector" unless defined $that;
 
@@ -22,7 +22,7 @@ sub new {
        $this->_recalc;
 
     if( $_[0] ) {
-        eval { $this->_set_computer(@_) }; croak $@ if $@;
+        eval { $this->_set_computer(@_) } or croak $@;
     }
 
     return $this;

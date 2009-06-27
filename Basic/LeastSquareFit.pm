@@ -18,8 +18,8 @@ use overload
 # new {{{
 sub new {
     my $this = shift;
-    my $v1   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
-    my $v2   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
+    my $v1   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
+    my $v2   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
 
     $this = bless {}, $this;
 
@@ -28,10 +28,10 @@ sub new {
 
     $this->{_vectors} = [ $v1, $v2 ];
 
-    $this->{vrx} = eval { Statistics::Basic::Variance->new($v1)        }; croak $@ if $@;
-    $this->{mnx} = eval { Statistics::Basic::Mean->new($v1)            }; croak $@ if $@;
-    $this->{mny} = eval { Statistics::Basic::Mean->new($v2)            }; croak $@ if $@;
-    $this->{cov} = eval { Statistics::Basic::Covariance->new($v1, $v2) }; croak $@ if $@;
+    $this->{vrx} = eval { Statistics::Basic::Variance->new($v1)        } or croak $@;
+    $this->{mnx} = eval { Statistics::Basic::Mean->new($v1)            } or croak $@;
+    $this->{mny} = eval { Statistics::Basic::Mean->new($v2)            } or croak $@;
+    $this->{cov} = eval { Statistics::Basic::Covariance->new($v1, $v2) } or croak $@;
 
     $v1->_set_linked_computer( LSF => $this, $v2 );
     $v2->_set_linked_computer( LSF => $this, $v1 );
@@ -123,7 +123,7 @@ sub x_given_y {
     my ($alpha, $beta) = $this->query;
     my $y = shift;
 
-    my $x = eval { ( ($y-$alpha)/$beta ) }; croak $@ if $@;
+    defined( my $x = eval { ( ($y-$alpha)/$beta ) }) or croak $@;
     return $x;
 }
 # }}}

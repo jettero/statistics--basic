@@ -13,7 +13,7 @@ sub new {
     warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this   = bless {}, $class;
-    my $vector = eval { Statistics::Basic::Vector->new(@_) }; croak $@ if $@;
+    my $vector = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
     my $c      = $vector->_get_computer("median"); return $c if defined $c;
 
     $this->{v} = $vector;

@@ -60,7 +60,7 @@ sub set_size {
     my $size = shift;
     my $nofl = shift;
 
-    eval { $this->{v}->set_size($size, $nofl) }; croak $@ if $@;
+    eval { $this->{v}->set_size($size, $nofl) } or croak $@;
 
     return $this;
 }

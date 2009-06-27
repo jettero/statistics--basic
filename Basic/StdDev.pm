@@ -13,7 +13,7 @@ sub new {
     warn "[new $class]\n" if $ENV{DEBUG} >= 2;
 
     my $this     = bless {}, $class;
-    my $variance = $this->{V} = eval { Statistics::Basic::Variance->new(@_) }; croak $@ if $@;
+    my $variance = $this->{V} = eval { Statistics::Basic::Variance->new(@_) } or croak $@;
     my $vector   = $this->{v} = $variance->query_vector;
     my $c        = $vector->_get_computer( 'stddev' ); return $c if defined $c;
 

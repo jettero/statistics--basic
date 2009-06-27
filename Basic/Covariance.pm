@@ -10,8 +10,8 @@ use base 'Statistics::Basic::_TwoVectorBase';
 # new {{{
 sub new {
     my $class = shift;
-    my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) }; croak $@ if $@;
-    my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) }; croak $@ if $@;
+    my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) } or croak $@;
+    my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) } or croak $@;
 
     my $c = $v1->_get_linked_computer( covariance => $v2 );
     return $c if $c;
@@ -21,8 +21,8 @@ sub new {
 
     $this->{_vectors} = [ $v1, $v2 ];
 
-    $this->{m1} = eval { Statistics::Basic::Mean->new($v1) }; croak $@ if $@;
-    $this->{m2} = eval { Statistics::Basic::Mean->new($v2) }; croak $@ if $@;
+    $this->{m1} = eval { Statistics::Basic::Mean->new($v1) } or croak $@;
+    $this->{m2} = eval { Statistics::Basic::Mean->new($v2) } or croak $@;
 
     $v1->_set_linked_computer( covariance => $this, $v2 );
     $v2->_set_linked_computer( covariance => $this, $v1 );

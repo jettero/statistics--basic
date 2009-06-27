@@ -10,17 +10,17 @@ use base 'Statistics::Basic::_TwoVectorBase';
 # new {{{
 sub new {
     my $this = shift;
-    my $v1   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
-    my $v2   = eval { Statistics::Basic::Vector->new( shift ) }; croak $@ if $@;
+    my $v1   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
+    my $v2   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
 
     $this = bless {}, $this;
 
     my $c = $v1->_get_linked_computer( correlation => $v2 );
     return $c if $c;
 
-    $this->{sd1} = eval { Statistics::Basic::StdDev->new($v1) }; croak $@ if $@;
-    $this->{sd2} = eval { Statistics::Basic::StdDev->new($v2) }; croak $@ if $@;
-    $this->{cov} = eval { Statistics::Basic::Covariance->new( $v1, $v2 ) }; croak $@ if $@;
+    $this->{sd1} = eval { Statistics::Basic::StdDev->new($v1) } or croak $@;
+    $this->{sd2} = eval { Statistics::Basic::StdDev->new($v2) } or croak $@;
+    $this->{cov} = eval { Statistics::Basic::Covariance->new( $v1, $v2 ) } or croak $@;
 
     $this->{_vectors} = [ $v1, $v2 ];
 
