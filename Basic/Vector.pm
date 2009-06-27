@@ -236,12 +236,14 @@ sub set_size {
 sub set_vector {
     my $this     = shift;
     my $vector   = shift;
-    my $set_size = shift;
 
     if( ref($vector) eq "ARRAY" ) {
         $this->{v} = $vector;
         $this->{s} = int @$vector;
         $this->_inform_computers_of_change;
+
+    } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::ComputedVector") ) {
+        $this->set_vector($vector->{input_vector});
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
@@ -250,10 +252,6 @@ sub set_vector {
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
-    }
-
-    if( defined $set_size ) {
-        $this->set_size( $set_size );
     }
 
     warn "[set_vector $this] [@{ $this->{v} }]\n" if $ENV{DEBUG} >= 2 and ref($this->{v});
