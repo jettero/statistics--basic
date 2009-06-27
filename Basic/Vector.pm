@@ -248,7 +248,7 @@ sub set_vector {
     my $vector   = shift;
 
     if( ref($vector) eq "ARRAY" ) {
-        $this->{v} = $vector;
+        @{$this->{v}} = @$vector;
         $this->{s} = int @$vector;
         $this->_inform_computers_of_change;
 

@@ -1,9 +1,9 @@
 
 use strict;
 use Test;
-use Statistics::Basic;
+use Statistics::Basic qw(:all);
 
-plan tests => 27;
+plan tests => 35;
 
 my  $v = new Statistics::Basic::Vector([1 .. 3]);
 ok( $v->query_size, 3 );
@@ -70,3 +70,37 @@ do { local $ENV{DEBUG}=0;
     my $str = "$w"; ok($str =~ s/, 6//, 1);
     ok( $str, $j );
 };
+
+my $S  = vector([1,2,3]);
+my $Sr = $S->query;
+
+{ my $Sr2 = $S->query;
+  my @Sr2 = $S->query;
+  ok( "@Sr2", "@$Sr2" );
+  ok( "@Sr2", "@$Sr" );
+}
+
+$S->insert(7);
+$S->ginsert(9);
+
+{ my $Sr2 = $S->query;
+  my @Sr2 = $S->query;
+  ok( "@Sr2", "@$Sr2" );
+  ok( "@Sr2", "@$Sr" );
+}
+
+$S->set_vector($w);
+
+{ my $Sr2 = $S->query;
+  my @Sr2 = $S->query;
+  ok( "@Sr2", "@$Sr2" );
+  ok( "@Sr2", "@$Sr" );
+}
+
+$S->set_vector([1,2,3,5]);
+
+{ my $Sr2 = $S->query;
+  my @Sr2 = $S->query;
+  ok( "@Sr2", "@$Sr2" );
+  ok( "@Sr2", "@$Sr" );
+}
