@@ -100,9 +100,9 @@ sub query_filled {
 # }}}
 
 sub _fix_size  { croak   "fix_size() makes no sense on computed vectors" }
-sub set_size   { my $this = shift; return $this->{input_vector}->set_size  (@_) }
-sub insert     { my $this = shift; return $this->{input_vector}->insert    (@_) }
-sub ginsert    { my $this = shift; return $this->{input_vector}->ginsert   (@_) }
-sub append     { my $this = shift; return $this->{input_vector}->append    (@_) }
-sub set_vector { my $this = shift; return $this->{input_vector}->set_vector(@_) }
+sub set_size   { my $this = shift; $this->{input_vector}->set_size  (@_); return $this }
+sub insert     { my $this = shift; $this->{input_vector}->insert    (@_); return $this }
+sub ginsert    { my $this = shift; $this->{input_vector}->ginsert   (@_); return $this }
+sub append     { my $this = shift; $this->{input_vector}->append    (@_); return $this }
+sub set_vector { my $this = shift; $this->{input_vector}->set_vector(@_); return $this }
 
