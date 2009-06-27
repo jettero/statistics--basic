@@ -43,7 +43,7 @@ sub new {
 # copy {{{
 sub copy {
     my $this = shift;
-    my $that = __PACKAGE__->new( [@{$this->{v}}], $this->{s} );
+    my $that = __PACKAGE__->new( [@{$this->{v}}] );
 
     warn "copied vector($this -> $that)\n" if $ENV{DEBUG} >= 3;
 
