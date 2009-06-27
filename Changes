@@ -8,6 +8,11 @@
      that -- set_vector now copies instead of linking.
      computed() vectors can serve that role instead.
    - made sure all the object accessors return the object
+   - made set_vector() take nonscalars like all the export
+     constructors
+   - made the export constructors use the new set_vector() via
+     new()
+   - made all the objects true in bool context
 
 1.6600: Wed Jun 24 2009
    - _OVBed: median, StdDev, Variance
