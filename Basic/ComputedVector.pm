@@ -98,17 +98,17 @@ sub query {
 }
 # }}}
 
-# query_filled {{{
 sub query_filled {
     my $this = shift;
+
+    # even though this makes little sense, imo, we need to provide it since so many other objects call it
 
     $this->_recalc if $this->{recalc_needed};
 
     return $this->{input_vector}->query_filled;
 }
-# }}}
 
-sub _fix_size  { croak   "fix_size() makes no sense on computed vectors" }
+sub _fix_size  { croak "fix_size() makes no sense on computed vectors" }
 sub set_size   { my $this = shift; $this->{input_vector}->set_size  (@_); return $this }
 sub insert     { my $this = shift; $this->{input_vector}->insert    (@_); return $this }
 sub ginsert    { my $this = shift; $this->{input_vector}->ginsert   (@_); return $this }
