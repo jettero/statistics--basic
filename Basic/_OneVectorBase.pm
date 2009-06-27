@@ -11,6 +11,7 @@ use overload
     '0+' => sub { $_[0]->query },
     ( exists($ENV{TOLER}) ? ('==' => sub { abs($_[0]-$_[1])<=$ENV{TOLER} }) : () ),
     'eq' => sub { "$_[0]" eq "$_[1]" },
+    'bool' => sub { 1 },
     fallback => 1; # tries to do what it would have done if this wasn't present.
 
 # _recalc_needed {{{
