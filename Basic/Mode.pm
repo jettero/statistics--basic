@@ -60,6 +60,8 @@ sub _recalc {
     $this->{_value} = ( (@a == 1) ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
 
     warn "[recalc " . ref($this) . "] count of $this->{_value} = $max\n" if $ENV{DEBUG};
+
+    return;
 }
 
 sub is_multimodal {

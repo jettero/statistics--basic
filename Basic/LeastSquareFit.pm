@@ -15,8 +15,6 @@ use overload
     '0+' => sub { croak "the result of LSF may not be used as a number" },
     fallback => 1; # tries to do what it would have done if this wasn't present.
 
-1;
-
 # new {{{
 sub new {
     my $this = shift;
@@ -58,6 +56,8 @@ sub _recalc {
     $this->{alpha} = ($mny - ($this->{beta} * $mnx));
 
     warn "[recalc " . ref($this) . "] (alpha: $this->{alpha}, beta: $this->{beta})\n" if $ENV{DEBUG};
+
+    return;
 }
 # }}}
 # query {{{
@@ -127,3 +127,5 @@ sub x_given_y {
     return $x;
 }
 # }}}
+
+1;

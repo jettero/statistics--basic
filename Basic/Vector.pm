@@ -20,8 +20,6 @@ use overload
     },
     fallback => 1; # tries to do what it would have done if this wasn't present.
 
-1;
-
 # new {{{
 sub new {
     my $class  = shift;
@@ -47,7 +45,7 @@ sub copy {
 
     warn "copied vector($this -> $that)\n" if $ENV{DEBUG} >= 3;
 
-    $that;
+    return $that;
 }
 # }}}
 
@@ -60,6 +58,8 @@ sub _set_computer {
         weaken($this->{c}{$k} = $v);
         $v->_recalc_needed;
     }
+
+    return;
 }
 # }}}
 # _set_linked_computer {{{
@@ -71,6 +71,8 @@ sub _set_linked_computer {
     my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
 
     $this->_set_computer( $new_key => $var );
+
+    return;
 }
 # }}}
 # _get_computer {{{
@@ -80,7 +82,7 @@ sub _get_computer {
 
     warn "$this get_computer($k): " . overload::StrVal($this->{c}{$k}||"<undef>") . "\n" if $ENV{DEBUG};
 
-    $this->{c}{$k};
+    return $this->{c}{$k};
 }
 # }}}
 # _get_linked_computer {{{
@@ -90,7 +92,7 @@ sub _get_linked_computer {
 
     my $new_key = join("_", ($key, sort {$a<=>$b} map {$_->{tag}} @_));
 
-    $this->_get_computer( $new_key );
+    return $this->_get_computer( $new_key );
 }
 # }}}
 # _inform_computers_of_change {{{
@@ -107,6 +109,8 @@ sub _inform_computers_of_change {
             delete $this->{c}{$k};
         }
     }
+
+    return;
 }
 # }}}
 
@@ -250,7 +254,7 @@ sub set_vector {
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::ComputedVector") ) {
         croak "setting a vector from a computed vector will almost certainly not do what you want.";
-        $this->set_vector($vector->{input_vector});
+        # $this->set_vector($vector->{input_vector});
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
@@ -271,3 +275,5 @@ sub set_vector {
     return $this;
 }
 # }}}
+
+1;

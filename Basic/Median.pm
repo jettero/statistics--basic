@@ -44,6 +44,8 @@ sub _recalc {
     }
 
     warn "[recalc " . ref($this) . "] vector[int($cardinality/2)] = $this->{_value}\n" if $ENV{DEBUG};
+
+    return;
 }
 
 1;

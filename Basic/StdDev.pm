@@ -35,6 +35,8 @@ sub _recalc {
     warn "[recalc " . ref($this) . "] sqrt( $var )\n" if $ENV{DEBUG};
 
     $this->{_value} = sqrt( $var );
+
+    return;
 }
 
 sub query_mean {
