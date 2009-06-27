@@ -58,7 +58,7 @@ $k->set_vector($j);
 $j->ginsert(33);
 
 do { local $ENV{DEBUG}=0; ok( $j, "[9, 7, 33]" ); };
-do { local $ENV{DEBUG}=0; ok( $k, "[9, 7, 33]" ); };
+do { local $ENV{DEBUG}=0; ok( $k, "[9, 7]" ); };
 
 my $w = $j->copy;
 ok( $w->query_size, $j->query_size );

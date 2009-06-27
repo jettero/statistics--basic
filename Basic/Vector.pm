@@ -248,8 +248,13 @@ sub set_vector {
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
-        $this->{v} = $vector->{v}; # this links the vectors together
-        $this->{c} = $vector->{c}; # so we should link their computers too
+        @{$this->{v}} = @{$vector->{v}}; # copy the vector
+
+        # I don't think this is the behavior that we really want, since they
+        # stay separate objects, they shouldn't be linked like this.
+        # $this->{s} = $vector->{s};
+        # $this->{v} = $vector->{v}; # this links the vectors together
+        # $this->{c} = $vector->{c}; # so we should link their computers too
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
