@@ -15,6 +15,59 @@ Invoke it this way:
 
 =head1 METHODS
 
+=over 4
+
+=item C<new()>
+
+The constructor takes a single array ref or a single
+L<Statistics::Basic::ComputedVector> as its argument.  It returns a
+L<Statistics::Basic::ComputedVector> object.
+
+Unlike L<Statistics::Basic::Vector/new()>, Computed vectors will never try to
+prevent unnecessary copying, presuming you'll add filters later.
+
+Note: normally you'd use the L<computed()|Statistics::Basic/computed()>
+constructor, rather than building these by hand using C<new()>.
+
+=item C<copy()>
+
+Creates a new computed vector object referring to the same source vector and
+using the same filter as this one.  This is rather like:
+
+    my $v1 = vector(1,2,3);
+    my $c1 = computed($v1); $c1->set_filter(my $s = sub {});
+    my $c2 = computed($v1); $c2->set_filter($s);
+
+To instead create a filtered version of this filtered vector, choose this form:
+
+    my $v1 = vector(1,2,3);
+    my $c1 = computed($v1); $c1->set_filter(sub {});
+    my $c2 = computed($c1); $c2->set_filter(sub {});
+
+=item C<insert()>
+
+Insert new values into the input vector.  If the vector was already full (see
+L</set_size()>), this will also shift oldest elements from the input vector to
+compensate.
+
+    $computed->insert( 4, 3 ); # insert a 3 and a 4
+
+Note that continuing from the L</SYNOPSIS> example, this would certainly insert
+a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
+L</query()> because it is odd.
+
+=item C<append()> C<ginsert()>
+
+Insert new values into the input vector.  If the vector was already full (see
+L</set_size()>), these functions will grow the size of the input vector to
+accommodate the new values, rather than shifting things.
+
+    $computed->append( 4, 3 ); # append a 3 and a 4
+
+Note that continuing from the L</SYNOPSIS> example, this would certainly insert
+a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
+L</query()> because it is odd.
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
