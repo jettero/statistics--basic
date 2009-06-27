@@ -253,8 +253,7 @@ sub set_vector {
         $this->_inform_computers_of_change;
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::ComputedVector") ) {
-        croak "setting a vector from a computed vector will almost certainly not do what you want.";
-        # $this->set_vector($vector->{input_vector});
+        $this->set_vector($vector->{input_vector});
 
     } elsif( UNIVERSAL::isa($vector, "Statistics::Basic::Vector") ) {
         $this->{s} = $vector->{s};
