@@ -267,6 +267,7 @@ sub set_vector {
 
     } elsif( my @n = grep {looks_like_number($_)} @_ ) {
         @{$this->{v}} = @n;
+        $this->{s} = int @n;
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
