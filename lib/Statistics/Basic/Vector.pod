@@ -50,7 +50,7 @@ compensate.
 
 Insert new values into the vector.  If the vector was already full (see
 L</set_size()>), these functions will grow the size of the vector to accommodate
-the new values, rather than shifting things.  compensate.
+the new values, rather than shifting things.
 
     $vector->append( 4, 3 ); # append a 3 and a 4
 
