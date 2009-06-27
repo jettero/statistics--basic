@@ -47,23 +47,24 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 1;
 
-sub computed { my $r = eval { ref($_[0]) ? Statistics::Basic::ComputedVector->new( $_[0] )   : Statistics::Basic::ComputedVector->new( [@_] );   }; croak $@ if $@; return $r }
+sub computed { my $r = eval { Statistics::Basic::ComputedVector->new(@_) } or croak $@; return $r }
 
-sub vector   { my $r = eval { ref($_[0]) ? Statistics::Basic::Vector->new( $_[0] )   : Statistics::Basic::Vector->new( [@_] );   }; croak $@ if $@; return $r }
-sub mean     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mean->new( $_[0] )     : Statistics::Basic::Mean->new( [@_] );     }; croak $@ if $@; return $r }
-sub median   { my $r = eval { ref($_[0]) ? Statistics::Basic::Median->new( $_[0] )   : Statistics::Basic::Median->new( [@_] );   }; croak $@ if $@; return $r }
-sub mode     { my $r = eval { ref($_[0]) ? Statistics::Basic::Mode->new( $_[0] )     : Statistics::Basic::Mode->new( [@_] );     }; croak $@ if $@; return $r }
-sub variance { my $r = eval { ref($_[0]) ? Statistics::Basic::Variance->new( $_[0] ) : Statistics::Basic::Variance->new( [@_] ); }; croak $@ if $@; return $r }
-sub stddev   { my $r = eval { ref($_[0]) ? Statistics::Basic::StdDev->new( $_[0] )   : Statistics::Basic::StdDev->new( [@_] );   }; croak $@ if $@; return $r }
+sub vector   { my $r = eval { Statistics::Basic::Vector->new(@_)   } or croak $@; return $r }
+sub mean     { my $r = eval { Statistics::Basic::Mean->new(@_)     } or croak $@; return $r }
+sub median   { my $r = eval { Statistics::Basic::Median->new(@_)   } or croak $@; return $r }
+sub mode     { my $r = eval { Statistics::Basic::Mode->new(@_)     } or croak $@; return $r }
+sub variance { my $r = eval { Statistics::Basic::Variance->new(@_) } or croak $@; return $r }
+sub stddev   { my $r = eval { Statistics::Basic::StdDev->new(@_)   } or croak $@; return $r }
 
-sub covariance     { my $r = eval { Statistics::Basic::Covariance->new( $_[0],$_[1] ) };     croak $@ if $@; return $r }
-sub correlation    { my $r = eval { Statistics::Basic::Correlation->new( $_[0],$_[1] ) };    croak $@ if $@; return $r }
-sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0],$_[1] ) }; croak $@ if $@; return $r }
+sub covariance     { my $r = eval { Statistics::Basic::Covariance->new(     $_[0], $_[1] ) } or croak $@; return $r }
+sub correlation    { my $r = eval { Statistics::Basic::Correlation->new(    $_[0], $_[1] ) } or croak $@; return $r }
+sub leastsquarefit { my $r = eval { Statistics::Basic::LeastSquareFit->new( $_[0], $_[1] ) } or croak $@; return $r }
 
 sub handle_missing_values {
     my ($v1,$v2) = @_;
-    my $v3 = eval { computed($v1) }; croak $@ if $@;
-    my $v4 = eval { computed($v2) }; croak $@ if $@;
+
+    my $v3 = eval { computed($v1) } or croak $@;
+    my $v4 = eval { computed($v2) } or croak $@;
 
     $v3->set_filter(sub {
         my @v = $v2->query;
