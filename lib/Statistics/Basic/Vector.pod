@@ -68,8 +68,7 @@ based on the vector.  If you need to change the contents of a vector in a
 special way, use a L<Statistics::Basic::ComputedVector> object instead.
 
 Keeping C<$reference_to_contents> available long term should work acceptably
-(since it refers to the vector contents itself), but the use of L</set_vector()>
-may change the internal reference -- if not now, then possibly in the future.
+(since it refers to the vector contents itself).
 
 =item C<query_filled()>
 
