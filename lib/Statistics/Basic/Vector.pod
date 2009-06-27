@@ -69,19 +69,24 @@ L</set_size()>.
 =item C<query_size()>
 
 Returns the current number of elements in the vector object (not the size set
-with L</set_size()>).
+with L</set_size()>).  This is almost never false unless you're using the
+L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> setting.
 
 =item C<set_size()>
 
-Sets the max size of the vector.  Note that on initialization with L</new()> or
-with L<vector()|Statistics::Basic/vector()>, this is called automatically.
+Sets the max size of the input vector.  Note that on initialization with
+L</new()> or with L<computed()|Statistics::Basic/computed()>, the input vector
+size is called automatically.
+
+    my $v1 = vector(1,2,3);
+    my $c2 = computed($v1);
+       $c2->set_size(7); # actually sets the size of $v1
 
 =item C<set_vector()>
 
-Given a vector or array ref, this will set the contents (and size) of the vector
-to match the argument.  If given a vector object argument, this will make the
-two vectors match, while still remaining separate objects -- which differs from
-the behavior of L</new()>.
+Given a vector or array ref, this will set the contents (and size) of the input
+vector to match the argument.  If given a vector object argument, this will make
+the two vectors match, while still remaining separate objects.
 
 =back
 
