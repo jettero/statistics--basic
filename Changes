@@ -1,10 +1,12 @@
-1.6600: Sat Jun 27 06:38:25 EDT 2009
+1.6600: Sat Jun 27 2009
    - worked on computed vectors a little.  decided it should be
      possible to insert into them, instead inserting into the
      input_vector.
    - finished a lot more 1.66 docs
 
-1.6600: Wed Jun 24 17:34:06 EDT 2009
+1.6600: Wed Jun 24 2009
+   - _OVBed: median, StdDev, Variance
+   - fixed bugs resulting from the above
    - made quite a lot of the methods of Vectors private
    - trying to make the pods more consistent and informative
    - renamed size() as query_size() to be really consistent --
@@ -13,11 +15,7 @@
    - renamed ginsert() append(), but left ginsert() operational,
      with no real chance of deprecation later
 
-1.6600: Wed Jun 24 06:40:20 EDT 2009
-   - _OVBed: median, StdDev, Variance
-   - fixed bugs resulting from the above
-
-1.6600: Tue Jun 23 17:39:58 EDT 2009
+1.6600: Tue Jun 23 2009
    - installed a lotta DRY on the two vector classes, will
      continue this tonight and on lunch break most likely.
    - worked on the docs, they need a good deal of work
@@ -34,14 +32,14 @@
        *sigh*
    - _OVBed Mode
 
-1.6600: Mon Jun 22 18:51:33 EDT 2009
+1.6600: Mon Jun 22 2009
    - started added best practices stuff to the dist
 
-1.6500: Fri May 29 07:00:10 EDT 2009
+1.6500: Fri May 29 2009
    - I get asked, "does S::B handle missing values?" quite a lot.
    - YES IT DOES! (now)
 
-1.6007: Sat May  2 07:09:12 EDT 2009
+1.6007: Sat May  2 2009
    - fixed copyright information on request
    - fixed various docbugs
    - finished a thought about outliers
