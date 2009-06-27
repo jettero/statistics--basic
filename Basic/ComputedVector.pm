@@ -28,6 +28,17 @@ sub new {
     $this;
 }
 # }}}
+# copy {{{
+sub copy {
+    my $this = shift;
+    my $that = __PACKAGE__->new( $this->{input_vector} );
+       $that->{computer} = $this->{computer};
+
+    warn "copied computedvector($this -> $that)\n" if $ENV{DEBUG} >= 3;
+
+    $that;
+}
+# }}}
 # set_filter {{{
 sub set_filter {
     my $this = shift;
