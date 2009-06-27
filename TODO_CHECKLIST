@@ -1,11 +1,11 @@
 
                         accessors documentation documentation
-                        return    complete(-)   consistent(+) and
+                        return    complete(x)   consistent(+) and
                         object(x)               correct(x)
                         [n/a (0)]
 
 Basic/Vector.pm         [x]       [ ]           [  ]
-Basic/ComputedVector.pm [x]       [ ]           [  ]
+Basic/ComputedVector.pm [x]       [x]           [  ]
 Basic/_OneVectorBase.pm [x]       [ ]           [  ]
 Basic/Mean.pm           [0]       [ ]           [  ]
 Basic/Median.pm         [0]       [ ]           [  ]
