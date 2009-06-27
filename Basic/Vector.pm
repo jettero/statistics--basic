@@ -1,10 +1,9 @@
-
 package Statistics::Basic::Vector;
 
 use strict;
 use warnings;
 use Carp;
-use Scalar::Util qw(blessed weaken);
+use Scalar::Util qw(blessed weaken looks_like_number);
 
 our $tag_number = 0;
 
@@ -264,6 +263,9 @@ sub set_vector {
         # $this->{s} = $vector->{s};
         # $this->{v} = $vector->{v}; # this links the vectors together
         # $this->{c} = $vector->{c}; # so we should link their computers too
+
+    } elsif( my @n = grep {looks_like_number($_)} ($vector, @_) ) {
+        @{$this->{v}} = @n;
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
