@@ -19,7 +19,7 @@ cases.
 
     $object_instance->insert( 4, 3 );
 
-=item C<ginsert()>
+=item C<append()> C<ginsert()>
 
 The growing insert inserts new elements, growing the max size of the vector to
 accommodate the new elements (if necessary).  This function must be given
