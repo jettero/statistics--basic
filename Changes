@@ -7,6 +7,7 @@
      $v1->set_vector($v2), they shouldn't be linked together from
      that -- set_vector now copies instead of linking.
      computed() vectors can serve that role instead.
+   - made sure all the object accessors return the object
 
 1.6600: Wed Jun 24 2009
    - _OVBed: median, StdDev, Variance
