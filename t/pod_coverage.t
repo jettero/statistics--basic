@@ -9,4 +9,7 @@ if (not $ENV{TEST_AUTHOR}) {
 
 eval "use Test::Pod::Coverage 1.00";
 plan skip_all => "Test::Pod::Coverage 1.00 required for testing POD" if $@;
-all_pod_coverage_ok( { trustme => ['WCOREDUMP'] } );
+
+my $trustme = { trustme => [qr/^(fix_size|set_size|insert|append|ginsert|set_vector)$/] };
+pod_coverage_ok( "Statistics::Basic::ComputedVector", $trustme );
+
