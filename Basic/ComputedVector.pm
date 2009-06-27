@@ -46,7 +46,6 @@ sub _recalc {
     my $this = shift;
 
     delete $this->{recalc_needed};
-    delete $this->{mean};
 
     if( ref( my $c = $this->{computer} ) eq "CODE" ) {
         $this->{output_vector}->set_vector( [$c->($this->{input_vector}->query)] );
