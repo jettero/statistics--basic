@@ -179,6 +179,8 @@ sub insert {
 
     $this->_fix_size;
     $this->_inform_computers_of_change;
+
+    return $this;
 }
 # }}}
 # ginsert {{{
@@ -203,6 +205,8 @@ sub ginsert {
 
     $this->{s} = @{$this->{v}} if @{$this->{v}} > $this->{s};
     $this->_inform_computers_of_change;
+
+    return $this;
 }
 *append = \&ginsert;
 # }}}
@@ -230,6 +234,8 @@ sub set_size {
         $this->_fix_size;
         $this->_inform_computers_of_change;
     }
+
+    return $this;
 }
 # }}}
 # set_vector {{{
