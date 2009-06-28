@@ -30,7 +30,7 @@ sub query {
 
     $this->_recalc if $this->{recalc_needed};
 
-    warn "[query mean $this->{_value}]\n" if $ENV{DEBUG};
+    warn "[query " . ref($this) . " $this->{_value}]\n" if $ENV{DEBUG};
 
     return $this->{_value};
 }
