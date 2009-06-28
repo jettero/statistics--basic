@@ -33,6 +33,17 @@ t/05_load_them.t
 t/07_vector.t
 t/08_cvec.t
 t/08_filter_outliers.t
+t/09_test_importer_vars_debug.t
+t/09_test_importer_vars_debug0.t
+t/09_test_importer_vars_debug1.t
+t/09_test_importer_vars_ipres.t
+t/09_test_importer_vars_ipres1.t
+t/09_test_importer_vars_ipres2.t
+t/09_test_importer_vars_nofill.t
+t/09_test_importer_vars_nofill0.t
+t/09_test_importer_vars_nofill1.t
+t/09_test_importer_vars_toler.t
+t/09_test_importer_vars_toler1.t
 t/10_mean.t
 t/10_median.t
 t/10_mode.t

@@ -29,7 +29,6 @@ $ENV{IPRES}  ||= 2;
 
 use base 'Exporter';
 
-#our @EXPORT      = ();
 our @EXPORT_OK   = (qw(
     vector computed
     mean average avg
@@ -41,11 +40,44 @@ our @EXPORT_OK   = (qw(
     correlation cor corr
     leastsquarefit LSF lsf
     handle_missing_values
-    FILL NOFILL
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
-1;
+sub import {
+    my @special = ();
+
+    @_ = grep { m/^(default_env|nofill|debug|ipres|toler)(?:=([\d\.\-]+))?\z/i ? do {push @special, [lc($1), $2]; 0} : 1 } @_;
+
+    if( grep {$_->[0] =~ m/default_env/} @special ) {
+        delete $ENV{TOLER};
+        @ENV{qw(NOFILL DEBUG IPRES)} = (0,0,2);
+
+    } else {
+        for( @special ) {
+            my ($k, $v) = @$_;
+
+            if( lc($k) eq "ipres" ) {
+                $v = 2 unless defined($v);
+                croak "bad ipres value ($v)" unless $v >= 0;
+                $ENV{uc($k)} = $v; ## no critic
+
+            } elsif( lc($k) eq "toler" ) {
+                if( defined $v ) {
+                    croak "bad toler value($v)" unless $v >= 0;
+                    $ENV{uc($k)} = $v; ## no critic
+
+                } else {
+                    delete $ENV{TOLER}; ## no critic
+                }
+
+            } else {
+                $ENV{uc($k)} = defined($v) ? $v : 1; ## no critic
+            }
+        }
+    }
+
+    return __PACKAGE__->export_to_level(1, @_);
+}
 
 sub computed { my $r = eval { Statistics::Basic::ComputedVector->new(@_) } or croak $@; return $r }
 
