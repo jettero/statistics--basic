@@ -522,6 +522,8 @@ C<$Statistics::Basic::TOLER=0.0001>).  But, for speed reasons, it must be
 L<defined|perlfunc/defined> before any other packages are imported or it will
 not actually do anything when changed.
 
+=over 4
+
 =item B<unbias>
 
 This module uses the B<sum(X - mean(X))/N> definition of variance.
@@ -601,6 +603,8 @@ this option.
 
     use Statistics::Basic qw(ignore_env);
 
+=back
+
 =head1 ENVIRONMENT VARIABLES
 
 You can change the defaults (assuming L<ignore_env|/ignore_env> is not used)
@@ -608,7 +612,7 @@ from your bash prompt.  Example:
 
     DEBUG=1 perl ./myprog.pl
 
-=over
+=over 4
 
 =item B<$ENV{DEBUG}>
 
