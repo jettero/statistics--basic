@@ -238,6 +238,9 @@ data:
         map {$_[$_]} grep { defined $v[$_] and defined $_[$_] } 0 .. $#_;
     });
 
+    print "$v1 $v2\n"; # prints: [1, 2, 3, _, 4] [1, 2, 3, 4, _]
+    print "$v3 $v4\n"; # prints: [1, 2, 3] [1, 2, 3]
+
 But I've made it even simpler.  Since this is such a common request, I have
 provided a helper function to build the filters automatically:
 
@@ -246,14 +249,19 @@ provided a helper function to build the filters automatically:
 
     my ($f1, $f2) = handle_missing_values($v1, $v2);
 
+    print "$f1 $f2\n"; # prints: [1, 2, 3] [1, 2, 3]
+
 Note that in practice, you would still manipulate (insert, and shift) C<$v1> and
-C<$v2>, I<not> the computed vectors!  But for correlations and the like, you
+C<$v2>, I<not> the computed vectors.  But for correlations and the like, you
 would use C<$f1> and C<$f2>.
 
     $v1->insert(5);
     $v2->insert(6);
 
     my $correlation = correlation($f1, $f2);
+
+You can still insert on C<$f1> and C<$f2>, but it updates the input vector
+rather than the computed one (which is just a filter handler).
 
 =head1 REUSE DETAILS
 
