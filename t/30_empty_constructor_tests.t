@@ -31,21 +31,29 @@ plan tests => 1   # warnings
     ;
 
 for (@zerosies) {
-    ok($_->query_size, 0);
+    my $r = ref $_;
+    my $s = "$r " . $_->query_size;
+
+    ok($s, "$r 0");
 }
 
 for (@onesies) {
     my $v = $_->query_vector;
+    my $r = ref $_;
+    my $s = "$r " . $v->query_size;
 
-    ok($v->query_size, 0);
+    ok($s, "$r 0");
 }
 
 for (@twosies) {
     my $v1 = $_->query_vector1;
     my $v2 = $_->query_vector2;
+    my $r  = ref $_;
+    my $s1 = "$r " . $v1->query_size;
+    my $s2 = "$r " . $v2->query_size;
 
-    ok($v1->query_size, 0);
-    ok($v2->query_size, 0);
+    ok($s1, "$r 0");
+    ok($s1, "$r 0");
 }
 
 ok($warning, 0);
