@@ -1,7 +1,4 @@
 
-
-BEGIN { $ENV{TOLER} = 1 }
-
 use Test;
 use Statistics::Basic qw(:all ipres);
 

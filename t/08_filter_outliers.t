@@ -1,7 +1,7 @@
 
 use strict;
 use Test;
-use Statistics::Basic qw(:all);
+use Statistics::Basic qw(:all ignore_env);
 
 plan tests => 11;
 
@@ -17,11 +17,11 @@ my $c  = computed($v1);
        grep { abs( $_-$m ) <= $s } @_
    });
 
-do{ local $ENV{DEBUG}=0; ok( $c, $v2 ); };
+ok( $c, $v2 );
 ok( mean($c), mean($v2) );
 ok( mean($c), 2 );
 ok( median($c), 2 );
-do{ local $ENV{DEBUG}=0; ok( mode($c), "[1, 2, 3]" ); };
+ok( mode($c), "[1, 2, 3]" );
 
 $v1->set_vector([6, 47, 49, 15, 42, 41, 7, 39, 43, 40, 36]);
 

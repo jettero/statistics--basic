@@ -1,8 +1,6 @@
-BEGIN { $ENV{TOLER} = 0.000_001; }
-
 use strict;
 use Test;
-use Statistics::Basic qw(:all);
+use Statistics::Basic qw(:all toler=0.000_001);
 
 plan tests => (my $t = 4);
 
@@ -33,5 +31,6 @@ $corr->insert( map {Math::BigFloat->new($_)} 11, 7 );
 my $tv = ((Math::BigFloat->new(129)/20) / (sqrt(Math::BigFloat->new(609)/100) * sqrt(Math::BigFloat->new(165)/20)));
 #my $d  = $corr - $tv;
 #warn " d: $d"; # 0.0000362452
-$ENV{TOLER} = 0.000_1;
+
+$Statistics::Basic::TOLER = 0.000_1;
 ok( $corr == $tv );

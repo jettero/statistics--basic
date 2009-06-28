@@ -1,7 +1,7 @@
 
 use strict;
 use Test;
-use Statistics::Basic qw(:all);
+use Statistics::Basic qw(:all ignore_env);
 
 plan tests => 12;
 
@@ -10,12 +10,12 @@ my $j = Statistics::Basic::ComputedVector->new( $i );
    $j->set_filter(sub { grep {$_<= 3} @_ });
 
 ok( $j->query_size, 3 );
-do { local $ENV{DEBUG}=0; ok( $j, "[1, 2, 3]" ); };
+ok( $j, "[1, 2, 3]" );
 
 $i->insert( 2 );
 
 ok( $j->query_size, 3 );
-do { local $ENV{DEBUG}=0; ok( $j, "[2, 3, 2]" ); };
+ok( $j, "[2, 3, 2]" );
 
 my $S  = computed(1,2,3); $S->set_filter(sub {map {$_+1} @_ });
 my $Sr = $S->query;

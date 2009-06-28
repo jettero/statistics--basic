@@ -1,7 +1,4 @@
 
-
-BEGIN { $ENV{TOLER} = 0 }
-
 use Test;
 use Statistics::Basic qw(:all toler=0);
 
