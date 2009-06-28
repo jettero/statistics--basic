@@ -265,9 +265,9 @@ sub set_vector {
         # $this->{v} = $vector->{v}; # this links the vectors together
         # $this->{c} = $vector->{c}; # so we should link their computers too
 
-    } elsif( my @n = grep {looks_like_number($_)} @_ ) {
-        @{$this->{v}} = @n;
-        $this->{s} = int @n;
+    } elsif( @_ ) {
+        @{$this->{v}} = @_;
+        $this->{s} = int @_;
 
     } elsif( defined $vector ) {
         croak "argument to set_vector() too strange";
