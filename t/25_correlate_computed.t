@@ -7,7 +7,7 @@ use Statistics::Basic qw(:all);
 plan tests => 2;
 
 my $warning = 0;
-$SIG{__WARN__} = sub { warn "\n\n\e[1;33mWARNING DETECTED: @_\e[m\n\n"; $warning ++ };
+$SIG{__WARN__} = sub { warn "\n\e[1;33mWARNING DETECTED: @_\e[m\n"; $warning ++ };
 
 my $v1 = vector(1 .. 10);
 my $v2 = computed($v1)->set_filter(sub {
