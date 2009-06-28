@@ -10,8 +10,10 @@ use base 'Statistics::Basic::_TwoVectorBase';
 # new {{{
 sub new {
     my $class = shift;
-    my $v1    = eval { Statistics::Basic::Vector->new( $_[0] ) } or croak $@;
-    my $v2    = eval { Statistics::Basic::Vector->new( $_[1] ) } or croak $@;
+    my @var1  = (shift || ());
+    my @var2  = (shift || ());
+    my $v1    = eval { Statistics::Basic::Vector->new( @var1 ) } or croak $@;
+    my $v2    = eval { Statistics::Basic::Vector->new( @var2 ) } or croak $@;
 
     my $c = $v1->_get_linked_computer( covariance => $v2 );
     return $c if $c;

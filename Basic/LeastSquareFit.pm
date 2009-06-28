@@ -18,8 +18,10 @@ use overload
 # new {{{
 sub new {
     my $this = shift;
-    my $v1   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
-    my $v2   = eval { Statistics::Basic::Vector->new( shift ) } or croak $@;
+    my @var1  = (shift || ());
+    my @var2  = (shift || ());
+    my $v1    = eval { Statistics::Basic::Vector->new( @var1 ) } or croak $@;
+    my $v2    = eval { Statistics::Basic::Vector->new( @var2 ) } or croak $@;
 
     $this = bless {}, $this;
 
