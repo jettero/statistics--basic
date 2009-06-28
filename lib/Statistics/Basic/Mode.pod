@@ -56,7 +56,7 @@ Create a 20 point "moving" mode like so:
 
 =over 4
 
-=item C<new()>
+=item B<new()>
 
 The constructor takes a list of values, a single array ref, or a
 single L<Statistics::Basic::Vector> as arguments.  It returns a
@@ -66,18 +66,18 @@ Note: normally you'd use the
 L<mean()|Statistics::Basic/mode()> constructor, rather than
 building these by hand using C<new()>.
 
-=item C<is_multimodal()>
+=item B<is_multimodal()>
 
 L<Statistics::Basic::Mode> objects sometimes return L<Statistics::Basic::Vector>
 objects instead of numbers.  When C<is_multimodal()> is true, the mode is a
 vector, not a scalar.
 
-=item C<_OVB::import()>
+=item B<_OVB::import()>
 
 This module also inherits all the overloads and methods from
 L<Statistics::Basic::_OneVectorBase>.
 
-=item C<mode overloads>
+=item B<mode overloads>
 
 If evaluated as a string, L<Statistics::Basic::Mode> will try to format a number
 (like any other L<Statistics::Basic> object), but if the object

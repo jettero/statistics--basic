@@ -42,7 +42,7 @@ Create a 20 point moving average like so:
 
 =over 4
 
-=item C<new()>
+=item B<new()>
 
 The constructor takes a single array ref or a single
 L<Statistics::Basic::Vector> as arguments.  It returns a
@@ -51,7 +51,7 @@ L<Statistics::Basic::Mean> object.
 Note: normally you'd use the L<mean()|Statistics::Basic/mean() average() avg()>
 constructor, rather than building these by hand using C<new()>.
 
-=item C<_OVB::import()>
+=item B<_OVB::import()>
 
 This module also inherits all the overloads and methods from
 L<Statistics::Basic::_OneVectorBase>.

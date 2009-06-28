@@ -49,7 +49,7 @@ and L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
 
 =over 4
 
-=item C<new()>
+=item B<new()>
 
 Create a new L<Statistics::Basic::Correlation> object.  This function takes two
 arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
@@ -57,23 +57,23 @@ objects.  This function is called when the
 L<correlation()|Statistics::Basic/correlation() cor() corr()> shortcut-function
 is called.
 
-=item C<query_covariance()>
+=item B<query_covariance()>
 
 Returns the L<Statistics::Basic::Covariance> object used to calculate the correlation.
 
-=item C<query_vector1()>
+=item B<query_vector1()>
 
 Return the L<Statistics::Basic::Vector> for the first vector.
 
-=item C<query_vector2()>
+=item B<query_vector2()>
 
 Return the L<Statistics::Basic::Vector> object for the second vector.
 
-=item C<query_mean1()>
+=item B<query_mean1()>
 
 Returns the L<Statistics::Basic::Mean> object for the first vector.
 
-=item C<query_mean2()>
+=item B<query_mean2()>
 
 Returns the L<Statistics::Basic::Mean> object for the second vector.
 

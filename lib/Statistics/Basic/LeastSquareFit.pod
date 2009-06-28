@@ -64,7 +64,7 @@ L<ginsert()|Statistics::Basic::_TwoVectorBase/ginsert()>).
 
 =over 4
 
-=item C<new()>
+=item B<new()>
 
 Create a new L<Statistics::Basic::LeastSquareFit> object.  This function takes
 two arguments -- which can either be arrayrefs or L<Statistics::Basic::Vector>
@@ -72,46 +72,46 @@ objects.  This function is called when the
 L<leastsquarefirt()|Statistics::Basic/leastsquarefit() LSF() lsf()>
 shortcut-function is called.
 
-=item C<query()>
+=item B<query()>
 
 L<LSF|Statistics::Basic::LeastSquareFit> is meant for finding a line of best
 fit.  C<$beta> is the slope of the line and C<$alpha> is the y-offset.
 
     my ($alpha, $beta) = $lsf->query;
 
-=item C<y_given_x()>
+=item B<y_given_x()>
 
 Automatically calculate the y-value on the line for a given x-value.
 
     my $y = $lsf->y_given_x( 7 );
 
-=item C<x_given_y()>
+=item B<x_given_y()>
 
 Automatically calculate the x-value on the line for a given y-value.
 
     my $x = $lsf->x_given_y( 7 );
 
-=item C<query_vector1()>
+=item B<query_vector1()>
 
 Return the L<Statistics::Basic::Vector> for the first vector used in the
 computation of alpha and beta.
 
-=item C<query_vector2()>
+=item B<query_vector2()>
 
 Return the L<Statistics::Basic::Vector> object for the second vector used in the
 computation of alpha and beta.
 
-=item C<query_mean1()>
+=item B<query_mean1()>
 
 Returns the L<Statistics::Basic::Mean> object for the first vector used in the
 computation of alpha and beta.
 
-=item C<query_variance1()>
+=item B<query_variance1()>
 
 Returns the L<Statistics::Basic::Variance> object for the first vector used in
 the computation of alpha and beta.
 
-=item C<query_covariance()>
+=item B<query_covariance()>
 
 Returns the L<Statistics::Basic::Covariance> object used in the computation of
 alpha and beta.

@@ -21,7 +21,7 @@ Invoke it this way:
 
 =over 4
 
-=item C<new()>
+=item B<new()>
 
 The constructor takes a single array ref or a single
 L<Statistics::Basic::ComputedVector> as its argument.  It returns a
@@ -34,7 +34,7 @@ L</query_vector()>
 Note: normally you'd use the L<computed()|Statistics::Basic/computed()>
 constructor, rather than building these by hand using C<new()>.
 
-=item C<copy()>
+=item B<copy()>
 
 Creates a new computed vector object referring to the same source vector and
 using the same filter as this one.  This is rather like:
@@ -49,7 +49,7 @@ To instead create a filtered version of a filtered vector, choose this form:
     my $c1 = computed($v1); $c1->set_filter(sub {});
     my $c2 = computed($c1); $c2->set_filter(sub {});
 
-=item C<insert()>
+=item B<insert()>
 
 Insert new values into the input vector.  If the vector was already full (see
 L</set_size()>), this will also shift oldest elements from the input vector to
@@ -61,7 +61,7 @@ Note that continuing from the L</SYNOPSIS> example, this would certainly insert
 a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
 L</query()> because it is odd.
 
-=item C<append()> C<ginsert()>
+=item B<append()> B<ginsert()>
 
 Insert new values into the input vector.  If the vector was already full (see
 L</set_size()>), these functions will grow the size of the input vector to
@@ -73,7 +73,7 @@ Note that continuing from the L</SYNOPSIS> example, this would certainly insert
 a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
 L</query()> because it is odd.
 
-=item C<query()>
+=item B<query()>
 
 C<query()> returns the contents of the computed vector (after filtering) either
 as a list or as an arrayref.
@@ -93,18 +93,18 @@ Keeping C<$reference_to_contents> available long term should work acceptably
 
 Return the input L<Statistics::Basic::Vector> object.
 
-=item C<query_filled()>
+=item B<query_filled()>
 
 This returns true when the input vector is full (see
 L<Statistics::Basic::Vector/query_filled()>).  This is of questionable
 usefulness on computed vectors, but is provided for completeness (and internal
 package consistency).
 
-=item C<query_size()>
+=item B<query_size()>
 
 Return the current size of the computed vector.
 
-=item C<set_filter()>
+=item B<set_filter()>
 
 Set the filtering for the computed vector.  This function takes a single coderef
 argument -- all other arguments will be ignored.  The elements of the input
@@ -120,12 +120,12 @@ using map or an anonymous sub.
 
     $pow->set_filter(sub { return f1(f2(f3(f4(@_)))) });
 
-=item C<set_size()>
+=item B<set_size()>
  
 Set the size of the input vector (not the computed vector, that would make
 little sense).
 
-=item C<set_vector()>
+=item B<set_vector()>
 
 Set the contents of the input vector (not the computed one).
 

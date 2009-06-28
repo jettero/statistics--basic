@@ -6,12 +6,12 @@ Statistics::Basic::_TwoVectorBase - base class objects like Correlation
 
 =over 4
 
-=item C<query()>
+=item B<query()>
 
 Query the value of the object.  It will return the undefined value until there's
 something to calculate.
 
-=item C<insert()>
+=item B<insert()>
 
 Insert two new new values into the vectors.  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
@@ -19,7 +19,7 @@ cases.
 
     $object_instance->insert( 4, 3 );
 
-=item C<append()> C<ginsert()>
+=item B<append()> B<ginsert()>
 
 The growing insert inserts new elements, growing the max size of the vector to
 accommodate the new elements (if necessary).  This function must be given
@@ -28,7 +28,7 @@ cases.
 
     $object_instance->ginsert( 4, 3 );
 
-=item C<query_size()>
+=item B<query_size()>
 
 The current size of the vectors -- regardless of their max size (as set by
 L</set_size()>0.  This function returns a list, i.e.:
@@ -36,12 +36,12 @@ L</set_size()>0.  This function returns a list, i.e.:
     my @s = $obj->query_size; # two values
     my $s = $obj->query_size; # the right hand value of the list
 
-=item C<set_size()>
+=item B<set_size()>
 
 Set the maximum size for the underlying L<Statistics::Basic::Vector> objects.
 This function requires two arguments.
 
-=item C<set_vector()>
+=item B<set_vector()>
 
 Set the vector objects used to calculate the object's value.  This function
 takes two arguments -- which can either be arrayrefs or
