@@ -32,7 +32,7 @@ Create a 20 point moving average like so:
 
     while( $sth->fetch ) {
         $avg->insert( $val );
-        if( defined( $m = $avg->query ) ) {
+        if( defined( my $m = $avg->query ) ) {
             print "Mean: $m\n";
         }
 

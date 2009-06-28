@@ -28,28 +28,22 @@ vector:
     print "hrm, there's three elements in this mode: $mod\n"
         if $mod->is_multimodal;
 
-    use Scalar::Util qw(blessed);
-
-    print "hrm, there's three elements in this mode: $mod\n"
-        if blessed($v2) and $v2->isa("Statistics::Basic::Vector");
-
 Create a 20 point "moving" mode like so:
 
     my $sth = $dbh->prepare("select col1 from data where something");
     my $len = 20;
-    my $mod = mode();
-       $mod->set_size($len);
+    my $mod = mode()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my $val ) or die $dbh->errstr;
 
-    my $count = $len;
     while( $sth->fetch ) {
-
         $mod->insert( $val );
-        if( -- $count <= 0 ) {
+        if( defined( my $m = $mod->query ) ) {
             print "Mode: $mod\n";
         }
+
+        print "Mode: $mod\n" if $mod->query_filled;
     }
 
 =head1 METHODS
@@ -58,13 +52,12 @@ Create a 20 point "moving" mode like so:
 
 =item B<new()>
 
-The constructor takes a list of values, a single array ref, or a
-single L<Statistics::Basic::Vector> as arguments.  It returns a
+The constructor takes a list of values, a single array ref, or a single
+L<Statistics::Basic::Vector> as arguments.  It returns a
 L<Statistics::Basic::Mode> object.
 
-Note: normally you'd use the
-L<mean()|Statistics::Basic/mode()> constructor, rather than
-building these by hand using C<new()>.
+Note: normally you'd use the L<mean()|Statistics::Basic/mode()> constructor,
+rather than building these by hand using C<new()>.
 
 =item B<is_multimodal()>
 
@@ -111,6 +104,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>, L<Statistics::Basic::Vector>
 
 =cut

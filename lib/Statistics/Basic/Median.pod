@@ -77,6 +77,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_OneVectorBase>, L<Statistics::Basic::Vector>
 
 =cut
