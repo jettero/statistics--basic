@@ -23,8 +23,7 @@ Create a 20 point moving average like so:
 
     my $sth = $dbh->prepare("select col1 from data where something");
     my $len = 20;
-    my $avg = mean();
-       $avg->set_size($len);
+    my $avg = mean()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my $val ) or die $dbh->errstr;
