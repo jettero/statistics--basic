@@ -22,21 +22,24 @@ And then either query the values or print them like so:
 
 Create a 20 point "moving" correlation like so:
 
+    use Statistics::Basic qw(:all nofill);
+
     my $sth = $dbh->prepare("select col1,col2 from data where something");
     my $len = 20;
-    my $cor = corr();
-       $cor->set_size($len);
+    my $cor = corr()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
 
     my $count = $len;
     while( $sth->fetch ) {
-
         $cor->insert( $lhs, $rhs );
-        if( -- $count <= 0 ) {
-            print "Correlation: $cor\n";
+        if( defined( my $c = $cor->query ) ) {
+            print "Correlation: $c\n";
         }
+
+        # This would also work:
+        # print "Correlation: $cor\n" if $cor->query_filled;
     }
 
 =head1 METHODS
@@ -96,6 +99,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>, L<Statistics::Basic::Vector>
 
 =cut

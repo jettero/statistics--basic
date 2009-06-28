@@ -22,6 +22,8 @@ And then either query the values or print them like so:
 
 Create a 20 point "moving" covariance like so:
 
+    use Statistics::Basic qw(:all nofill);
+
     my $sth = $dbh->prepare("select col1,col2 from data where something");
     my $len = 20;
     my $cov = cov();
@@ -32,11 +34,13 @@ Create a 20 point "moving" covariance like so:
 
     my $count = $len;
     while( $sth->fetch ) {
-
         $cov->insert( $lhs, $rhs );
-        if( -- $count <= 0 ) {
-            print "Covariance: $cov\n";
+        if( defined( my $c = $cov->query ) ) {
+            print "Covariance: $c\n";
         }
+
+        # This would also work:
+        # print "Covariance: $cov\n" if $cov->query_filled;
     }
 
 =head1 METHODS
@@ -92,6 +96,7 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>, L<Statistics::Basic::Vector>
+
 
 =cut

@@ -38,21 +38,24 @@ has to divide by the C<$beta>.)
 
 Create a 20 point "moving" L<LSF|Statistics::Basic::LeastSquareFit> like so:
 
+    use Statistics::Basic qw(:all nofill);
+
     my $sth = $dbh->prepare("select col1,col2 from data where something");
     my $len = 20;
-    my $lsf = lsf();
-       $lsf->set_size($len);
+    my $lsf = lsf()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
 
     my $count = $len;
     while( $sth->fetch ) {
-
         $lsf->insert( $lhs, $rhs );
-        if( -- $count <= 0 ) {
-            print "LSF: $lsf\n";
+        if( defined( my ($yint, $slope) = $lsf->query ) {
+            print "LSF: y= $slope*x + $yint\n";
         }
+
+        # This would also work:
+        # print "$lsf\n" if $lsf->query_filled;
     }
 
 =head1 METHODS
@@ -145,6 +148,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::_TwoVectorBase>, L<Statistics::Basic::Vector>
 
 =cut
