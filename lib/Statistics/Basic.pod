@@ -89,27 +89,32 @@ L<Statistics::Basic::Correlation>).
 
 =item B<vector()>
 
+Returns a L<Statistics::Basic::Vector> object.
 Arguments to C<vector()> can be any of: an array ref, a list of numbers, or a
 blessed vector object.  If passed a blessed vector object, vector will just
 return the vector passed in.
 
 =item B<mean()> B<average()> B<avg()>
 
+Returns a L<Statistics::Basic::Mean> object.
 You can choose to call C<mean()> as C<average()> or C<avg()>.  Arguments can be
 any of: an array ref, a list of numbers, or a blessed vector object.
 
 =item B<median()>
 
+Returns a L<Statistics::Basic::Median> object.
 Arguments can be any of: an array ref, a list of numbers, or a blessed vector
 object.
 
 =item B<mode()>
 
+Returns a L<Statistics::Basic::Mode> object.
 Arguments can be any of: an array ref, a list of numbers, or a blessed vector
 object.
 
 =item B<variance()> B<var()>
 
+Returns a L<Statistics::Basic::Variance> object.
 You can choose to call C<variance()> as C<var()>.  Arguments can be any of: an
 array ref, a list of numbers, or a blessed vector object.  If you will also be
 calculating the mean of the same list of numbers it's recommended to do this:
@@ -134,36 +139,42 @@ If you really only need the variance, ignore the above and this is fine:
 
 =item B<stddev()>
 
+Returns a L<Statistics::Basic::StdDev> object.
 Arguments can be any of: an array ref, a list of numbers, or a blessed vector
 object.  Pass a vector object to C<stddev()> to avoid recalculating the variance
 and mean if applicable (see C<variance()>).
 
 =item B<covariance()> B<cov()>
 
+Returns a L<Statistics::Basic::Covariance> object.
 Arguments to C<covariance()> or C<cov()> must be array ref or vector objects.
 There must be precisely two arguments (or none, setting the vectors to two empty
 ones), and they must be the same length.
 
 =item B<correlation()> B<cor()> B<corr()>
 
+Returns a L<Statistics::Basic::Correlation> object.
 Arguments to C<correlation()> or C<cor()>/C<corr()> must be array ref or vector
 objects.  There must be precisely two arguments (or none, setting the vectors to
 two empty ones), and they must be the same length.
 
 =item B<leastsquarefit()> B<LSF()> B<lsf()>
 
+Returns a L<Statistics::Basic::LeastSquareFit> object.
 Arguments to C<leastsquarefit()> or C<lsf()>/C<LSF()> must be array ref or
 vector objects.  There must be precisely two arguments (or none, setting the
 vectors to two empty ones), and they must be the same length.
 
 =item B<computed()>
 
+Returns a L<Statistics::Basic::ComputedVector> object.
 Argument must be a blessed vector object.  See the section on
 L<COMPUTED VECTORS> for more information on this.
 
 =item B<handle_missing_values()>
 
-This function should be two vector arguments.  See the section on
+Returns two L<Statistics::Basic::ComputedVector> objects.
+Arguments to this function should be two vector arguments.  See the section on
 L</MISSING VALUES> for further information on this function.
 
 =back
@@ -659,4 +670,18 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Number::Format>, L<overload>
+perl(1), L<Number::Format>, L<overload>,
+L<Statistics::Basic::Vector>,
+L<Statistics::Basic::ComputedVector>,
+L<Statistics::Basic::_OneVectorBase>,
+L<Statistics::Basic::Mean>,
+L<Statistics::Basic::Median>,
+L<Statistics::Basic::Mode>,
+L<Statistics::Basic::Variance>,
+L<Statistics::Basic::StdDev>,
+L<Statistics::Basic::_TwoVectorBase>,
+L<Statistics::Basic::Correlation>,
+L<Statistics::Basic::Covariance>,
+L<Statistics::Basic::LeastSquareFit>
+
+=cut
