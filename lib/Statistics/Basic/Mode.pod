@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Mode - find the mode of an array
+Statistics::Basic::Mode - find the mode of a list
 
 =head1 SYNOPSIS
 

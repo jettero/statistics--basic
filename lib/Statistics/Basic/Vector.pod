@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Vector - a class for handling arrays of numbers
+Statistics::Basic::Vector - a class for handling lists of numbers
 
 =head1 SYNOPSIS
 

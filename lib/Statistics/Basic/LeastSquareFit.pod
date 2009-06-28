@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::LeastSquareFit - find the least square fit for two arrays
+Statistics::Basic::LeastSquareFit - find the least square fit for two lists
 
 =head1 SYNOPSIS
 

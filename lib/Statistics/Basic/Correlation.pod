@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Correlation - find the correlation between two arrays
+Statistics::Basic::Correlation - find the correlation between two lists
 
 =head1 SYNOPSIS
 

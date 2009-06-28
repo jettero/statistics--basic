@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Mean - find the mean of an array
+Statistics::Basic::Mean - find the mean of a list
 
 =head1 SYNOPSIS
 

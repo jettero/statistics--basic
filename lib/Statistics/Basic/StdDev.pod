@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::StdDev - find the standard deviation of an array
+Statistics::Basic::StdDev - find the standard deviation of a list
 
 =head1 SYNOPSIS
 

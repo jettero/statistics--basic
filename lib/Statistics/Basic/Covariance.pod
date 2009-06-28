@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Covariance - find the covariance between two arrays
+Statistics::Basic::Covariance - find the covariance between two lists
 
 =head1 SYNOPSIS
 

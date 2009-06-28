@@ -1,6 +1,6 @@
 =head1 NAME
 
-Statistics::Basic::Median - find the median of an array
+Statistics::Basic::Median - find the median of a list
 
 =head1 SYNOPSIS
 
