@@ -9,7 +9,7 @@ use base 'Statistics::Basic::_OneVectorBase';
 sub new {
     my $class = shift;
 
-    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $Statistics::Basic::DEBUG >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
@@ -35,10 +35,10 @@ sub _recalc {
 
     my $v = $this->{v};
     my $cardinality = $v->query_size;
-       $cardinality -- if $ENV{UNBIAS};
+       $cardinality -- if $Statistics::Basic::UNBIAS;
     return unless $cardinality > 0;
 
-    if( $ENV{DEBUG} >= 2 ) {
+    if( $Statistics::Basic::DEBUG >= 2 ) {
         warn "[recalc " . ref($this) . "] ( $_ - $mean ) ** 2\n" for $v->query;
     }
 
@@ -48,7 +48,7 @@ sub _recalc {
 
     $this->{_value} = ($sum / $cardinality);
 
-    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

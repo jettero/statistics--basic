@@ -10,7 +10,7 @@ use base 'Statistics::Basic::_OneVectorBase';
 sub new {
     my $class = shift;
 
-    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $Statistics::Basic::DEBUG >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
@@ -41,7 +41,7 @@ sub _recalc {
 
     $this->{_value} = ($sum / $cardinality);
 
-    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

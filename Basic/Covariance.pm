@@ -19,7 +19,7 @@ sub new {
     return $c if $c;
 
     my $this = bless {v1=>$v1, v2=>$v2}, $class;
-    warn "[new " . ref($this) . " v1:$this->{v1} v2:$this->{v2}]\n" if $ENV{DEBUG} >= 2;
+    warn "[new " . ref($this) . " v1:$this->{v1} v2:$this->{v2}]\n" if $Statistics::Basic::DEBUG >= 2;
 
     $this->{_vectors} = [ $v1, $v2 ];
 
@@ -41,12 +41,12 @@ sub _recalc {
     my $c1   = $v1->query_size;
     my $c2   = $v2->query_size;
 
-    warn "[recalc " . ref($this) . "] (\$c1, \$c2) = ($c1, $c2)\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] (\$c1, \$c2) = ($c1, $c2)\n" if $Statistics::Basic::DEBUG;
 
     confess "the two vectors in a " . ref($this) . " object must be the same length ($c2!=$c1)" unless $c2 == $c1;
 
     my $cardinality = $c1;
-       $cardinality -- if $ENV{UNBIAS};
+       $cardinality -- if $Statistics::Basic::UNBIAS;
 
     delete $this->{recalc_necessary};
     delete $this->{_value};
@@ -60,7 +60,7 @@ sub _recalc {
     my $m1 = $this->{m1}->query;
     my $m2 = $this->{m2}->query;
 
-    if( $ENV{DEBUG} >= 2 ) {
+    if( $Statistics::Basic::DEBUG >= 2 ) {
         for my $i (0 .. $#$v1) {
             warn "[recalc " . ref($this) . "] ( $v1->[$i] - $m1 ) * ( $v2->[$i] - $m2 )\n";
         }
@@ -73,7 +73,7 @@ sub _recalc {
 
     $this->{_value} = ($sum / $cardinality);
 
-    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] ($sum/$cardinality) = $this->{_value}\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

@@ -28,7 +28,7 @@ sub copy {
     my $that = __PACKAGE__->new( $this->{input_vector} );
        $that->{computer} = $this->{computer};
 
-    warn "copied computedvector($this -> $that)\n" if $ENV{DEBUG} >= 3;
+    warn "copied computedvector($this -> $that)\n" if $Statistics::Basic::DEBUG >= 3;
 
     return $that;
 }
@@ -59,7 +59,7 @@ sub _recalc {
         $this->{output_vector}->set_vector( [$this->{input_vector}->query] );
     }
 
-    warn "[recalc " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
     $this->_inform_computers_of_change;
 
     return;
@@ -70,7 +70,7 @@ sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
-    warn "[recalc_needed " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[recalc_needed " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

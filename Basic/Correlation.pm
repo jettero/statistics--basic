@@ -44,14 +44,14 @@ sub _recalc {
     my $s2 = $this->{sd2}->query; return unless defined $s2;
 
     if( $s1 == 0 or $s2 == 0 ) {
-        warn "[recalc " . ref($this) . "] Standard deviation of 0.  Crazy infinite correlation detected.\n" if $ENV{DEBUG};
+        warn "[recalc " . ref($this) . "] Standard deviation of 0.  Crazy infinite correlation detected.\n" if $Statistics::Basic::DEBUG;
 
         return;
     }
 
     $this->{_value} = ( $c / ($s1*$s2) );
 
-    warn "[recalc " . ref($this) . "] ( $c / ($s1*$s2) ) = $this->{_value}\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] ( $c / ($s1*$s2) ) = $this->{_value}\n" if $Statistics::Basic::DEBUG;
 
     return 1;
 }

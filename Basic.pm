@@ -20,12 +20,14 @@ use Statistics::Basic::ComputedVector;
 our $VERSION = '1.6600';
 our $fmt = new Number::Format;
 
-$ENV{NOFILL} ||= 0;
-$ENV{DEBUG}  ||= 0;
-$ENV{IPRES}  ||= 2;
+our( $NOFILL, $DEBUG, $IPRES, $TOLER, $UNBIAS );
 
-# probably best to not set a default
-# $ENV{TOLER} ||= 0.000_000_000_1; # differences smaller this will test equal for the overloaded objects
+BEGIN {
+    $NOFILL = exists($ENV{NOFILL}) ? $ENV{NOFILL} : 0;
+    $DEBUG  = exists($ENV{DEBUG})  ? $ENV{DEBUG}  : 0;
+    $IPRES  = exists($ENV{IPRES})  ? $ENV{IPRES}  : 2;
+    $TOLER  = $ENV{TOLER} if exists $ENV{TOLER};
+}
 
 use base 'Exporter';
 
@@ -46,33 +48,39 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 sub import {
     my @special = ();
 
-    @_ = grep { m/^(default_env|nofill|debug|ipres|toler)(?:=([\d\.\-]+))?\z/i ? do {push @special, [lc($1), $2]; 0} : 1 } @_;
+    @_ = grep { m/^(ignore_env|nofill|debug|ipres|toler|unbias)(?:=([\d\.\-]+))?\z/i
+        ? do {push @special, [lc($1), $2]; 0} : 1 }
+        @_;
 
-    if( grep {$_->[0] =~ m/default_env/} @special ) {
+    if( grep {$_->[0] =~ m/ignore_env/} @special ) {
         delete $ENV{TOLER};
-        @ENV{qw(NOFILL DEBUG IPRES)} = (0,0,2); ## no critic
+        $NOFILL = 0;
+        $DEBUG  = 0;
+        $IPRES  = 2;
+        $TOLER  = undef;
+        $UNBIAS = 0;
+    }
 
-    } else {
-        for( @special ) {
-            my ($k, $v) = @$_;
+    for( grep {$_->[0] !~ m/ignore_env/} @special ) {
+        my ($k, $v) = @$_;
 
-            if( lc($k) eq "ipres" ) {
-                $v = 2 unless defined($v);
-                croak "bad ipres value ($v)" unless $v >= 0;
-                $ENV{uc($k)} = $v; ## no critic
+        if( lc($k) eq "ipres" ) {
+            $v = 2 unless defined($v);
+            croak "bad ipres value ($v)" unless $v >= 0;
+            $IPRES = $v; ## no critic
 
-            } elsif( lc($k) eq "toler" ) {
-                if( defined $v ) {
-                    croak "bad toler value($v)" unless $v >= 0;
-                    $ENV{uc($k)} = $v; ## no critic
-
-                } else {
-                    delete $ENV{TOLER}; ## no critic
-                }
+        } elsif( lc($k) eq "toler" ) {
+            if( defined $v ) {
+                croak "bad toler value($v)" unless $v >= 0;
+                $TOLER = $v;
 
             } else {
-                $ENV{uc($k)} = defined($v) ? $v : 1; ## no critic
+                $TOLER = undef;
             }
+
+        } else {
+            no strict 'refs';
+            ${uc($k)} = defined($v) ? $v : 1; ## no critic
         }
     }
 

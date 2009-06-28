@@ -7,9 +7,9 @@ use Carp;
 use Statistics::Basic; # make sure all the basic classes are loaded
 
 use overload
-    '""' => sub { defined( my $v = $_[0]->query ) || return "n/a"; $Statistics::Basic::fmt->format_number("$v", $ENV{IPRES}) },
+    '""' => sub { defined( my $v = $_[0]->query ) || return "n/a"; $Statistics::Basic::fmt->format_number("$v", $Statistics::Basic::IPRES) },
     '0+' => sub { $_[0]->query },
-    ( exists($ENV{TOLER}) ? ('==' => sub { abs($_[0]-$_[1])<=$ENV{TOLER} }) : () ),
+    ( defined($Statistics::Basic::TOLER) ? ('==' => sub { abs($_[0]-$_[1])<=$Statistics::Basic::TOLER }) : () ),
     'eq' => sub { "$_[0]" eq "$_[1]" },
     'bool' => sub { 1 },
     fallback => 1; # tries to do what it would have done if this wasn't present.
@@ -20,7 +20,7 @@ sub query {
 
     $this->_recalc if $this->{recalc_needed};
 
-    warn "[query " . ref($this) . " $this->{_value}]\n" if $ENV{DEBUG};
+    warn "[query " . ref($this) . " $this->{_value}]\n" if $Statistics::Basic::DEBUG;
 
     return $this->{_value};
 }
@@ -52,7 +52,7 @@ sub set_size {
 sub insert {
     my $this = shift;
 
-    warn "[insert " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[insert " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
 
     croak ref($this) . "-insert() takes precisely two arguments.  They can be arrayrefs if you like." unless 2 == int @_;
 
@@ -66,7 +66,7 @@ sub insert {
 sub ginsert {
     my $this = shift;
 
-    warn "[ginsert " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[ginsert " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
 
     croak "" . ref($this) . "-ginsert() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
@@ -86,7 +86,7 @@ sub ginsert {
 sub set_vector {
     my $this = shift;
 
-    warn "[set_vector " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[set_vector " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
 
     croak "this set_vector() takes precisely two arguments.  They can be arrayrefs if you like." 
         unless 2 == int @_;
@@ -106,7 +106,7 @@ sub _recalc_needed {
     my $this = shift;
        $this->{recalc_needed} = 1;
 
-    warn "[recalc_needed " . ref($this) . "]\n" if $ENV{DEBUG};
+    warn "[recalc_needed " . ref($this) . "]\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

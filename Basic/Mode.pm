@@ -13,7 +13,7 @@ use overload
     '""' => sub {
         defined( my $q = $_[0]->query ) or return "n/a";
         return $q if ref $q; # vectors interpolate themselves
-        $Statistics::Basic::fmt->format_number($_[0]->query, $ENV{IPRES});
+        $Statistics::Basic::fmt->format_number($_[0]->query, $Statistics::Basic::IPRES);
     },
     '0+' => sub {
         my $q = $_[0]->query;
@@ -25,7 +25,7 @@ use overload
 sub new {
     my $class = shift;
 
-    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $Statistics::Basic::DEBUG >= 2;
 
     my $this   = bless {}, $class;
     my $vector = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
@@ -60,7 +60,7 @@ sub _recalc {
 
     $this->{_value} = ( (@a == 1) ?  $a[0] : Statistics::Basic::Vector->new(\@a) );
 
-    warn "[recalc " . ref($this) . "] count of $this->{_value} = $max\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] count of $this->{_value} = $max\n" if $Statistics::Basic::DEBUG;
 
     return;
 }

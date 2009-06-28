@@ -10,7 +10,7 @@ use base 'Statistics::Basic::_OneVectorBase';
 sub new {
     my $class = shift;
 
-    warn "[new $class]\n" if $ENV{DEBUG} >= 2;
+    warn "[new $class]\n" if $Statistics::Basic::DEBUG >= 2;
 
     my $this     = bless {}, $class;
     my $variance = $this->{V} = eval { Statistics::Basic::Variance->new(@_) } or croak $@;
@@ -32,7 +32,7 @@ sub _recalc {
     return unless defined $var;
     # no need to query filled here, variance does it for us
 
-    warn "[recalc " . ref($this) . "] sqrt( $var )\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] sqrt( $var )\n" if $Statistics::Basic::DEBUG;
 
     $this->{_value} = sqrt( $var );
 

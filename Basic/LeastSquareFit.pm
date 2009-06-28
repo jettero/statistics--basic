@@ -9,7 +9,7 @@ use base 'Statistics::Basic::_TwoVectorBase';
 
 use overload
     '""' => sub {
-        my ($alpha,$beta) = map{$Statistics::Basic::fmt->format_number($_, $ENV{IPRES})} $_[0]->query;
+        my ($alpha,$beta) = map{$Statistics::Basic::fmt->format_number($_, $Statistics::Basic::IPRES)} $_[0]->query;
         "LSF( alpha: $alpha, beta: $beta )";
     },
     '0+' => sub { croak "the result of LSF may not be used as a number" },
@@ -57,7 +57,7 @@ sub _recalc {
     $this->{beta}  = ($cov / $vrx);
     $this->{alpha} = ($mny - ($this->{beta} * $mnx));
 
-    warn "[recalc " . ref($this) . "] (alpha: $this->{alpha}, beta: $this->{beta})\n" if $ENV{DEBUG};
+    warn "[recalc " . ref($this) . "] (alpha: $this->{alpha}, beta: $this->{beta})\n" if $Statistics::Basic::DEBUG;
 
     return;
 }
@@ -68,7 +68,7 @@ sub query {
 
     $this->_recalc if $this->{recalc_needed};
 
-    warn "[query " . ref($this) . " ($this->{alpha}, $this->{beta})]\n" if $ENV{DEBUG};
+    warn "[query " . ref($this) . " ($this->{alpha}, $this->{beta})]\n" if $Statistics::Basic::DEBUG;
 
     return (wantarray ? ($this->{alpha}, $this->{beta}) : [$this->{alpha}, $this->{beta}] );
 }
