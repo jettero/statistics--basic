@@ -29,7 +29,8 @@ values.
 It returns a L<Statistics::Basic::Vector> object.
 
 If given a vector object argument, this function will return the argument rather
-than creating a new vector.
+than creating a new vector.  This mainly used by the other L<Statistics::Basic>
+modules to try to prevent duplicate calculations.
 
 A vector's max size is set to the size of the argument or list on initialization.
 
