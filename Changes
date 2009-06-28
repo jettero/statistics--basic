@@ -3,6 +3,7 @@
      its really empty.
    - added an importer interface for the %ENV vars
    - removing the ENV vars (except for pre-compile init)
+   - finished updating the pods for all the 1.66 changes
 
 1.6600: Sat Jun 27 2009
    - worked on computed vectors a little.  decided it should be
