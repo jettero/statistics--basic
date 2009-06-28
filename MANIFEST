@@ -51,3 +51,4 @@ t/75_filtered_missings.t
 t/critic.t
 t/pod.t
 t/pod_coverage.t
+t/30_empty_constructor_tests.t
