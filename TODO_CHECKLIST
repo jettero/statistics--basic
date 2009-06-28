@@ -7,7 +7,7 @@
 lib/Statistics/Basic/Vector.pod         [x]       [x]           [+x]               [x]            [x]               [0]
 lib/Statistics/Basic/ComputedVector.pod [x]       [x]           [+x]               [x]            [x]               [0]
 lib/Statistics/Basic/_OneVectorBase.pod [x]       [x]           [+x]               [x]            [x]               [0]
-lib/Statistics/Basic/Mean.pod           [0]       [ ]           [  ]               [x]            [ ]               [ ]
+lib/Statistics/Basic/Mean.pod           [0]       [x]           [+x]               [x]            [x]               [x]
 lib/Statistics/Basic/Median.pod         [0]       [ ]           [  ]               [x]            [ ]               [ ]
 lib/Statistics/Basic/Mode.pod           [0]       [ ]           [  ]               [x]            [ ]               [ ]
 lib/Statistics/Basic/Variance.pod       [0]       [ ]           [  ]               [x]            [ ]               [ ]
