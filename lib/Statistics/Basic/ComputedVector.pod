@@ -61,6 +61,8 @@ Note that continuing from the L</SYNOPSIS> example, this would certainly insert
 a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
 L</query()> because it is odd.
 
+This function returns the object itself, for chaining purposes.
+
 =item B<append()> B<ginsert()>
 
 Insert new values into the input vector.  If the vector was already full (see
@@ -72,6 +74,8 @@ accommodate the new values, rather than shifting things.
 Note that continuing from the L</SYNOPSIS> example, this would certainly insert
 a 4 and a 3 into the input vector, but the 3 wouldn't be returned from a
 L</query()> because it is odd.
+
+This function returns the object itself, for chaining purposes.
 
 =item B<query()>
 
@@ -120,14 +124,20 @@ using map or an anonymous sub.
 
     $pow->set_filter(sub { return f1(f2(f3(f4(@_)))) });
 
+This function returns the object itself, for chaining purposes.
+
 =item B<set_size()>
  
 Set the size of the input vector (not the computed vector, that would make
 little sense).
 
+This function returns the object itself, for chaining purposes.
+
 =item B<set_vector()>
 
 Set the contents of the input vector (not the computed one).
+
+This function returns the object itself, for chaining purposes.
 
 =back
 
