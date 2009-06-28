@@ -548,7 +548,7 @@ interpolation (see: L<overload>).
 
 =item B<toler>
 
-When set C<$Statistics::Basic::TOLER>, which is not enabled by default,
+When set, C<$Statistics::Basic::TOLER> (which is not enabled by default),
 instructs the stats objects to test true when I<within> some tolerable range,
 pretty much like this:
 
@@ -559,7 +559,7 @@ pretty much like this:
         return $_[0] == $_[1]
     }
 
-Caveat: For speed reasons, this must be defined before the import of any other
+For performance reasons, this must be defined before the import of any other
 L<Statistics::Basic> modules or the modules will fail to overload the C<==>
 operator.
 
