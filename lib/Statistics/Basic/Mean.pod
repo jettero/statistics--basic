@@ -31,6 +31,7 @@ Create a 20 point moving average like so:
     $sth->bind_columns( my $val ) or die $dbh->errstr;
 
     while( $sth->fetch ) {
+        $avg->insert( $val );
         if( defined( $m = $avg->query ) ) {
             print "Mean: $m\n";
         }

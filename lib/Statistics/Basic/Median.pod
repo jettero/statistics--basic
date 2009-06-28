@@ -21,36 +21,37 @@ And then either query the values or print them like so:
 
 Create a 20 point "moving" median like so:
 
+    use Statistics::Basic qw(:all nofill);
+
     my $sth = $dbh->prepare("select col1 from data where something");
     my $len = 20;
-    my $med = median();
-       $std->set_size($len);
+    my $med = median()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
     $sth->bind_columns( my $val ) or die $dbh->errstr;
 
-    my $count = $len;
     while( $sth->fetch ) {
-
         $med->insert( $val );
-        if( -- $count <= 0 ) {
-            print "Median: $med\n";
+        if( defined( $m = $med->query ) ) {
+            print "Median: $m\n";
         }
+
+        # This would also work:
+        # print "Median: $med\n" if $med->query_filled;
     }
 
 =head1 METHODS
 
 =over 4
 
-=item B<new>
+=item B<new()>
 
-The constructor takes a list of values, a single array ref, or a
-single L<Statistics::Basic::Vector> as arguments.  It returns a
+The constructor takes a single array ref or a single
+L<Statistics::Basic::Vector> as arguments.  It returns a
 L<Statistics::Basic::Median> object.
 
-Note: normally you'd use the
-L<median()|Statistics::Basic/median()> constructor, rather than
-building these by hand using C<new()>.
+Note: normally you'd use the L<median()|Statistics::Basic/median()>
+constructor, rather than building these by hand using C<new()>.
 
 =item B<_OVB::import()>
 
