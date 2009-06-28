@@ -1,18 +1,18 @@
 
-                        accessors documentation documentation
-                        return    complete      consistent(+) and
-                        object(x) (&&!covering  correct(x)
+                        accessors documentation documentation      item C<func()> function chaining moving-value
+                        return    complete      consistent(+) and                                   example(x)
+                        object(x) (&&!covering  correct(x)                                          [n/a (0)]
                         [n/a (0)] non-exist &f)
 
-Basic/Vector.pm         [x]       [ ]           [  ]
-Basic/ComputedVector.pm [x]       [x]           [  ]
-Basic/_OneVectorBase.pm [x]       [ ]           [  ]
-Basic/Mean.pm           [0]       [ ]           [  ]
-Basic/Median.pm         [0]       [ ]           [  ]
-Basic/Mode.pm           [0]       [ ]           [  ]
-Basic/Variance.pm       [0]       [ ]           [  ]
-Basic/StdDev.pm         [0]       [ ]           [  ]
-Basic/_TwoVectorBase.pm [x]       [ ]           [  ]
-Basic/Correlation.pm    [0]       [ ]           [  ]
-Basic/Covariance.pm     [0]       [ ]           [  ]
-Basic/LeastSquareFit.pm [0]       [ ]           [  ]
+Basic/Vector.pm         [x]       [x]           [+x]               [x]            [x]               [0]
+Basic/ComputedVector.pm [x]       [x]           [  ]               [ ]            [ ]               [ ]
+Basic/_OneVectorBase.pm [x]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Mean.pm           [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Median.pm         [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Mode.pm           [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Variance.pm       [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/StdDev.pm         [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/_TwoVectorBase.pm [x]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Correlation.pm    [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/Covariance.pm     [0]       [ ]           [  ]               [ ]            [ ]               [ ]
+Basic/LeastSquareFit.pm [0]       [ ]           [  ]               [ ]            [ ]               [ ]

@@ -22,14 +22,16 @@ vectors in a pretty fashion.
 
 =item C<new()>
 
-The constructor takes a single array ref or a single
-L<Statistics::Basic::Vector> as its argument.  It returns a
-L<Statistics::Basic::Vector> object.
+The constructor can take a single array ref or a single
+L<Statistics::Basic::Vector> as its argument.  It can also take a list of
+values.
+
+It returns a L<Statistics::Basic::Vector> object.
 
 If given a vector object argument, this function will return the argument rather
 than creating a new vector.
 
-A vector's max size is set to the size of the argument on initialization.
+A vector's max size is set to the size of the argument or list on initialization.
 
 Note: normally you'd use the L<vector()|Statistics::Basic/vector()> constructor,
 rather than building these by hand using C<new()>.
@@ -37,6 +39,10 @@ rather than building these by hand using C<new()>.
 =item C<copy()>
 
 Creates a new vector object with the same contents and size as this one and returns it.
+
+    my $v1 = vector(3,7,9);
+    my $v2 = $v1->copy(); # $v2 is a new object, separate vector
+    my $v3 = vector($v1); # $v3 is the same object as $v1
 
 =item C<insert()>
 
@@ -46,13 +52,17 @@ compensate.
 
     $vector->insert( 4, 3 ); # insert a 3 and a 4
 
+This function returns the object itself, for chaining purposes.
+
 =item C<append()> C<ginsert()>
 
 Insert new values into the vector.  If the vector was already full (see
 L</set_size()>), these functions will grow the size of the vector to accommodate
-the new values, rather than shifting things.
+the new values, rather than shifting things.  C<ginsert()> does the same thing.
 
     $vector->append( 4, 3 ); # append a 3 and a 4
+
+This function returns the object itself, for chaining purposes.
 
 =item C<query()>
 
@@ -73,7 +83,8 @@ Keeping C<$reference_to_contents> available long term should work acceptably
 =item C<query_filled()>
 
 Returns true when the vector is the same size as the max size set by
-L</set_size()>.
+L</set_size()>.  This function isn't useful unless operating under the effects
+of the L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> setting.
 
 =item C<query_size()>
 
@@ -83,19 +94,31 @@ L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> setting.
 
 =item C<set_size()>
 
-Sets the max size of the input vector.  Note that on initialization with
-L</new()> or with L<computed()|Statistics::Basic/computed()>, the input vector
-size is called automatically.
+Sets the max size of the vector.
 
     my $v1 = vector(1,2,3);
-    my $c2 = computed($v1);
-       $c2->set_size(7); # actually sets the size of $v1
+       $v1->set_size(7); # [0, 0, 0, 0, 1, 2, 3]
+
+Unless L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is set, the vector will be
+filled with C<0>s (assuming the vector wouldn't otherwise be full) on the oldest
+side of the vector (so an insert will push off one of the filled-zeros).
+
+This function returns the object itself, for chaining purposes.
+
+    my $v1 = vector(2 .. 5)->set_size(5);
+    # [0, 2, 3, 4, 5]
 
 =item C<set_vector()>
 
 Given a vector or array ref, this will set the contents (and size) of the input
 vector to match the argument.  If given a vector object argument, this will make
 the two vectors match, while still remaining separate objects.
+
+    my $v1 = vector(3,7,9);
+    my $v2 = vector()->set_vector($v1);
+    my $v3 = vector($v1); # $v3 is the same object as $v1
+
+This function returns the object itself, for chaining purposes.
 
 =back
 
