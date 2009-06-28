@@ -30,6 +30,8 @@ vector:
 
 Create a 20 point "moving" mode like so:
 
+    use Statistics::Basic qw(:all nofill);
+
     my $sth = $dbh->prepare("select col1 from data where something");
     my $len = 20;
     my $mod = mode()->set_size($len);
@@ -40,7 +42,7 @@ Create a 20 point "moving" mode like so:
     while( $sth->fetch ) {
         $mod->insert( $val );
         if( defined( my $m = $mod->query ) ) {
-            print "Mode: $mod\n";
+            print "Mode: $m\n";
         }
 
         print "Mode: $mod\n" if $mod->query_filled;
@@ -70,7 +72,14 @@ vector, not a scalar.
 This module also inherits all the overloads and methods from
 L<Statistics::Basic::_OneVectorBase>.
 
-=item B<mode overloads>
+=back
+
+=head1 OVERLOADS
+
+This object is overloaded.  It tries to return an appropriate string for the
+calculation or the value of the computation in numeric context.
+
+In boolean context, this object is always true (even when empty).
 
 If evaluated as a string, L<Statistics::Basic::Mode> will try to format a number
 (like any other L<Statistics::Basic> object), but if the object
@@ -84,15 +93,6 @@ stringification.
 
 If evaluated as a number, a L<Statistics::Basic::Mode> will raise an error when
 the object L</is_multimodal()>.
-
-=back
-
-=head1 OVERLOADS
-
-This object is overloaded.  It tries to return an appropriate string for the
-calculation or the value of the computation in numeric context.
-
-In boolean context, this object is always true (even when empty).
 
 =head1 AUTHOR
 
