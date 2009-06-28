@@ -98,6 +98,8 @@ sub query {
 }
 # }}}
 
+sub query_vector { return $_[0]{input_vector} }
+
 # query_filled {{{
 sub query_filled {
     my $this = shift;
