@@ -7,11 +7,15 @@ Statistics::Basic::ComputedVector - a class for computing filtered vectors
 Invoke it this way:
 
     my $vector   = vector(1,2,3);
-    my $computed = computed($vector);
-       $computed->set_filter(sub{
-           # NOTE: only interested in even numbers:
-           grep { !($_ % 2) } @_
-       });
+    my $computed = computed($vector)->set_filter(sub{
+        # NOTE: only interested in even numbers:
+        grep { !($_ % 2) } @_
+    });
+
+    # nearly the same, opposite order:
+
+    my $computed = computed(1,2,3)->set_filter(sub {map{$_+1}@_});
+    my $vector   = $computed->query_vector; 
 
 =head1 METHODS
 
@@ -23,8 +27,9 @@ The constructor takes a single array ref or a single
 L<Statistics::Basic::ComputedVector> as its argument.  It returns a
 L<Statistics::Basic::ComputedVector> object.
 
-Unlike L<Statistics::Basic::Vector/new()>, Computed vectors will never try to
-prevent unnecessary copying, presuming you'll add filters later.
+If passed arguments other than L<Statistics::Basic::Vector> objects, the
+constructor will built an appropriate vector object -- which can be queried with
+L</query_vector()>
 
 Note: normally you'd use the L<computed()|Statistics::Basic/computed()>
 constructor, rather than building these by hand using C<new()>.
@@ -38,7 +43,7 @@ using the same filter as this one.  This is rather like:
     my $c1 = computed($v1); $c1->set_filter(my $s = sub {});
     my $c2 = computed($v1); $c2->set_filter($s);
 
-To instead create a filtered version of this filtered vector, choose this form:
+To instead create a filtered version of a filtered vector, choose this form:
 
     my $v1 = vector(1,2,3);
     my $c1 = computed($v1); $c1->set_filter(sub {});
@@ -83,6 +88,10 @@ special way, use another L<Statistics::Basic::ComputedVector> object instead.
 
 Keeping C<$reference_to_contents> available long term should work acceptably
 (since it refers to the vector contents itself).
+
+=item B<query_vector()>
+
+Return the input L<Statistics::Basic::Vector> object.
 
 =item C<query_filled()>
 
@@ -132,6 +141,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::Vector>
 
 =cut
