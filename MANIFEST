@@ -43,6 +43,8 @@ t/17_stddev.t
 t/19_combo.t
 t/20_LSF.t
 t/20_correlation.t
+t/25_correlate_computed.t
+t/30_empty_constructor_tests.t
 t/53_co_persistance.t
 t/53_persistance.t
 t/54_doc_example.t
@@ -51,4 +53,3 @@ t/75_filtered_missings.t
 t/critic.t
 t/pod.t
 t/pod_coverage.t
-t/30_empty_constructor_tests.t
