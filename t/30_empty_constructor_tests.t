@@ -3,7 +3,7 @@ use Test;
 use Statistics::Basic qw(:all);
 
 my $warning = 0;
-$SIG{__WARN__} = sub { warn "\n\n\e[1;33mWARNING DETECTED: @_\e[m\n\n"; $warning ++ };
+$SIG{__WARN__} = sub { warn "\n\e[1;33mWARNING DETECTED: @_\e[m\n"; $warning ++ };
 
 my @zerosies = (
     scalar vector(),
