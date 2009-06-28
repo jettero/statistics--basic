@@ -9,7 +9,7 @@ Statistics::Basic::_OneVectorBase - base class objects like Mean
 =item B<query()>
 
 Query the value of the object.  It will return the undefined value until there's
-something to calculate (or until the vector is full if
+something to calculate (or until the vector is full when
 L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is in effect).
 
 =item B<insert()>
@@ -18,12 +18,16 @@ Insert new values into the vector.
 
     $object_instance->insert( 4, 3 ); # insert a 3 and a 4
 
+This function returns the object itself, for chaining purposes.
+
 =item B<append()> B<ginsert()>
 
 The growing insert inserts new elements, growing the max size of the vector to
 accommodate the new elements (if necessary).
 
     $object_instance->ginsert( 4, 3 ); # append a 3 and a 4
+
+This function returns the object itself, for chaining purposes.
 
 =item B<query_size()>
 
@@ -38,14 +42,20 @@ object.
 =item B<set_size()>
 
 Set the maximum size for the underlying L<Statistics::Basic::Vector> object.
-This function requires one arguments.
+This function requires one arguments.  
+
+Unless L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is set, the vector will be
+filled with C<0>s (assuming the vector wouldn't otherwise be full) on the oldest
+side of the vector (so an insert will push off one of the filled-zeros).
+
+This function returns the object itself, for chaining purposes.
 
 =item B<set_vector()>
 
-Set the vector objects used to calculate the object's value.  This function
-either takes one argument -- which can either be an arrayref or a
-L<Statistics::Basic::Vector> object -- or it can take a list of elements to
-populate the vector with.
+Given a vector or array ref, this will set the contents (and size) of the vector
+used for the object computations.
+
+This function returns the object itself, for chaining purposes.
 
 =back
 
