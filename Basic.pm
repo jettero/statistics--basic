@@ -48,7 +48,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 sub import {
     my @special = ();
 
-    @_ = grep { m/^(ignore_env|nofill|debug|ipres|toler|unbias)(?:=([\d\.\-]+))?\z/i
+    @_ = grep { m/^(ignore_env|nofill|debug|ipres|toler|unbias)(?:=([\d\.\-_]+))?\z/i
         ? do {push @special, [lc($1), $2]; 0} : 1 }
         @_;
 
@@ -63,11 +63,12 @@ sub import {
 
     for( grep {$_->[0] !~ m/ignore_env/} @special ) {
         my ($k, $v) = @$_;
+        $v = eval $v if defined $v;
 
         if( lc($k) eq "ipres" ) {
             $v = 2 unless defined($v);
             croak "bad ipres value ($v)" unless $v >= 0;
-            $IPRES = $v; ## no critic
+            $IPRES = $v;
 
         } elsif( lc($k) eq "toler" ) {
             if( defined $v ) {
