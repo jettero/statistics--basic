@@ -486,61 +486,149 @@ kicked out after new C<insert()>s.
 
 =back
 
+=head1 OPTIONS
+
+Each of the following options can be specified on package import like this.
+
+    use Statistics::Basic qw(unbias=0); # start with unbias disabled
+    use Statistics::Basic qw(unbias=1); # start with unbias enabled
+
+When specified on import, each option has certain defaults.
+
+    use Statistics::Basic qw(unbias); # start with unbias enabled
+    use Statistics::Basic qw(nofill); # start with nofill enabled
+    use Statistics::Basic qw(toler);  # start with toler disabled
+    use Statistics::Basic qw(ipres);  # start with ipres=2
+
+Additionally, with the exception of L</ignore_env>, they can all be accessed via
+package variables of the same name in all upper case.  Example:
+
+    # code code code
+
+    $Statistics::Basic::UNBIAS = 0; # turn UNBIAS off
+
+    # code code code
+
+    $Statistics::Basic::UNBIAS = 1; # turn it back on
+
+    # code code code
+
+    { 
+        local $Statistics::Basic::DEBUG = 1; # debug, this block only
+    }
+ 
+Special caveat: L</toler> can in fact be changed via the package var (e.g.,
+C<$Statistics::Basic::TOLER=0.0001>).  But, for speed reasons, it must be
+L<defined|perlfunc/defined> before any other packages are imported or it will
+not actually do anything when changed.
+
+=item B<unbias>
+
+This module uses the B<sum(X - mean(X))/N> definition of variance.
+
+If you wish to use the I<unbiased>, B<sum(X-mean(X)/(N-1)> definition, then set
+the C<$Statistics::Basic::UNBIAS> true (possibly with
+C<use Statistics::Basic qw(unbias)>).
+
+This can be changed at any time with the package variable or at compile time.
+
+This feature was requested by C<< Robert McGehee <xxxxxxxx@wso.williams.edu> >>.
+
+[NOTE 2008-11-06: L<http://cpanratings.perl.org/dist/Statistics-Basic>, this can
+also be called "B<population (n)>" vs "B<sample (n-1)>" and is indeed fully
+addressed right here!]
+
+=item B<ipres>
+
+C<ipres> defaults to 2.  It is passed to L<Number::Format> as the second
+argument to L<format_number()|Number::Format/format_number> during string
+interpolation (see: L<overload>).
+
+=item B<toler>
+
+When set C<$Statistics::Basic::TOLER>, which is not enabled by default,
+instructs the stats objects to test true when I<within> some tolerable range,
+pretty much like this:
+
+    sub is_equal {
+        return abs($_[0]-$_[1])<$Statistics::Basic::TOLER
+            if defined($Statistics::Basic::TOLER)
+
+        return $_[0] == $_[1]
+    }
+
+Caveat: For speed reasons, this must be defined before the import of any other
+L<Statistics::Basic> modules or the modules will fail to overload the C<==>
+operator.
+
+C<$Statistics::Basic::TOLER> totally disabled:
+
+    use Statistics::Basic qw(:all toler);
+
+C<$Statistics::Basic::TOLER> disabled, but changeable:
+
+    use Statistics::Basic qw(:all toler=0);
+
+    $Statistics::Basic::TOLER = 0.000_001;
+
+You can I<change> the tolerance at runtime, but it must be set (or unset) at
+compile time before the packages load.
+
+=item B<nofill>
+
+Normally when you set the size of a vector it automatically fills with zeros on
+the first-out side of the vector.  You can disable the autofilling with this
+option.  It can be changed at any time.
+
+=item B<debug>
+
+Enable debugging with C<use Statistics::Basic qw(debug)> or disable a specific
+level (including C<0> to disable) with C<use Statistics::Basic qw(debug=2)>.
+
+This is also accessible at runtime using C<$Statistics::Basic::DEBUG> and can be
+switched on and off at any time.
+
+=item B<ignore_env>
+
+Normally the defaults for these options can be changed in the environment of the
+program.  Example:
+
+    UNBIAS=1 perl ./myprog.pl
+
+This does the same thing as C<$Statistics::Basic::UNBIAS=1> or
+C<use Statistics::Basic qw(unbias)> unless you disable the C<%ENV> checking with
+this option.
+
+    use Statistics::Basic qw(ignore_env);
+
 =head1 ENVIRONMENT VARIABLES
+
+You can change the defaults (assuming L<ignore_env|/ignore_env> is not used)
+from your bash prompt.  Example:
+
+    DEBUG=1 perl ./myprog.pl
 
 =over
 
 =item B<$ENV{DEBUG}>
 
-Try setting C<$ENV{DEBUG}=1>; or C<$ENV{DEBUG}=2>; to see the internals.
-
-Also, from your bash prompt you can C<'DEBUG=1 perl ./myprog.pl'> to
-enable debugging dynamically.
+Sets the default value of L</debug>.
 
 =item B<$ENV{UNBIAS}>
 
-This module uses the sum(X - mean(X))/N definition of variance.
-If you wish to use the unbiased, sum(X-mean(X)/(N-1) definition, then 
-set the C<$ENV{UNBIAS}=1>;
-
-This feature was requested by Robert McGehee <xxxxxxxx@wso.williams.edu>.
-
-[NOTE 2008-11-06: L<http://cpanratings.perl.org/dist/Statistics-Basic>, this can
-also be called "population (n)" vs "sample (n-1)" and is indeed fully addressed
-right here!]
+Sets the default value of L</unbias>.
 
 =item B<$ENV{NOFILL}>
 
-Normally when you set the size of a vector it automatically fills with zeros on
-the first out side of the vector.  You can disable the autofilling with this
-environment variable.
+Sets the default value of L</nofill>.
 
 =item B<$ENV{IPRES}>
 
-C<$ENV{IPRES}>, which defaults to 2, is passed to L<Number::Format> as the second
-argument to C<format_number> during string interpolation (see: L<overload>).
+Sets the default value of L</ipres>.
 
 =item B<$ENV{TOLER}>
 
-When set C<$ENV{TOLER}> (which by default doesn't exist in the environment
-hash), this instructs the stats objects to test true when I<within> some
-tolerable range, pretty much like this:
-
-    sub is_equal {
-        return abs($_[0]-$_[1])<$ENV{TOLER} if exists($ENV{TOLER});
-        return $_[0] ==$_[1]
-    }
-
-Caveat: Because of certain peculiarities of the overload system and for
-efficiency, this environment variable must exist prior to the compile time
-import of L<Statistics::Basic>.  If you wish to set this in perl, rather than
-from the shell, you must use a C<BEGIN> block to do it, e.g.:
-
-    BEGIN { $ENV{TOLER} = 0.000_000_001 }
-    use Statistics::Basic qw(:all);
-
-You can I<change> the tolerance at runtime, but it must be set (or unset) at
-compile time before the package loads.
+Sets the default value of L</toler>.
 
 =back
 
