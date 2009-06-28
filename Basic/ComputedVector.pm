@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Carp;
 
+our $tag_number = 0;
+
 use Statistics::Basic;
 use base 'Statistics::Basic::Vector';
 
@@ -14,7 +16,7 @@ sub new {
     my $that  = eval { Statistics::Basic::Vector->new(@_) } or croak $@;
     croak "input vector must be supplied to ComputedVector" unless defined $that;
 
-    my $this = bless { c=>{}, input_vector=>$that, output_vector=>Statistics::Basic::Vector->new() }, $class;
+    my $this = bless { tag=>(--$tag_number), c=>{}, input_vector=>$that, output_vector=>Statistics::Basic::Vector->new() }, $class;
        $this->_recalc_needed;
 
     return $this;
