@@ -2,6 +2,7 @@
    - new test: create each object in its empty state, make sure
      its really empty.
    - added an importer interface for the %ENV vars
+   - removing the ENV vars (except for pre-compile init)
 
 1.6600: Sat Jun 27 2009
    - worked on computed vectors a little.  decided it should be
