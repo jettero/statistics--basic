@@ -17,6 +17,7 @@ Insert two new new values into the vectors.  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
 
+    # insert a 4 in one vector and a 3 in the other
     $object_instance->insert( 4, 3 );
 
 =item B<append()> B<ginsert()>
@@ -26,12 +27,13 @@ accommodate the new elements (if necessary).  This function must be given
 precisely two arguments and probably shouldn't be undefined values in most
 cases.
 
+    # append a 4 in one vector and a 3 in the other
     $object_instance->ginsert( 4, 3 );
 
 =item B<query_size()>
 
 The current size of the vectors -- regardless of their max size (as set by
-L</set_size()>0.  This function returns a list, i.e.:
+L</set_size()>).  This function returns a list, i.e.:
 
     my @s = $obj->query_size; # two values
     my $s = $obj->query_size; # the right hand value of the list
@@ -47,6 +49,10 @@ Set the vector objects used to calculate the object's value.  This function
 takes two arguments -- which can either be arrayrefs or
 L<Statistics::Basic::Vector> objects.  They must have the same number of
 elements.
+
+    my $v1 = vector
+    my $v2 = $v1->copy;
+    $example_correlation->set_vector($v1, $v2);
 
 =back
 
