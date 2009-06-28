@@ -23,9 +23,6 @@ ok( $j->query->[1], 1); # beta
 my $k = new Statistics::Basic::LeastSquareFit;
 my @v = ($k->query_vector1, $k->query_vector2);
 
-use Data::Dump qw(dump);
-die dump(map {"$_"} @v);
-
 my @a = (1 .. 10);
 my @b = map(13 + $_*19, 1 .. 10);
 for my $i (0 .. $#a) {
