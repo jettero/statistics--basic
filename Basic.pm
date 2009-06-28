@@ -64,7 +64,6 @@ sub import {
             if( defined $v ) {
                 croak "bad toler value($v)" unless $v >= 0;
                 $TOLER = $v;
-                warn "TOLER: $v";
 
             } else {
                 $TOLER = undef;
