@@ -60,8 +60,8 @@ though.
 
     my $lsf = leastsquarefit($v1, $v2);
 
-This C<$lsf> will interpolate fine, showing C<"alpha: $alpha, beta: $beta">, but
-it will C<croak> if you try to use the object as a number.
+This C<$lsf> will interpolate fine, showing C<LSF( alpha: $alpha, beta: $beta
+)>, but it will C<croak> if you try to use the object as a number.
 
     my $v3             = $multimodal->query;
     my ($alpha, $beta) = $lsf->query;
