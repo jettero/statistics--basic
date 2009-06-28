@@ -1,11 +1,9 @@
 
 use strict;
 use Test;
-use Statistics::Basic qw(:all);
+use Statistics::Basic qw(:all nofill);
 
 plan tests => 2*(1+(my $t = 3));
-
-$ENV{NOFILL} = 1;
 
 my $avg = avg()->set_size($t);
 ok( $avg->query_size, 0 );
