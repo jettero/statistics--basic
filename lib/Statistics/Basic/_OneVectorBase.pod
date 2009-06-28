@@ -10,7 +10,7 @@ Statistics::Basic::_OneVectorBase - base class objects like Mean
 
 Query the value of the object.  It will return the undefined value until there's
 something to calculate (or until the vector is full when
-L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is in effect).
+L<nofill|Statistics::Basic/nofill> is in effect).
 
 =item B<insert()>
 
@@ -44,7 +44,7 @@ object.
 Set the maximum size for the underlying L<Statistics::Basic::Vector> object.
 This function requires one arguments.  
 
-Unless L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is set, the vector will be
+Unless L<nofill|Statistics::Basic/nofill> is set, the vector will be
 filled with C<0>s (assuming the vector wouldn't otherwise be full) on the oldest
 side of the vector (so an insert will push off one of the filled-zeros).
 
@@ -64,14 +64,14 @@ This function returns the object itself, for chaining purposes.
 This class provides overloads.  If evaluated as a string, it will attempt to
 print a pretty value for the object (or C<n/a>, see L</query()> above).  the
 resulting string can be tuned, in terms of precision, see
-L<$ENV{IPRES}|Statistics::Basic/$ENV{IPRES}> for further information.
+L<ipres|Statistics::Basic/ipres> for further information.
 
 If evaluated as a number, it will try to return the raw result of L</query()>,
 possibly turning the resulting C<undef> (if applicable) into a C<0> in the
 process -- note that Perl does this C<0>-izing, not the overload.
 
 The C<eq> and C<==> operators are also overloaded, trying to do the right thing.
-Also see L<$ENV{TOLER}|Statistics::Basic/$ENV{TOLER}> for further information.
+Also see L<toler|Statistics::Basic/toler> for further information.
 
 =head1 AUTHOR
 
@@ -83,6 +83,6 @@ Copyright 2009 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
-perl(1), L<Statistics::Basic>
+perl(1), L<Statistics::Basic>, L<Statistics::Basic::Vector>
 
 =cut

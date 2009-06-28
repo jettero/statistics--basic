@@ -85,13 +85,13 @@ Keeping C<$reference_to_contents> available long term should work acceptably
 
 Returns true when the vector is the same size as the max size set by
 L</set_size()>.  This function isn't useful unless operating under the effects
-of the L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> setting.
+of the L<nofill|Statistics::Basic/nofill> setting.
 
 =item B<query_size()>
 
 Returns the current number of elements in the vector object (not the size set
 with L</set_size()>).  This is almost never false unless you're using the
-L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> setting.
+L<nofill|Statistics::Basic/nofill> setting.
 
 =item B<set_size()>
 
@@ -100,7 +100,7 @@ Sets the max size of the vector.
     my $v1 = vector(1,2,3);
        $v1->set_size(7); # [0, 0, 0, 0, 1, 2, 3]
 
-Unless L<$ENV{NOFILL}|Statistics::Basic/$ENV{NOFILL}> is set, the vector will be
+Unless L<nofill|Statistics::Basic/nofill> is set, the vector will be
 filled with C<0>s (assuming the vector wouldn't otherwise be full) on the oldest
 side of the vector (so an insert will push off one of the filled-zeros).
 
