@@ -53,7 +53,7 @@ sub import {
 
     for( grep {$_->[0] !~ m/ignore_env/} @special ) {
         my ($k, $v) = @$_;
-        $v = eval $v if defined $v;
+        $v = eval $v if defined $v; ## no critic
 
         if( lc($k) eq "ipres" ) {
             $v = 2 unless defined($v);
@@ -70,12 +70,12 @@ sub import {
             }
 
         } else {
-            no strict 'refs';
+            no strict 'refs'; ## no critic
             ${uc($k)} = defined($v) ? $v : 1; ## no critic
         }
     }
 
-    eval q {
+    my $pull = q {
 
         use Statistics::Basic::Covariance;
         use Statistics::Basic::Correlation;
@@ -90,7 +90,9 @@ sub import {
 
         1;
 
-    } or die "problem loading base modules: $@";
+    };
+
+    eval $pull or die "problem loading base modules: $@"; ## no critic
 
     return __PACKAGE__->export_to_level(1, @_);
 }
