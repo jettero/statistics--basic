@@ -36,11 +36,13 @@ sub _recalc {
     my @v = (sort {$a <=> $b} ($v->query));
     my $center = int($cardinality/2);
 
-    if ($cardinality%2) {
-        $this->{_value} = $v[$center];
+    { no warnings 'uninitialized'; ## no critic
+        if ($cardinality%2) {
+            $this->{_value} = $v[$center];
 
-    } else {
-        $this->{_value} = ($v[$center] + $v[$center-1])/2;
+        } else {
+            $this->{_value} = ($v[$center] + $v[$center-1])/2;
+        }
     }
 
     warn "[recalc " . ref($this) . "] vector[int($cardinality/2)] = $this->{_value}\n" if $ENV{DEBUG};

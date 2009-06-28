@@ -52,6 +52,7 @@ sub _recalc {
     my $max = 0;
 
     for my $val ($v->query) {
+        no warnings 'uninitialized'; ## no critic
         my $t = ++ $mode{$val};
         $max = $t if $t > $max;
     }

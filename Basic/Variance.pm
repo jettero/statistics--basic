@@ -42,9 +42,9 @@ sub _recalc {
         warn "[recalc " . ref($this) . "] ( $_ - $mean ) ** 2\n" for $v->query;
     }
 
-    my $sum = 0;
-
-    $sum += ( $_ - $mean ) ** 2 for $v->query;
+    my $sum = 0; { no warnings 'uninitialized'; ## no critic
+       $sum += ( $_ - $mean ) ** 2 for $v->query;
+    }
 
     $this->{_value} = ($sum / $cardinality);
 

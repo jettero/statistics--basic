@@ -65,6 +65,7 @@ sub _recalc {
     }
 
     for my $i (0 .. $#$v1) {
+        no warnings 'uninitialized'; ## no critic
         $sum += ( $v1->[$i] - $m1 ) * ( $v2->[$i] - $m2 );
     }
 

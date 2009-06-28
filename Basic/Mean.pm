@@ -35,7 +35,9 @@ sub _recalc {
     return unless $cardinality > 0;
     return unless $v->query_filled; # only applicable in certain circumstances
 
-    $sum += $_ for $v->query;
+    { no warnings 'uninitialized'; ## no critic
+      $sum += $_ for $v->query;
+    }
 
     $this->{_value} = ($sum / $cardinality);
 
