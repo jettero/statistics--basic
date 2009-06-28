@@ -6,16 +6,6 @@ use warnings;
 use Carp;
 
 use Number::Format;
-use Statistics::Basic::Covariance;
-use Statistics::Basic::Correlation;
-use Statistics::Basic::LeastSquareFit;
-use Statistics::Basic::Mean;
-use Statistics::Basic::Median;
-use Statistics::Basic::Mode;
-use Statistics::Basic::StdDev;
-use Statistics::Basic::Variance;
-use Statistics::Basic::Vector;
-use Statistics::Basic::ComputedVector;
 
 our $VERSION = '1.6600';
 our $fmt = new Number::Format;
@@ -74,6 +64,7 @@ sub import {
             if( defined $v ) {
                 croak "bad toler value($v)" unless $v >= 0;
                 $TOLER = $v;
+                warn "TOLER: $v";
 
             } else {
                 $TOLER = undef;
@@ -84,6 +75,23 @@ sub import {
             ${uc($k)} = defined($v) ? $v : 1; ## no critic
         }
     }
+
+    eval q {
+
+        use Statistics::Basic::Covariance;
+        use Statistics::Basic::Correlation;
+        use Statistics::Basic::LeastSquareFit;
+        use Statistics::Basic::Mean;
+        use Statistics::Basic::Median;
+        use Statistics::Basic::Mode;
+        use Statistics::Basic::StdDev;
+        use Statistics::Basic::Variance;
+        use Statistics::Basic::Vector;
+        use Statistics::Basic::ComputedVector;
+
+        1;
+
+    } or die "problem loading base modules: $@";
 
     return __PACKAGE__->export_to_level(1, @_);
 }
