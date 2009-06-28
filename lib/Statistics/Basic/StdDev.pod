@@ -63,6 +63,13 @@ L<Statistics::Basic::_OneVectorBase>.
 
 =back
 
+=head1 OVERLOADS
+
+This object is overloaded.  It tries to return an appropriate string for the
+calculation or the value of the computation in numeric context.
+
+In boolean context, this object is always true (even when empty).
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

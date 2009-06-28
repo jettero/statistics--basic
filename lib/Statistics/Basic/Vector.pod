@@ -123,6 +123,13 @@ This function returns the object itself, for chaining purposes.
 
 =back
 
+=head1 OVERLOADS
+
+This object is overloaded.  It tries to return an appropriate string for the
+vector and raises errors in numeric context.
+
+In boolean context, this object is always true (even when empty).
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

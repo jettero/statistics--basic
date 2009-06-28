@@ -77,9 +77,10 @@ Returns the L<Statistics::Basic::Mean> object for the second vector.
 
 =head1 OVERLOADS
 
-This object is overloaded.  It tries to return an appropriate string or number,
-depending on the context.  See L<Statistics::Basic::_TwoVectorBase/OVERLOAD> for
-further information.
+This object is overloaded.  It tries to return an appropriate string for the
+calculation or the value of the computation in numeric context.
+
+In boolean context, this object is always true (even when empty).
 
 =head1 AUTHOR
 

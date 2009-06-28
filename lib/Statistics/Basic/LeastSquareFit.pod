@@ -91,6 +91,16 @@ Automatically calculate the x-value on the line for a given y-value.
 
     my $x = $lsf->x_given_y( 7 );
 
+C<x_given_y()> can sometimes produce a divide-by-zero error since it
+has to divide by the C<$beta>.  This might be helpful:
+
+    if( defined( my $x = eval { $lsf->x_given_y(7) } ) ) {
+        warn "there is no x value for 7";
+
+    } else {
+        print "x (given y=7): $x\n";
+    }
+
 =item B<query_vector1()>
 
 Return the L<Statistics::Basic::Vector> for the first vector used in the
@@ -120,9 +130,10 @@ alpha and beta.
 
 =head1 OVERLOADS
 
-This object is overloaded.  It tries to return an appropriate string or number,
-depending on the context.  See L<Statistics::Basic::_TwoVectorBase/OVERLOAD> for
-further information.
+This object is overloaded.  It tries to return an appropriate string for the
+calculation, but raises an error in numeric context.
+
+In boolean context, this object is always true (even when empty).
 
 =head1 AUTHOR
 

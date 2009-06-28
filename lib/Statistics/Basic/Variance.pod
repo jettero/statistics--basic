@@ -70,6 +70,13 @@ I am using this software in my own projects...  If you find bugs, please
 please please let me know. :) Actually, let me know if you find it handy at
 all.  Half the fun of releasing this stuff is knowing that people use it.
 
+=head1 OVERLOADS
+
+This object is overloaded.  It tries to return an appropriate string for the
+calculation or the value of the computation in numeric context.
+
+In boolean context, this object is always true (even when empty).
+
 =head1 COPYRIGHT
 
 Copyright 2009 Paul Miller -- Licensed under the LGPL

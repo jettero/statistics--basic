@@ -544,6 +544,15 @@ compile time before the package loads.
 
 =back
 
+=head1 OVERLOADS
+
+All of the objects are true in numeric context.  All of the objects print useful
+strings when evaluated as a string.  Most of the objects evaluate usefully as
+numbers, although L<Statistics::Basic::Vector> objects,
+L<Statistics::Basic::ComputedVector> objects, and
+L<Statistics::Basic::LeastSquareFit> objects do not -- they instead raise an
+error.
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>
