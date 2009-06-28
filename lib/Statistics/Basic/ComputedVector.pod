@@ -37,11 +37,13 @@ constructor, rather than building these by hand using C<new()>.
 =item B<copy()>
 
 Creates a new computed vector object referring to the same source vector and
-using the same filter as this one.  This is rather like:
+using the same filter as this one.
 
     my $v1 = vector(1,2,3);
     my $c1 = computed($v1); $c1->set_filter(my $s = sub {});
-    my $c2 = computed($v1); $c2->set_filter($s);
+
+    my $copy1 = computed($v1); $copy1->set_filter($s);
+    my $copy2 = $c1->copy; # just like $c2, but in one step
 
 To instead create a filtered version of a filtered vector, choose this form:
 
