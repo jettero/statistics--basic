@@ -50,7 +50,7 @@ sub import {
 
     if( grep {$_->[0] =~ m/default_env/} @special ) {
         delete $ENV{TOLER};
-        @ENV{qw(NOFILL DEBUG IPRES)} = (0,0,2);
+        @ENV{qw(NOFILL DEBUG IPRES)} = (0,0,2); ## no critic
 
     } else {
         for( @special ) {
