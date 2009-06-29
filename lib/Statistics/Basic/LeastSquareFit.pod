@@ -6,23 +6,31 @@ Statistics::Basic::LeastSquareFit - find the least square fit for two lists
 
 A machine to calculate the Least Square Fit of given vectors x and y.
 
-The module returns the alpha and beta that best fits this formula:
+The module returns the alpha and beta filling this formula:
 
     $y = $beta * $x + $alpha
 
-Invoke it this way:
+for a given set of I<x> and I<y> co-ordinate pairs.
 
-    my $lsf = leastsquarefit( [1,2,3], [1,2,3] );
+Say you have the set of Cartesian coordinates:
+
+    my @points = ( [1,1], [2,2], [3,3], [4,4] );
+
+The simplest way to find the LSF is as follows:
+
+    my $lsf = lsf()->set_size(int @points);
+       $lsf->insert(@$_) for @points;
 
 Or this way:
 
-    my $v1  = vector(1,2,3);
-    my $v2  = vector(1,2,3);
-    my $lsf = lsf($v1,$v2);
+    my $xv  = vector( map {$_->[0]} @points );
+    my $yv  = vector( map {$_->[1]} @points );
+    my $lsf = lsf($xv, $yv);
 
 And then either query the values or print them like so:
 
-    print "The LSF for $v1 and $v2: $lsf\n";
+    print "The LSF for $xv and $yv: $lsf\n";
+    my ($yint, $slope) =
     my ($alpha, $beta) = $lsf->query;
 
 L<LSF|Statistics::Basic::LeastSquareFit> is meant for finding a line of best
@@ -40,16 +48,16 @@ Create a 20 point "moving" L<LSF|Statistics::Basic::LeastSquareFit> like so:
 
     use Statistics::Basic qw(:all nofill);
 
-    my $sth = $dbh->prepare("select col1,col2 from data where something");
+    my $sth = $dbh->prepare("select x,y from points where something");
     my $len = 20;
     my $lsf = lsf()->set_size($len);
 
     $sth->execute or die $dbh->errstr;
-    $sth->bind_columns( my ($lhs, $rhs) ) or die $dbh->errstr;
+    $sth->bind_columns( my ($x, $y) ) or die $dbh->errstr;
 
     my $count = $len;
     while( $sth->fetch ) {
-        $lsf->insert( $lhs, $rhs );
+        $lsf->insert( $x, $y );
         if( defined( my ($yint, $slope) = $lsf->query ) {
             print "LSF: y= $slope*x + $yint\n";
         }
