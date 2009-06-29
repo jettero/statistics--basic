@@ -31,7 +31,7 @@ our @EXPORT_OK   = (qw(
     covariance cov
     correlation cor corr
     leastsquarefit LSF lsf
-    handle_missing_values
+    handle_missing_values handle_missing
 ));
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
@@ -128,6 +128,7 @@ sub handle_missing_values {
 
     return ($v3,$v4);
 }
+*handle_missing = \&handle_missing_values;
 
 *average = *mean;
 *avg     = *mean;

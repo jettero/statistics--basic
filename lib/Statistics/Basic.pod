@@ -171,7 +171,7 @@ Returns a L<Statistics::Basic::ComputedVector> object.
 Argument must be a blessed vector object.  See the section on
 L<COMPUTED VECTORS> for more information on this.
 
-=item B<handle_missing_values()>
+=item B<handle_missing_values()> B<handle_missing()>
 
 Returns two L<Statistics::Basic::ComputedVector> objects.
 Arguments to this function should be two vector arguments.  See the section on
