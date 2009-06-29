@@ -61,6 +61,7 @@ t/53_persistance.t
 t/54_doc_example.t
 t/60_bigfloats.t
 t/75_filtered_missings.t
+t/75_missing_correlated.t
 t/critic.t
 t/pod.t
 t/pod_coverage.t
