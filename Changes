@@ -1,3 +1,10 @@
+1.6601: Sat Sep 12 2009
+   - The debian build devs set TEST_AUTHOR, then created a bug
+     report concerning the results.  First things first, make it
+     so setting TEST_AUTHOR doesn't work unless you set a
+     specific code -- are you the author? No?  Then don't
+     complain about the suggestions from Perl-Critic
+
 1.6600: Sun Jun 28 2009
    - new test: create each object in its empty state, make sure
      its really empty.
