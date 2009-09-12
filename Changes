@@ -4,6 +4,8 @@
      so setting TEST_AUTHOR doesn't work unless you set a
      specific code -- are you the author? No?  Then don't
      complain about the suggestions from Perl-Critic
+   - fixed the various things the latest Perl-Critic complains
+     about -- nothing really, and a bug in the critic.
 
 1.6600: Sun Jun 28 2009
    - new test: create each object in its empty state, make sure
