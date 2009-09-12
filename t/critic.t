@@ -3,7 +3,9 @@ use strict;
 use Test::More;
 use File::Spec;
 
-if (not $ENV{TEST_AUTHOR}) {
+# NOTE: please do not blame me for suggetions from this test.  Do not set
+# TEST_AUTHOR and then tell me about it.  Use test at your own risk.
+if ($ENV{TEST_AUTHOR} ne "author972") {
     plan( skip_all => 'Author test.  Set $ENV{TEST_AUTHOR} to true to run.');
 }
 
