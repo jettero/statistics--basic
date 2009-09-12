@@ -1,0 +1,8 @@
+^blib/$
+^.git
+^.gitignore$
+^Makefile$
+^MANIFEST.SKIP$
+^pm_to_blib$
+^tabular_todo
+^.todo$
