@@ -18,7 +18,7 @@ sub new {
     my $c = $v1->_get_linked_computer( covariance => $v2 );
     return $c if $c;
 
-    my $this = bless {v1=>$v1, v2=>$v2}, $class; ## no critic: false, this is not comma separated statements, wtf?
+    my $this = bless({'v1'=>$v1, 'v2'=>$v2}, $class);
     warn "[new " . ref($this) . " v1:$this->{v1} v2:$this->{v2}]\n" if $Statistics::Basic::DEBUG >= 2;
 
     $this->{_vectors} = [ $v1, $v2 ];

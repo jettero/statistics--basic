@@ -3,6 +3,8 @@ use strict;
 use Test::More;
 use File::Spec;
 
+no warnings;
+
 # NOTE: please do not blame me for suggetions from this test.  Do not set
 # TEST_AUTHOR and then tell me about it.  Use test at your own risk.
 if ($ENV{TEST_AUTHOR} ne "author972") {

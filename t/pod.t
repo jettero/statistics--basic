@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 use Test::More;
+no warnings;
 
 # NOTE: please do not blame me for suggetions from this test.  Do not set
 # TEST_AUTHOR and then tell me about it.  Use test at your own risk.

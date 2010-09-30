@@ -1,3 +1,7 @@
+1.6602: Thu Sep 30 2010
+   - changes to make this work again in 5.6.x
+     (hint provided by Jerome Provensal)
+
 1.6601: Sat Sep 12 2009
    - The debian build devs set TEST_AUTHOR, then created a bug
      report concerning the results.  First things first, make it
