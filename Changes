@@ -1,3 +1,7 @@
+1.6603: Mon Jan 24 2011
+   - fail to load Test::More gracefully, but don't require it
+     even for build.
+
 1.6602: Thu Sep 30 2010
    - changes to make this work again in 5.6.x
      (hint provided by Jerome Provensal)
