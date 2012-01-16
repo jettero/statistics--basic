@@ -674,7 +674,7 @@ all.  Half the fun of releasing this stuff is knowing that people use it.
 
 =head1 COPYRIGHT
 
-Copyright 2009 Paul Miller -- Licensed under the LGPL
+Copyright 2009 Paul Miller -- Licensed under the LGPL version 2.
 
 =head1 SEE ALSO
 
