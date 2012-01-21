@@ -13,9 +13,9 @@ our $fmt = new Number::Format;
 our( $NOFILL, $DEBUG, $IPRES, $TOLER, $UNBIAS );
 
 BEGIN {
-    $NOFILL = exists($ENV{NOFILL}) ? $ENV{NOFILL} : 0;
-    $DEBUG  = exists($ENV{DEBUG})  ? $ENV{DEBUG}  : 0;
-    $IPRES  = exists($ENV{IPRES})  ? $ENV{IPRES}  : 2;
+    $NOFILL = exists($ENV{NOFILL})        ? $ENV{NOFILL}        : 0;
+    $DEBUG  = exists($ENV{DEBUG_STATS_B}) ? $ENV{DEBUG_STATS_B} : 0;
+    $IPRES  = exists($ENV{IPRES})         ? $ENV{IPRES}         : 2;
     $TOLER  = $ENV{TOLER} if exists $ENV{TOLER};
 }
 
