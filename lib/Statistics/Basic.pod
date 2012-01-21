@@ -533,7 +533,7 @@ package variables of the same name in all upper case.  Example:
     # code code code
 
     { 
-        local $Statistics::Basic::DEBUG = 1; # debug, this block only
+        local $Statistics::Basic::DEBUG_STATS_B = 1; # debug, this block only
     }
  
 Special caveat: L</toler> can in fact be changed via the package var (e.g.,
@@ -606,7 +606,7 @@ option.  It can be changed at any time.
 Enable debugging with C<use Statistics::Basic qw(debug)> or disable a specific
 level (including C<0> to disable) with C<use Statistics::Basic qw(debug=2)>.
 
-This is also accessible at runtime using C<$Statistics::Basic::DEBUG> and can be
+This is also accessible at runtime using C<$Statistics::Basic::DEBUG_STATS_B> and can be
 switched on and off at any time.
 
 =item B<ignore_env>
@@ -629,11 +629,11 @@ this option.
 You can change the defaults (assuming L<ignore_env|/ignore_env> is not used)
 from your bash prompt.  Example:
 
-    DEBUG=1 perl ./myprog.pl
+    DEBUG_STATS_B=1 perl ./myprog.pl
 
 =over 4
 
-=item B<$ENV{DEBUG}>
+=item B<$ENV{DEBUG_STATS_B}>
 
 Sets the default value of L</debug>.
 

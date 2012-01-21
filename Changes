@@ -1,3 +1,6 @@
+1.6605: Sat Jan 21 2012
+   - change env var DEBUG to DEBUG_STATS_B (cpan698301@mstier.de)
+
 1.6603: Mon Jan 24 2011
    - fail to load Test::More gracefully, but don't require it
      even for build.
