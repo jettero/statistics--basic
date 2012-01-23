@@ -152,7 +152,7 @@ Paul Miller C<< <jettero@cpan.org> >>
 
 =head1 COPYRIGHT
 
-Copyright 2009 Paul Miller -- Licensed under the LGPL
+Copyright 2012 Paul Miller -- Licensed under the LGPL
 
 =head1 SEE ALSO
 
