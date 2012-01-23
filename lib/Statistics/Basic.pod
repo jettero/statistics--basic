@@ -664,6 +664,32 @@ L<Statistics::Basic::ComputedVector> objects, and
 L<Statistics::Basic::LeastSquareFit> objects do not -- they instead raise an
 error.
 
+=head1 Author's note on Statistics::Descriptive
+
+I've been asked a couple times now why I don't link to
+L<Statistics::Descriptive> in my see also section.  As a rule, I only link to
+packages there that I think are related or that I actually used in the package
+construction.  I've never personally used Descriptive, but it surely seems to do
+quite a lot more.  In a sense, this package really doesn't do statistics, not
+like a scientist would think about it anyway.  So I always figured people could
+find their own way to Descriptive anyway.
+
+The one thing this package does do, that I don't think Descriptive does (correct
+me if I'm wrong) is time difference computations.  If there are say, 200 things
+in the mean object, then after inserting (using this package) there'll still be
+200 things, allowing the computation of a moving average, moving stddev, moving
+correlation, etc.  You might argue that this is rarely needed, but it is really
+the only time I need to compute these things.
+
+  while( $data = $fetch_sth->fetchrow_arrayref ) {
+      $mean->insert($data);
+      $moving_avg_sth->execute(0 + $mean);
+  }
+
+Since I opened the topic I'd also like to mention that I find this package
+easier to use.  That is a matter of taste and since I wrote this, you might say
+I'm a little biased.  Your mileage may vary.
+
 =head1 AUTHOR
 
 Paul Miller C<< <jettero@cpan.org> >>

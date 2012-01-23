@@ -1,3 +1,6 @@
+1.6605: Mon Jan 23 2012
+   - forgot to update the copyright to 2012
+
 1.6605: Sat Jan 21 2012
    - change env var DEBUG to DEBUG_STATS_B (cpan698301@mstier.de)
 
