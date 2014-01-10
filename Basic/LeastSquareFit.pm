@@ -50,7 +50,7 @@ sub _recalc {
     delete $this->{beta};
 
     my $vrx = $this->{vrx}->query; return unless defined $vrx; return unless $vrx > 0;
-    my $mnx = $this->{mnx}->query; return unless defined $mnx; return unless $mnx > 0;
+    my $mnx = $this->{mnx}->query; return unless defined $mnx;
     my $mny = $this->{mny}->query; return unless defined $mny;
     my $cov = $this->{cov}->query; return unless defined $cov;
 
