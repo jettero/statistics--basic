@@ -7,7 +7,7 @@ Statistics::Basic - A collection of very basic statistics modules
     use Statistics::Basic qw(:all);
 
 These actually return objects, not numbers.  The objects will interpolate as
-nicely formated numbers (using L<Number::Format>).  Or the actual number will be
+nicely formatted numbers (using L<Number::Format>).  Or the actual number will be
 returned when the object is used as a number.
 
     my $median = median( 1,2,3 );
