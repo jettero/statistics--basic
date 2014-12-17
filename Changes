@@ -1,8 +1,7 @@
-1.6610: Wed Dec 17 2014
-   - using Number::Format vars instead of LC_ALL to fix tests
-
-1.6609: Tue Dec 16 2014
+1.6611: Wed Dec 17 2014
    - SREZIC@cpan.org suggested LC_ALL=C for all tests
+   - using Number::Format vars instead of LC_ALL to fix tests
+   - yeah, that's not going to work... using setlocale()
 
 1.6608: Fri Jan 10 2014
    - bug in LSF
