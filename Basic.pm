@@ -7,7 +7,7 @@ use Carp;
 
 use Number::Format;
 
-our $VERSION = '1.6609';
+our $VERSION = '1.6608';
 our $fmt = new Number::Format;
 
 our( $NOFILL, $DEBUG, $IPRES, $TOLER, $UNBIAS );

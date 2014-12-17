@@ -1,4 +1,3 @@
-$ENV{LC_ALL} = "C";
 
 use Test;
 use Statistics::Basic qw(:all ipres);

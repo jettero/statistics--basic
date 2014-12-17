@@ -1,4 +1,3 @@
-$ENV{LC_ALL} = "C";
 
    use Statistics::Basic qw(:all);
 

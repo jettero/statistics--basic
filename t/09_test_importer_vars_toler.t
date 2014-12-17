@@ -1,4 +1,4 @@
-$ENV{LC_ALL} = "C";
+
 
 BEGIN { $ENV{TOLER} = 1 }
 
