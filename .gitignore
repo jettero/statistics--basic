@@ -10,3 +10,4 @@ SIGNATURE
 skip_sig.check
 tmp
 dist
+.prove
