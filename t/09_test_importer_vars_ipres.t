@@ -1,4 +1,5 @@
 
+use t::locale_hack;
 use Test;
 use Statistics::Basic qw(:all ipres);
 

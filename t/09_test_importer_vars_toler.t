@@ -1,4 +1,5 @@
 
+use t::locale_hack;
 
 BEGIN { $ENV{TOLER} = 1 }
 
