@@ -1,3 +1,4 @@
+$ENV{LC_ALL} = "C";
 
 use strict;
 use Test;

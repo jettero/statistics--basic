@@ -1,3 +1,5 @@
+$ENV{LC_ALL} = "C";
+
 use strict;
 use Test;
 use Statistics::Basic qw(:all toler=0.05);
