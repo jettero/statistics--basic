@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 # NOTE: I couldn't reproduce the locale issues reported in 
 # 
