@@ -1,5 +1,5 @@
+BEGIN { require "./t/locale_hack.pm" }
 
-use t::locale_hack;
 use Test;
 use Statistics::Basic qw(:all);
 

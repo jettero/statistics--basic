@@ -1,5 +1,5 @@
 
-use t::locale_hack;
+BEGIN { require "./t/locale_hack.pm" }
 use Test;
 use Statistics::Basic qw(:all ipres=1);
 

@@ -1,5 +1,4 @@
-
-use t::locale_hack;
+BEGIN { require "./t/locale_hack.pm" }
 use strict;
 use Test;
 

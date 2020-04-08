@@ -1,5 +1,5 @@
 use strict;
-use t::locale_hack;
+BEGIN { require "./t/locale_hack.pm" }
 use Test;
 use Statistics::Basic qw(:all toler=0.000_001);
 
