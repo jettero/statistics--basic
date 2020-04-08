@@ -1,5 +1,5 @@
 
-use t::locale_hack;
+BEGIN { require "./t/locale_hack.pm" }
    use Statistics::Basic qw(:all);
 
    my $v1 = vector(1,2,3,4,5);
